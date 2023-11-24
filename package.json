@@ -14,6 +14,7 @@
     "@emotion/react": "^11.11.1",
     "chess": "^1.2.1",
     "emotion": "^11.0.0",
+    "events": "^3.3.0",
     "react": "18.2.0",
     "react-native": "0.72.7"
   },
