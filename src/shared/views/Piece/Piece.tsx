@@ -1,6 +1,6 @@
 import {Image} from 'react-native';
 import {Player} from '../../domain/entities/Player';
-import {ColoredPieceName, PieceName} from '../../domain/entities/PieceName';
+import {ColoredPieceName, PieceCode} from '../../domain/entities/PieceCode';
 import styled from '@emotion/native';
 
 export const PIECES: Record<ColoredPieceName, number> = {
@@ -19,7 +19,7 @@ export const PIECES: Record<ColoredPieceName, number> = {
 };
 
 interface PieceProps {
-  piece: PieceName;
+  piece: PieceCode;
   player: Player;
 }
 
