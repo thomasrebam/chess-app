@@ -6,22 +6,21 @@
  */
 
 import {View} from 'react-native';
-import {ChessBoardBackground} from './src/shared/views/ChessBoardBackground/ChessBoardBackground';
+import styled from '@emotion/native';
+import {ChessBoard} from './src/shared/views/ChessBoard/ChessBoard';
 
 function App(): JSX.Element {
   return (
-    <View style={{flex: 1, justifyContent: 'center', backgroundColor: 'black'}}>
-      <View
-        style={{
-          flexShrink: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          aspectRatio: 1,
-        }}>
-        <ChessBoardBackground />
-      </View>
-    </View>
+    <AppBackground>
+      <ChessBoard />
+    </AppBackground>
   );
 }
+
+const AppBackground = styled(View)({
+  flex: 1,
+  justifyContent: 'center',
+  backgroundColor: 'black',
+});
 
 export default App;
