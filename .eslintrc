@@ -1,0 +1,9 @@
+{
+  "extends": "plugin:@bam.tech/recommended",
+  "overrides": [
+    {
+      "files": ["*.test.tsx", "*.test.ts"],
+      "extends": "plugin:@bam.tech/tests"
+    }
+  ]
+}
