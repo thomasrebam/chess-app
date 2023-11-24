@@ -1,4 +1,4 @@
-import {Image} from 'react-native';
+import {Animated, Dimensions, Image} from 'react-native';
 import {Player} from '../../domain/entities/Player';
 import {ColoredPieceName, PieceCode} from '../../domain/entities/PieceCode';
 import styled from '@emotion/native';
@@ -25,11 +25,20 @@ interface PieceProps {
 
 export const Piece = ({piece, player}: PieceProps) => {
   const coloredPieceName: ColoredPieceName = `${player}${piece}`;
-  return <StyledImage source={PIECES[coloredPieceName]} />;
+  return (
+    <StyledAnimatedView>
+      <StyledImage source={PIECES[coloredPieceName]} />
+    </StyledAnimatedView>
+  );
 };
 
+const SIZE = Dimensions.get('window').width / 8;
+
 const StyledImage = styled(Image)({
-  flexShrink: 1,
-  width: '12.5%',
-  height: '12.5%',
+  width: SIZE,
+  height: SIZE,
+});
+
+const StyledAnimatedView = styled(Animated.View)({
+  position: 'absolute',
 });
