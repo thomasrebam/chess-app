@@ -20,6 +20,7 @@ function App(): JSX.Element {
         <Spacer height={32} />
         <PlayedMovesProvider>
           <ChessBoard />
+          <Spacer height={4} />
           <PlayedMoves />
         </PlayedMovesProvider>
       </AppBackground>

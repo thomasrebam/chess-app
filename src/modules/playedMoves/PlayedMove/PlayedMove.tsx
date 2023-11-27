@@ -15,5 +15,4 @@ export const PlayedMove = ({move}: PlayedMoveProps) => {
 
 const StyledText = styled(Text)({
   color: 'white',
-  backgroundColor: 'red',
 });
