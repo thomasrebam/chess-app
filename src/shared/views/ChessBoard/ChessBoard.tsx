@@ -1,37 +1,33 @@
 import styled from '@emotion/native';
 import {View} from 'react-native';
 import {ChessBoardBackground} from './ChessBoardBackground';
-import Chess = require('chess');
 import {useRef, useState} from 'react';
-import {Piece, SIZE} from '../Piece/Piece';
-import {getPiecesCodeFromPiece} from '../helpers/getPieceCodeFromPiece';
-import {getPlayerFromPiece} from '../helpers/getPlayerFromPiece';
-import {getFileCodeFromFile} from '../helpers/getFileCodeFromFile';
+import {Piece} from '../Piece/Piece';
+import {Chess} from 'chess.js';
 
 export const ChessBoard = () => {
-  const chess = useRef(() => Chess.create());
+  const chess = useRef(new Chess());
   const [gameState, setGameState] = useState({
-    player: 'w',
-    board: chess.current().getStatus().board,
+    player: chess.current.turn(),
+    board: chess.current.board(),
   });
   return (
     <Container>
       <ChessBoardBackground />
-      {gameState.board.squares.map((square, index) => {
-        if (square.piece === null) return null;
-        const position = {
-          x: getFileCodeFromFile(square.file) * SIZE,
-          y: (8 - square.rank) * SIZE,
-        };
-        return (
-          <Piece
-            key={index}
-            piece={getPiecesCodeFromPiece(square.piece)}
-            player={getPlayerFromPiece(square.piece)}
-            position={position}
-          />
-        );
-      })}
+      {gameState.board.map(file =>
+        file.map((square, index) => {
+          if (square === null) return null;
+          return (
+            <Piece
+              key={index}
+              piece={square.type}
+              player={square.color}
+              position={square.square}
+              chess={chess.current}
+            />
+          );
+        }),
+      )}
     </Container>
   );
 };
