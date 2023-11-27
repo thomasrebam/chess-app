@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/native": "^11.11.0",
     "@emotion/react": "^11.11.1",
+    "@types/react-native": "^0.72.7",
     "chess": "^1.2.1",
     "emotion": "^11.0.0",
     "events": "^3.3.0",
