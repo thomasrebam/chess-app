@@ -20,6 +20,9 @@ interface PlayedMovesProviderProps {
 export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
   const [playedMoves, setPlayedMoves] = useState<string[]>([]);
   const addPlayedMove = (move: string) => {
+    if (playedMoves.length % 2 === 0) {
+      move = `${playedMoves.length / 2 + 1}. ${move}`;
+    }
     setPlayedMoves([...playedMoves, move]);
   };
   return (
