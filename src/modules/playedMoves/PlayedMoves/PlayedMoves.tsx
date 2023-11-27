@@ -12,7 +12,17 @@ export const PlayedMoves = () => {
       <Spacer width={4} />
       {playedMoves.map((move, index) => {
         if (index === playedMoves.length - 1) {
-          return <PlayedMove key={index} move={move} isHighlighted />;
+          const onLongPress = () => {
+            console.log('Long press');
+          };
+          return (
+            <PlayedMove
+              key={index}
+              move={move}
+              isHighlighted
+              onLongPress={onLongPress}
+            />
+          );
         }
         return <PlayedMove key={index} move={move} />;
       })}

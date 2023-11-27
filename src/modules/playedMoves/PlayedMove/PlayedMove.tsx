@@ -4,11 +4,16 @@ import {Text, TouchableOpacity} from 'react-native';
 interface PlayedMoveProps {
   move: string;
   isHighlighted?: boolean;
+  onLongPress?: () => void;
 }
 
-export const PlayedMove = ({move, isHighlighted = false}: PlayedMoveProps) => {
+export const PlayedMove = ({
+  move,
+  isHighlighted = false,
+  onLongPress,
+}: PlayedMoveProps) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onLongPress={onLongPress}>
       {isHighlighted ? (
         <HighlightedText>{`${move} `}</HighlightedText>
       ) : (
