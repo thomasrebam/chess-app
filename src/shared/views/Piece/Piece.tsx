@@ -12,12 +12,13 @@ import Animated, {
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {PositionNumber} from '../../domain/entities/PositionNumber';
 import {getAlgebraicPositionFromAbsolutePosition} from '../helpers/getAlgebraicPositionFromAbsolutePosition';
-import {useCallback} from 'react';
+import {useCallback, useContext} from 'react';
 import {
   getAbsolutePositionFromAlgebraicNotation,
   getAbsolutePositionFromAlgebraicPosition,
 } from '../helpers/getAbsolutePositionFromAlgebraicPosition';
 import Chess from 'chess.js';
+import {PlayedMovesContext} from '../../../modules/playedMoves/PlayedMovesContext/PlayedMonveContext';
 
 export const PIECES: Record<ColoredPieceName, number> = {
   wk: require('../../../../assets/images/WhiteKing.png'),
@@ -45,6 +46,7 @@ interface PieceProps {
 export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
   const coloredPieceName: ColoredPieceName = `${player}${piece}`;
   const isGestureActive = useSharedValue(false);
+  const {addPlayedMove} = useContext(PlayedMovesContext);
   const absolutePosition = getAbsolutePositionFromAlgebraicNotation(position);
   const offsetX = useSharedValue(0);
   const offsetY = useSharedValue(0);
@@ -79,6 +81,7 @@ export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
           isGestureActive.value = false;
         });
         chess.move(validMove);
+        addPlayedMove(chess.history()[chess.history().length - 1]);
         onTurn();
         return;
       }
@@ -87,7 +90,7 @@ export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
         isGestureActive.value = false;
       });
     },
-    [chess, onTurn, translateX, translateY, isGestureActive],
+    [chess, onTurn, translateX, translateY, isGestureActive, addPlayedMove],
   );
   const movePiece = useAnimatedGestureHandler({
     onStart: () => {
