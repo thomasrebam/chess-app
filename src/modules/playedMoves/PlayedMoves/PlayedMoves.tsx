@@ -2,7 +2,7 @@ import styled from '@emotion/native';
 import {PlayedMove} from '../PlayedMove/PlayedMove';
 import {View} from 'react-native';
 import {useContext} from 'react';
-import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMonveContext';
+import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMoveContext';
 import {Spacer} from '../../../shared/views/Spacer/Spacer';
 
 export const PlayedMoves = () => {

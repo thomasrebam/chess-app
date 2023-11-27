@@ -18,7 +18,7 @@ import {
   getAbsolutePositionFromAlgebraicPosition,
 } from '../helpers/getAbsolutePositionFromAlgebraicPosition';
 import Chess from 'chess.js';
-import {PlayedMovesContext} from '../../../modules/playedMoves/PlayedMovesContext/PlayedMonveContext';
+import {PlayedMovesContext} from '../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 
 export const PIECES: Record<ColoredPieceName, number> = {
   wk: require('../../../../assets/images/WhiteKing.png'),
