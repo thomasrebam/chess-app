@@ -1,12 +1,11 @@
 import styled from '@emotion/native';
 import {PlayedMove} from '../PlayedMove/PlayedMove';
 import {View} from 'react-native';
+import {useContext} from 'react';
+import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMonveContext';
 
-interface PlayedMovesProps {
-  playedMoves: string[];
-}
-
-export const PlayedMoves = ({playedMoves}: PlayedMovesProps) => {
+export const PlayedMoves = () => {
+  const {playedMoves} = useContext(PlayedMovesContext);
   return (
     <PlayedMovesBackground>
       {playedMoves.map((move, index) => {
