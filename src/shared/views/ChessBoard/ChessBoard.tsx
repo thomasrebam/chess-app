@@ -11,6 +11,12 @@ export const ChessBoard = () => {
     player: chess.current.turn(),
     board: chess.current.board(),
   });
+  const onTurn = () => {
+    setGameState({
+      player: gameState.player === 'w' ? 'b' : 'w',
+      board: chess.current.board(),
+    });
+  };
   return (
     <Container>
       <ChessBoardBackground />
@@ -24,6 +30,7 @@ export const ChessBoard = () => {
               player={square.color}
               position={square.square}
               chess={chess.current}
+              onTurn={onTurn}
             />
           );
         }),

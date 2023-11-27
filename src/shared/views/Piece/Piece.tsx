@@ -39,9 +39,10 @@ interface PieceProps {
   player: Player;
   position: Chess.Square;
   chess: Chess.Chess;
+  onTurn: () => void;
 }
 
-export const Piece = ({piece, player, position, chess}: PieceProps) => {
+export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
   const coloredPieceName: ColoredPieceName = `${player}${piece}`;
   const absolutePosition = getAbsolutePositionFromAlgebraicNotation(position);
   const offsetX = useSharedValue(0);
@@ -74,12 +75,13 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
         translateX.value = withTiming(newPos.x);
         translateY.value = withTiming(newPos.y);
         chess.move(validMove);
+        onTurn();
         return;
       }
       translateX.value = withTiming(from.x);
       translateY.value = withTiming(from.y);
     },
-    [chess, translateX, translateY],
+    [chess, onTurn, translateX, translateY],
   );
   const movePiece = useAnimatedGestureHandler({
     onStart: () => {
