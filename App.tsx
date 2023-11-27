@@ -11,7 +11,7 @@ import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
 import 'react-native-gesture-handler';
 import {PlayedMoves} from './src/modules/playedMoves/PlayedMoves/PlayedMoves';
 import {Spacer} from './src/shared/views/Spacer/Spacer';
-import {PlayedMovesProvider} from './src/modules/playedMoves/PlayedMovesContext/PlayedMonveContext';
+import {PlayedMovesProvider} from './src/modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 
 function App(): JSX.Element {
   return (

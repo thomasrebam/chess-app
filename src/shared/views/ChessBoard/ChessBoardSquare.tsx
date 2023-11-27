@@ -1,8 +1,12 @@
 import styled from '@emotion/native';
+import {useContext} from 'react';
 import {View} from 'react-native';
+import {LastMoveContext} from './LastMoveContext';
 
 const WHITE = 'rgb(230, 233, 198)';
 const BLACK = 'rgb(100, 133, 68)';
+const HIGHLITED_WHITE = 'rgb(244, 246, 128)';
+const HIGHLITED_BLACK = 'rgb(187, 204, 68)';
 
 export const ChessBoardSquare = ({
   row,
@@ -11,8 +15,26 @@ export const ChessBoardSquare = ({
   row: number;
   column: number;
 }) => {
-  const backgroundColor = (row + column) % 2 === 0 ? WHITE : BLACK;
-  const color = backgroundColor === WHITE ? BLACK : WHITE;
+  const {row: lastMoveRow, column: lastMoveColumn} =
+    useContext(LastMoveContext);
+  let backgroundColor;
+  if ((row + column) % 2 === 0) {
+    if (row === 8 - lastMoveRow && column === lastMoveColumn) {
+      backgroundColor = HIGHLITED_WHITE;
+    } else {
+      backgroundColor = WHITE;
+    }
+  } else {
+    if (row === 8 - lastMoveRow && column === lastMoveColumn) {
+      backgroundColor = HIGHLITED_BLACK;
+    } else {
+      backgroundColor = BLACK;
+    }
+  }
+  const color =
+    backgroundColor === WHITE || backgroundColor === HIGHLITED_WHITE
+      ? BLACK
+      : WHITE;
   return (
     <Square
       style={{
