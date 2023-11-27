@@ -2,6 +2,7 @@ import {Animated, Dimensions, Image} from 'react-native';
 import {Player} from '../../domain/entities/Player';
 import {ColoredPieceName, PieceCode} from '../../domain/entities/PieceCode';
 import styled from '@emotion/native';
+import {PositionNumber} from '../../domain/entities/PositionNumber';
 
 export const PIECES: Record<ColoredPieceName, number> = {
   wk: require('../../../../assets/images/WhiteKing.png'),
@@ -21,7 +22,7 @@ export const PIECES: Record<ColoredPieceName, number> = {
 interface PieceProps {
   piece: PieceCode;
   player: Player;
-  position: Position;
+  position: PositionNumber;
 }
 
 export const Piece = ({piece, player, position}: PieceProps) => {
