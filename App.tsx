@@ -5,9 +5,10 @@
  * @format
  */
 
-import {View} from 'react-native';
 import styled from '@emotion/native';
 import {ChessBoard} from './src/shared/views/ChessBoard/ChessBoard';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import 'react-native-gesture-handler';
 
 function App(): JSX.Element {
   return (
@@ -17,7 +18,7 @@ function App(): JSX.Element {
   );
 }
 
-const AppBackground = styled(View)({
+const AppBackground = styled(GestureHandlerRootView)({
   flex: 1,
   justifyContent: 'center',
   backgroundColor: 'black',
