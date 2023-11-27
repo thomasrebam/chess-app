@@ -24,8 +24,8 @@ export const ChessBoard = () => {
   ];
   const {row, column} = lastMove
     ? {
-        row: getFileCodeFromFile(lastMove.to[0]),
-        column: Number(lastMove.to[1]),
+        column: getFileCodeFromFile(lastMove.to[0]),
+        row: Number(lastMove.to[1]),
       }
     : {
         row: -1,
