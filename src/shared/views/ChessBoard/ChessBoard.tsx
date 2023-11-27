@@ -1,11 +1,12 @@
 import styled from '@emotion/native';
-import {View} from 'react-native';
+import {Animated, View} from 'react-native';
 import {ChessBoardBackground} from './ChessBoardBackground';
 import Chess = require('chess');
 import {useRef, useState} from 'react';
-import {Piece} from '../Piece/Piece';
+import {Piece, SIZE} from '../Piece/Piece';
 import {getPiecesCodeFromPiece} from '../helpers/getPieceCodeFromPiece';
 import {getPlayerFromPiece} from '../helpers/getPlayerFromPiece';
+import {getFileCodeFromFile} from '../helpers/getFileCodeFromFile';
 
 export const ChessBoard = () => {
   const chess = useRef(() => Chess.create());
@@ -18,11 +19,16 @@ export const ChessBoard = () => {
       <ChessBoardBackground />
       {gameState.board.squares.map((square, index) => {
         if (square.piece === null) return null;
+        const position = new Animated.ValueXY({
+          x: getFileCodeFromFile(square.file) * SIZE,
+          y: (8 - square.rank) * SIZE,
+        });
         return (
           <Piece
             key={index}
             piece={getPiecesCodeFromPiece(square.piece)}
             player={getPlayerFromPiece(square.piece)}
+            position={position}
           />
         );
       })}

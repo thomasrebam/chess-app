@@ -21,18 +21,22 @@ export const PIECES: Record<ColoredPieceName, number> = {
 interface PieceProps {
   piece: PieceCode;
   player: Player;
+  position: Animated.ValueXY;
 }
 
-export const Piece = ({piece, player}: PieceProps) => {
+export const Piece = ({piece, player, position}: PieceProps) => {
   const coloredPieceName: ColoredPieceName = `${player}${piece}`;
   return (
-    <StyledAnimatedView>
+    <StyledAnimatedView
+      style={{
+        transform: [{translateX: position.x}, {translateY: position.y}],
+      }}>
       <StyledImage source={PIECES[coloredPieceName]} />
     </StyledAnimatedView>
   );
 };
 
-const SIZE = Dimensions.get('window').width / 8;
+export const SIZE = Dimensions.get('window').width / 8;
 
 const StyledImage = styled(Image)({
   width: SIZE,
