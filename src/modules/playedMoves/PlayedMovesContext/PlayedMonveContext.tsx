@@ -23,7 +23,7 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
     if (playedMoves.length % 2 === 0) {
       move = ` ${playedMoves.length / 2 + 1}. ${move}`;
     }
-    setPlayedMoves([...playedMoves, move]);
+    setPlayedMoves([...playedMoves, ` ${move}`]);
   };
   return (
     <PlayedMovesContext.Provider value={{playedMoves, addPlayedMove}}>
