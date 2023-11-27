@@ -11,6 +11,9 @@ export const PlayedMoves = () => {
     <PlayedMovesBackground>
       <Spacer width={4} />
       {playedMoves.map((move, index) => {
+        if (index === playedMoves.length - 1) {
+          return <PlayedMove key={index} move={move} isHighlighted />;
+        }
         return <PlayedMove key={index} move={move} />;
       })}
     </PlayedMovesBackground>

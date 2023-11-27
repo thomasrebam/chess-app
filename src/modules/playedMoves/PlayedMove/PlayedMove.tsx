@@ -3,16 +3,26 @@ import {Text, TouchableOpacity} from 'react-native';
 
 interface PlayedMoveProps {
   move: string;
+  isHighlighted?: boolean;
 }
 
-export const PlayedMove = ({move}: PlayedMoveProps) => {
+export const PlayedMove = ({move, isHighlighted = false}: PlayedMoveProps) => {
   return (
     <TouchableOpacity>
-      <StyledText>{`${move} `}</StyledText>
+      {isHighlighted ? (
+        <HighlightedText>{`${move} `}</HighlightedText>
+      ) : (
+        <NormalText>{`${move} `}</NormalText>
+      )}
     </TouchableOpacity>
   );
 };
 
-const StyledText = styled(Text)({
+const NormalText = styled(Text)({
   color: 'white',
+});
+
+const HighlightedText = styled(Text)({
+  color: 'white',
+  backgroundColor: 'grey',
 });
