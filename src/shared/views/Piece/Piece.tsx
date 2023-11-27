@@ -21,7 +21,7 @@ export const PIECES: Record<ColoredPieceName, number> = {
 interface PieceProps {
   piece: PieceCode;
   player: Player;
-  position: Animated.ValueXY;
+  position: Position;
 }
 
 export const Piece = ({piece, player, position}: PieceProps) => {

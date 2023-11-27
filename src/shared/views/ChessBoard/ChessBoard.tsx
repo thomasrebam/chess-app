@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import {Animated, View} from 'react-native';
+import {View} from 'react-native';
 import {ChessBoardBackground} from './ChessBoardBackground';
 import Chess = require('chess');
 import {useRef, useState} from 'react';
@@ -19,10 +19,10 @@ export const ChessBoard = () => {
       <ChessBoardBackground />
       {gameState.board.squares.map((square, index) => {
         if (square.piece === null) return null;
-        const position = new Animated.ValueXY({
+        const position = {
           x: getFileCodeFromFile(square.file) * SIZE,
           y: (8 - square.rank) * SIZE,
-        });
+        };
         return (
           <Piece
             key={index}
