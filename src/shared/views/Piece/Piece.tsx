@@ -39,10 +39,12 @@ interface PieceProps {
   player: Player;
   position: Chess.Square;
   chess: Chess.Chess;
+  onTurn: () => void;
 }
 
-export const Piece = ({piece, player, position, chess}: PieceProps) => {
+export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
   const coloredPieceName: ColoredPieceName = `${player}${piece}`;
+  const isGestureActive = useSharedValue(false);
   const absolutePosition = getAbsolutePositionFromAlgebraicNotation(position);
   const offsetX = useSharedValue(0);
   const offsetY = useSharedValue(0);
@@ -53,6 +55,7 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
     width: SIZE,
     height: SIZE,
     transform: [{translateX: translateX.value}, {translateY: translateY.value}],
+    zIndex: isGestureActive.value ? 1 : 0,
   }));
   const checkMovePiece = useCallback(
     (from: PositionNumber, to: PositionNumber) => {
@@ -72,19 +75,25 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
           column: rankTo,
         });
         translateX.value = withTiming(newPos.x);
-        translateY.value = withTiming(newPos.y);
+        translateY.value = withTiming(newPos.y, {}, () => {
+          isGestureActive.value = false;
+        });
         chess.move(validMove);
+        onTurn();
         return;
       }
       translateX.value = withTiming(from.x);
-      translateY.value = withTiming(from.y);
+      translateY.value = withTiming(from.y, {}, () => {
+        isGestureActive.value = false;
+      });
     },
-    [chess, translateX, translateY],
+    [chess, onTurn, translateX, translateY, isGestureActive],
   );
   const movePiece = useAnimatedGestureHandler({
     onStart: () => {
       offsetX.value = translateX.value;
       offsetY.value = translateY.value;
+      isGestureActive.value = true;
     },
     onActive: event => {
       translateX.value = event.translationX + offsetX.value;
