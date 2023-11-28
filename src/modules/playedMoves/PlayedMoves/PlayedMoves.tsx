@@ -3,7 +3,7 @@ import {PlayedMove} from '../PlayedMove/PlayedMove';
 import {View} from 'react-native';
 import {useContext} from 'react';
 import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMoveContext';
-import {Spacer} from '../../../shared/views/Spacer/Spacer';
+import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 
 export const PlayedMoves = () => {
   const {playedMoves} = useContext(PlayedMovesContext);

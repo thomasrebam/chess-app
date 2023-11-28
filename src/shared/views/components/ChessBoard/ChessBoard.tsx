@@ -5,7 +5,7 @@ import {useRef, useState} from 'react';
 import {Piece} from '../Piece/Piece';
 import {Chess} from 'chess.js';
 import {LastMoveContext} from './LastMoveContext';
-import {getFileCodeFromFile} from '../helpers/getFileCodeFromFile';
+import {getFileCodeFromFile} from '../../helpers/getFileCodeFromFile';
 
 export const ChessBoard = () => {
   const chess = useRef(new Chess());

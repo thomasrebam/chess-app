@@ -6,12 +6,12 @@
  */
 
 import styled from '@emotion/native';
-import {ChessBoard} from './src/shared/views/ChessBoard/ChessBoard';
+import {ChessBoard} from './src/shared/views/components/ChessBoard/ChessBoard';
 import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
 import 'react-native-gesture-handler';
 import {PlayedMoves} from './src/modules/playedMoves/PlayedMoves/PlayedMoves';
-import {Spacer} from './src/shared/views/Spacer/Spacer';
 import {PlayedMovesProvider} from './src/modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
+import {Spacer} from './src/shared/views/components/Spacer/Spacer';
 
 function App(): JSX.Element {
   return (
