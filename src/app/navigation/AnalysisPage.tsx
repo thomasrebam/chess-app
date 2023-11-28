@@ -19,6 +19,10 @@ export const AnalysisPage = () => {
       board: chess.current.board(),
     });
   };
+  const onRemove = () => {
+    chess.current.undo();
+    setGameState({player: chess.current.turn(), board: chess.current.board()});
+  };
   const lastMove = chess.current.history({verbose: true})[
     chess.current.history().length - 1
   ];
@@ -41,7 +45,7 @@ export const AnalysisPage = () => {
         <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
       </LastMoveContext.Provider>
       <Spacer height={4} />
-      <PlayedMoves />
+      <PlayedMoves onRemove={onRemove} />
     </PlayedMovesProvider>
   );
 };
