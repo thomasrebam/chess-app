@@ -6,26 +6,20 @@
  */
 
 import styled from '@emotion/native';
-import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import 'react-native-gesture-handler';
-import {Spacer} from './src/shared/views/components/Spacer/Spacer';
-import {AnalysisPage} from './src/app/navigation/AnalysisPage';
+import {AuthenticatedNavigator} from './src/app/navigation/AuthenticatedNavigator/AuthenticatedNavigator';
+import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 
 function App(): JSX.Element {
   return (
     <StyledGestureHandlerRootView>
-      <AppBackground>
-        <Spacer height={32} />
-        <AnalysisPage />
-      </AppBackground>
+      <NavigationContainer theme={DarkTheme}>
+        <AuthenticatedNavigator />
+      </NavigationContainer>
     </StyledGestureHandlerRootView>
   );
 }
-
-const AppBackground = styled(ScrollView)({
-  flexGrow: 1,
-  backgroundColor: 'black',
-});
 
 const StyledGestureHandlerRootView = styled(GestureHandlerRootView)({flex: 1});
 
