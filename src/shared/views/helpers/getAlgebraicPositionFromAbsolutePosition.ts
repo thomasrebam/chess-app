@@ -1,5 +1,5 @@
 import {PositionNumber} from '../../domain/entities/PositionNumber';
-import {SIZE} from '../Piece/Piece';
+import {SIZE} from '../components/Piece/Piece';
 
 export const getAlgebraicPositionFromAbsolutePosition = (
   absolutePosition: PositionNumber,

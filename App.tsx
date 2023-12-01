@@ -6,23 +6,17 @@
  */
 
 import styled from '@emotion/native';
-import {ChessBoard} from './src/shared/views/ChessBoard/ChessBoard';
 import {GestureHandlerRootView, ScrollView} from 'react-native-gesture-handler';
 import 'react-native-gesture-handler';
-import {PlayedMoves} from './src/modules/playedMoves/PlayedMoves/PlayedMoves';
-import {Spacer} from './src/shared/views/Spacer/Spacer';
-import {PlayedMovesProvider} from './src/modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
+import {Spacer} from './src/shared/views/components/Spacer/Spacer';
+import {AnalysisPage} from './src/app/navigation/AnalysisPage';
 
 function App(): JSX.Element {
   return (
     <StyledGestureHandlerRootView>
       <AppBackground>
         <Spacer height={32} />
-        <PlayedMovesProvider>
-          <ChessBoard />
-          <Spacer height={4} />
-          <PlayedMoves />
-        </PlayedMovesProvider>
+        <AnalysisPage />
       </AppBackground>
     </StyledGestureHandlerRootView>
   );

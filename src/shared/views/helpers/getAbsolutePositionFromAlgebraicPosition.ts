@@ -1,4 +1,4 @@
-import {SIZE} from '../Piece/Piece';
+import {SIZE} from '../components/Piece/Piece';
 import {getFileCodeFromFile} from './getFileCodeFromFile';
 
 type AlgebraicPosition = {
