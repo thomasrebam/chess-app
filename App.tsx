@@ -10,13 +10,16 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import 'react-native-gesture-handler';
 import {AuthenticatedNavigator} from './src/app/navigation/AuthenticatedNavigator/AuthenticatedNavigator';
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
+import {ThemeProvider} from '@emotion/react';
 
 function App(): JSX.Element {
   return (
     <StyledGestureHandlerRootView>
-      <NavigationContainer theme={DarkTheme}>
-        <AuthenticatedNavigator />
-      </NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer theme={DarkTheme}>
+          <AuthenticatedNavigator />
+        </NavigationContainer>
+      </ThemeProvider>
     </StyledGestureHandlerRootView>
   );
 }
