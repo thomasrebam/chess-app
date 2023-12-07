@@ -11,11 +11,8 @@ const AuthenticatedStack = createNativeStackNavigator();
 export const AuthenticatedNavigator = () => {
   return (
     <AuthenticatedStack.Navigator initialRouteName="MainPage">
-      <AuthenticatedStack.Screen
-        name={'AnalysisPage'}
-        component={AnalysisPage}
-      />
-      <AuthenticatedStack.Screen name={'MainPage'} component={MainPage} />
+      <AuthenticatedStack.Screen name={'Analysis'} component={AnalysisPage} />
+      <AuthenticatedStack.Screen name={'Menu'} component={MainPage} />
     </AuthenticatedStack.Navigator>
   );
 };
