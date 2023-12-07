@@ -16,6 +16,9 @@ export const AnalysisPage = () => {
 
   const [selectedMove, setSelectedMove] = useState<number>(-1);
 
+  const onSelectMove = (move: number) => {
+    setSelectedMove(move);
+  };
   const onTurn = () => {
     setGameState({
       player: gameState.player === 'w' ? 'b' : 'w',
@@ -50,7 +53,11 @@ export const AnalysisPage = () => {
         <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
       </LastMoveContext.Provider>
       <Spacer height={4} />
-      <PlayedMoves onRemove={onRemove} selectedMove={selectedMove} />
+      <PlayedMoves
+        onRemove={onRemove}
+        selectedMove={selectedMove}
+        onSelectMove={onSelectMove}
+      />
     </PlayedMovesProvider>
   );
 };
