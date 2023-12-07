@@ -13,12 +13,17 @@ export const AnalysisPage = () => {
     player: chess.current.turn(),
     board: chess.current.board(),
   });
+
+  const [selectedMove, setSelectedMove] = useState<number>(-1);
+
   const onTurn = () => {
     setGameState({
       player: gameState.player === 'w' ? 'b' : 'w',
       board: chess.current.board(),
     });
+    setSelectedMove(selectedMove + 1);
   };
+
   const onRemove = () => {
     chess.current.undo();
     setGameState({player: chess.current.turn(), board: chess.current.board()});
@@ -45,7 +50,7 @@ export const AnalysisPage = () => {
         <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
       </LastMoveContext.Provider>
       <Spacer height={4} />
-      <PlayedMoves onRemove={onRemove} />
+      <PlayedMoves onRemove={onRemove} selectedMove={selectedMove} />
     </PlayedMovesProvider>
   );
 };
