@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
-import {Button} from 'react-native';
 import {AuthenticatedNavigatorStackParamList} from './AuthenticatedNavigator/AuthenticatedNavigator.type';
 import {Navigation} from './AuthenticatedNavigator/AuthenticatedNavigator';
+import {Button} from '../../shared/boson/components/Button/Button';
 
 export const MainPage = () => {
   const navigation =
@@ -9,10 +9,11 @@ export const MainPage = () => {
       Navigation<AuthenticatedNavigatorStackParamList, 'MainPage'>
     >();
   return (
-    <Button
-      title="Analysis"
+    <Button.Primary
+      label="Analysis"
       onPress={() => {
         navigation.navigate('AnalysisPage');
-      }}></Button>
+      }}
+    />
   );
 };

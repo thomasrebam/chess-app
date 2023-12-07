@@ -11,6 +11,7 @@ import 'react-native-gesture-handler';
 import {AuthenticatedNavigator} from './src/app/navigation/AuthenticatedNavigator/AuthenticatedNavigator';
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from '@emotion/react';
+import {theme} from './src/shared/boson/theme/theme';
 
 function App(): JSX.Element {
   return (
