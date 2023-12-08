@@ -34,6 +34,8 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
   const addPlayedMove = ({move, fen}: {move: string; fen: string}) => {
     if (playedMoves[currentMoveKey].moveDepth % 2 === 0) {
       move = ` ${playedMoves[currentMoveKey].moveDepth / 2 + 1}. ${move}`;
+    } else {
+      move = ` ${move}`;
     }
     const {tree, key} = addMoveToMovesTree({
       tree: playedMoves,
