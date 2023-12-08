@@ -81,7 +81,10 @@ export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
           isGestureActive.value = false;
         });
         chess.move(validMove);
-        addPlayedMove(chess.history()[chess.history().length - 1]);
+        addPlayedMove({
+          move: chess.history()[chess.history().length - 1],
+          fen: chess.fen(),
+        });
         onTurn();
         return;
       }

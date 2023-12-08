@@ -4,6 +4,7 @@ import {View} from 'react-native';
 import {useContext} from 'react';
 import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMoveContext';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
+import {getMovesListFromMovesTree} from '../../../shared/views/helpers/getMovesListFromMovesTree';
 
 interface PlayedMovesProps {
   onRemove: () => void;
@@ -16,33 +17,38 @@ export const PlayedMoves = ({
   selectedMove,
   onSelectMove,
 }: PlayedMovesProps) => {
-  const {playedMoves, removeLastMove} = useContext(PlayedMovesContext);
+  const {playedMoves, currentMoveKey, removeLastMove} =
+    useContext(PlayedMovesContext);
   const highlightedMove =
-    selectedMove !== -1 ? selectedMove : playedMoves.length - 1;
+    selectedMove !== -1
+      ? selectedMove
+      : playedMoves[currentMoveKey].moveDepth - 1;
   return (
     <PlayedMovesBackground>
       <Spacer width={4} />
-      {playedMoves.map((move, index) => {
-        const onPress = () => {
-          onSelectMove(index);
-        };
-        if (index === highlightedMove) {
-          const onLongPress = () => {
-            removeLastMove();
-            onRemove();
+      {getMovesListFromMovesTree({tree: playedMoves, currentMoveKey}).map(
+        (move, index) => {
+          const onPress = () => {
+            onSelectMove(index);
           };
-          return (
-            <PlayedMove
-              key={index}
-              move={move}
-              isHighlighted
-              onLongPress={onLongPress}
-              onPress={onPress}
-            />
-          );
-        }
-        return <PlayedMove key={index} move={move} onPress={onPress} />;
-      })}
+          if (index === highlightedMove) {
+            const onLongPress = () => {
+              removeLastMove();
+              onRemove();
+            };
+            return (
+              <PlayedMove
+                key={index}
+                move={move}
+                isHighlighted
+                onLongPress={onLongPress}
+                onPress={onPress}
+              />
+            );
+          }
+          return <PlayedMove key={index} move={move} onPress={onPress} />;
+        },
+      )}
     </PlayedMovesBackground>
   );
 };
