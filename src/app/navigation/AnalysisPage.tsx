@@ -6,6 +6,10 @@ import {getFileCodeFromFile} from '../../shared/views/helpers/getFileCodeFromFil
 import {Spacer} from '../../shared/views/components/Spacer/Spacer';
 import {PlayedMoves} from '../../modules/playedMoves/PlayedMoves/PlayedMoves';
 import {LastMoveContext} from '../../shared/views/components/ChessBoard/LastMoveContext';
+import {Icon} from '../../../assets/icons';
+import {View} from 'react-native';
+import {colors} from '../../shared/boson/theme/colors';
+import styled from '@emotion/native';
 
 export const AnalysisPage = () => {
   const chess = useRef(new Chess());
@@ -45,19 +49,51 @@ export const AnalysisPage = () => {
       };
   return (
     <PlayedMovesProvider>
-      <LastMoveContext.Provider
-        value={{
-          row,
-          column,
-        }}>
-        <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
-      </LastMoveContext.Provider>
-      <Spacer height={4} />
-      <PlayedMoves
-        onRemove={onRemove}
-        selectedMove={selectedMove}
-        onSelectMove={onSelectMove}
-      />
+      <Container>
+        <TopContentContainer>
+          <LastMoveContext.Provider
+            value={{
+              row,
+              column,
+            }}>
+            <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
+          </LastMoveContext.Provider>
+          <Spacer height={4} />
+          <PlayedMoves
+            onRemove={onRemove}
+            selectedMove={selectedMove}
+            onSelectMove={onSelectMove}
+          />
+        </TopContentContainer>
+        <BottomBar>
+          <Icon.RightArrow
+            style={{transform: [{rotate: '180deg'}]}}
+            color={colors.white}
+            width={32}
+            height={32}
+          />
+          <Spacer width={40} />
+          <Icon.RightArrow color={colors.white} width={32} height={32} />
+        </BottomBar>
+      </Container>
     </PlayedMovesProvider>
   );
 };
+
+const Container = styled(View)({
+  flex: 1,
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+});
+
+const TopContentContainer = styled(View)({
+  justifyContent: 'flex-start',
+});
+
+const BottomBar = styled(View)({
+  backgroundColor: colors.grey300,
+  paddingVertical: 4,
+  borderRadius: 4,
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+});
