@@ -7,7 +7,7 @@ import {Spacer} from '../../shared/views/components/Spacer/Spacer';
 import {PlayedMoves} from '../../modules/playedMoves/PlayedMoves/PlayedMoves';
 import {LastMoveContext} from '../../shared/views/components/ChessBoard/LastMoveContext';
 import {Icon} from '../../../assets/icons';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {colors} from '../../shared/boson/theme/colors';
 import styled from '@emotion/native';
 
@@ -23,12 +23,18 @@ export const AnalysisPage = () => {
   const onSelectMove = (move: number) => {
     setSelectedMove(move);
   };
+  const incrementSelectedMove = () => {
+    setSelectedMove(selectedMove + 1);
+  };
+  const decrementSelectedMove = () => {
+    setSelectedMove(selectedMove - 1);
+  };
   const onTurn = () => {
     setGameState({
       player: gameState.player === 'w' ? 'b' : 'w',
       board: chess.current.board(),
     });
-    setSelectedMove(selectedMove + 1);
+    incrementSelectedMove();
   };
 
   const onRemove = () => {
@@ -66,14 +72,18 @@ export const AnalysisPage = () => {
           />
         </TopContentContainer>
         <BottomBar>
-          <Icon.RightArrow
-            style={{transform: [{rotate: '180deg'}]}}
-            color={colors.white}
-            width={32}
-            height={32}
-          />
+          <TouchableOpacity onPress={decrementSelectedMove}>
+            <Icon.RightArrow
+              style={{transform: [{rotate: '180deg'}]}}
+              color={colors.white}
+              width={32}
+              height={32}
+            />
+          </TouchableOpacity>
           <Spacer width={40} />
-          <Icon.RightArrow color={colors.white} width={32} height={32} />
+          <TouchableOpacity onPress={incrementSelectedMove}>
+            <Icon.RightArrow color={colors.white} width={32} height={32} />
+          </TouchableOpacity>
         </BottomBar>
       </Container>
     </PlayedMovesProvider>
