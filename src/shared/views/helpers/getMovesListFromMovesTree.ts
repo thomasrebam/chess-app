@@ -36,7 +36,8 @@ export const getCompleteMovesListFromMovesTree = ({
       });
     } else {
       if (currentMove.children.length > 1) {
-        const [mainMove, ...variants] = currentMove.children.reduce(
+        const [mainMove, ...variants] = currentMove.children;
+        const variantsResponse = variants.reduce(
           (acc: MovesList, childKey) => [
             ...acc,
             ...getCompleteMovesListFromMovesTree({
@@ -46,12 +47,15 @@ export const getCompleteMovesListFromMovesTree = ({
           ],
           [],
         );
+        const [firstMainMove, ...restMainMove] =
+          getCompleteMovesListFromMovesTree({tree, currentMoveKey: mainMove});
         return [
           {key: currentMoveKey, move: currentMove.move},
-          mainMove,
+          firstMainMove,
           {key: 'leftParenthesis', move: '('},
-          ...variants,
+          ...variantsResponse,
           {key: 'rightParenthesis', move: ')'},
+          ...restMainMove,
         ];
       }
       return [
