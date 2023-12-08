@@ -17,14 +17,17 @@ export const getMovesListFromMovesTree = ({
   }
 };
 
+type MovesList = Array<{key: string; move: string}>;
+
 export const getCompleteMovesListFromMovesTree = ({
   tree,
   currentMoveKey = Object.keys(emptyMovesTree)[0],
 }: {
   tree: MovesTree;
   currentMoveKey?: string;
-}): Array<{key: string; move: string}> => {
-  if (tree[currentMoveKey].children.length > 0) {
+}): MovesList => {
+  const currentMove = tree[currentMoveKey];
+  if (currentMove.children.length > 0) {
     const nextMoveKey = tree[currentMoveKey].children[0];
     if (currentMoveKey === Object.keys(emptyMovesTree)[0]) {
       return getCompleteMovesListFromMovesTree({
@@ -32,8 +35,27 @@ export const getCompleteMovesListFromMovesTree = ({
         currentMoveKey: nextMoveKey,
       });
     } else {
+      if (currentMove.children.length > 1) {
+        const [mainMove, ...variants] = currentMove.children.reduce(
+          (acc: MovesList, childKey) => [
+            ...acc,
+            ...getCompleteMovesListFromMovesTree({
+              tree,
+              currentMoveKey: childKey,
+            }),
+          ],
+          [],
+        );
+        return [
+          {key: currentMoveKey, move: currentMove.move},
+          mainMove,
+          {key: 'leftParenthesis', move: '('},
+          ...variants,
+          {key: 'rightParenthesis', move: ')'},
+        ];
+      }
       return [
-        {key: currentMoveKey, move: tree[currentMoveKey].move},
+        {key: currentMoveKey, move: currentMove.move},
         ...getCompleteMovesListFromMovesTree({
           tree,
           currentMoveKey: nextMoveKey,
@@ -41,6 +63,6 @@ export const getCompleteMovesListFromMovesTree = ({
       ];
     }
   } else {
-    return [{key: currentMoveKey, move: tree[currentMoveKey].move}];
+    return [{key: currentMoveKey, move: currentMove.move}];
   }
 };
