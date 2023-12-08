@@ -24,10 +24,16 @@ export const AnalysisPage = () => {
     setSelectedMove(move);
   };
   const incrementSelectedMove = () => {
-    setSelectedMove(selectedMove + 1);
+    setSelectedMove(selectedMove =>
+      selectedMove !== chess.current.history().length - 1
+        ? selectedMove + 1
+        : selectedMove,
+    );
   };
   const decrementSelectedMove = () => {
-    setSelectedMove(selectedMove - 1);
+    setSelectedMove(selectedMove =>
+      selectedMove !== 0 ? selectedMove - 1 : selectedMove,
+    );
   };
   const onTurn = () => {
     setGameState({
