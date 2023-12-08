@@ -7,6 +7,7 @@ import {MutableRefObject, useContext} from 'react';
 import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {Chess} from 'chess.js';
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
+import {emptyMovesTree} from '../../../shared/domain/entities/MovesTree';
 
 interface AnalysisBottomBarProps {
   onLeftArrowPress: () => void;
@@ -23,6 +24,9 @@ export const AnalysisBottomBar = ({
     useContext(PlayedMovesContext);
 
   const passNextMove = () => {
+    if (playedMoves[currentMoveKey].children.length === 0) {
+      return;
+    }
     const nextMoveKey = playedMoves[currentMoveKey].children[0];
     addPlayedMove({
       move: playedMoves[nextMoveKey].move,
@@ -33,6 +37,12 @@ export const AnalysisBottomBar = ({
   };
 
   const passPreviousMove = () => {
+    if (
+      playedMoves[currentMoveKey].parentKey ===
+      emptyMovesTree['empty'].parentKey
+    ) {
+      return;
+    }
     removeLastMove();
     onLeftArrowPress();
   };
