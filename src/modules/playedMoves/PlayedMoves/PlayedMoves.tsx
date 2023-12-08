@@ -17,7 +17,8 @@ export const PlayedMoves = ({
   onSelectMove,
 }: PlayedMovesProps) => {
   const {playedMoves, removeLastMove} = useContext(PlayedMovesContext);
-  const highlightedMove = selectedMove ? selectedMove : playedMoves.length - 1;
+  const highlightedMove =
+    selectedMove !== -1 ? selectedMove : playedMoves.length - 1;
   return (
     <PlayedMovesBackground>
       <Spacer width={4} />
