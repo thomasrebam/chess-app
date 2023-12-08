@@ -3,25 +3,24 @@ import {TouchableOpacity, View} from 'react-native';
 import {colors} from '../../../shared/boson/theme/colors';
 import {Icon} from '../../../../assets/icons';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
-import {MutableRefObject, useContext} from 'react';
+import {useContext} from 'react';
 import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMoveContext';
-import {Chess} from 'chess.js';
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {emptyMovesTree} from '../../../shared/domain/entities/MovesTree';
+import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 
 interface AnalysisBottomBarProps {
   onLeftArrowPress: () => void;
   onRightArrowPress: () => void;
-  chess: MutableRefObject<Chess>;
 }
 
 export const AnalysisBottomBar = ({
   onLeftArrowPress,
   onRightArrowPress,
-  chess,
 }: AnalysisBottomBarProps) => {
   const {playedMoves, currentMoveKey, addPlayedMove, removeLastMove} =
     useContext(PlayedMovesContext);
+  const {chess} = useContext(ChessEngineContext);
 
   const passNextMove = () => {
     if (playedMoves[currentMoveKey].children.length === 0) {

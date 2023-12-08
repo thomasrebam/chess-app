@@ -64,7 +64,6 @@ export const AnalysisPage = () => {
             <PlayedMoves onRemove={onRemove} />
           </TopContentContainer>
           <AnalysisBottomBar
-            chess={chess}
             onLeftArrowPress={onRemove}
             onRightArrowPress={onTurn}
           />
