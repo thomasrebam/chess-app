@@ -21,6 +21,7 @@ export const AnalysisBottomBar = ({
 }: AnalysisBottomBarProps) => {
   const {playedMoves, currentMoveKey, addPlayedMove, removeLastMove} =
     useContext(PlayedMovesContext);
+
   const passNextMove = () => {
     const nextMoveKey = playedMoves[currentMoveKey].children[0];
     addPlayedMove({
@@ -30,6 +31,7 @@ export const AnalysisBottomBar = ({
     chess.current.move(cleanMove(playedMoves[nextMoveKey].move));
     onRightArrowPress();
   };
+
   const passPreviousMove = () => {
     removeLastMove();
     onLeftArrowPress();
