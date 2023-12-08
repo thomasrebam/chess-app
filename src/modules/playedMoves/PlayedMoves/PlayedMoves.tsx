@@ -7,15 +7,26 @@ import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 
 interface PlayedMovesProps {
   onRemove: () => void;
+  selectedMove?: number;
+  onSelectMove: (move: number) => void;
 }
 
-export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
+export const PlayedMoves = ({
+  onRemove,
+  selectedMove,
+  onSelectMove,
+}: PlayedMovesProps) => {
   const {playedMoves, removeLastMove} = useContext(PlayedMovesContext);
+  const highlightedMove =
+    selectedMove !== -1 ? selectedMove : playedMoves.length - 1;
   return (
     <PlayedMovesBackground>
       <Spacer width={4} />
       {playedMoves.map((move, index) => {
-        if (index === playedMoves.length - 1) {
+        const onPress = () => {
+          onSelectMove(index);
+        };
+        if (index === highlightedMove) {
           const onLongPress = () => {
             removeLastMove();
             onRemove();
@@ -26,10 +37,11 @@ export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
               move={move}
               isHighlighted
               onLongPress={onLongPress}
+              onPress={onPress}
             />
           );
         }
-        return <PlayedMove key={index} move={move} />;
+        return <PlayedMove key={index} move={move} onPress={onPress} />;
       })}
     </PlayedMovesBackground>
   );

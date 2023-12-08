@@ -5,15 +5,17 @@ interface PlayedMoveProps {
   move: string;
   isHighlighted?: boolean;
   onLongPress?: () => void;
+  onPress?: () => void;
 }
 
 export const PlayedMove = ({
   move,
   isHighlighted = false,
   onLongPress,
+  onPress,
 }: PlayedMoveProps) => {
   return (
-    <TouchableOpacity onLongPress={onLongPress}>
+    <TouchableOpacity onLongPress={onLongPress} onPress={onPress}>
       {isHighlighted ? (
         <HighlightedText>{`${move} `}</HighlightedText>
       ) : (
