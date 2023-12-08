@@ -2,8 +2,9 @@ import styled from '@emotion/native';
 import {View} from 'react-native';
 import {ChessBoardBackground} from './ChessBoardBackground';
 import {Piece} from '../Piece/Piece';
-import {Chess, Color, PieceSymbol, Square} from 'chess.js';
-import {MutableRefObject} from 'react';
+import {Color, PieceSymbol, Square} from 'chess.js';
+import {useContext} from 'react';
+import {ChessEngineContext} from '../../contexts/ChessEngineContext';
 
 interface ChessBoardProps {
   game: {
@@ -15,10 +16,10 @@ interface ChessBoardProps {
     } | null)[][];
   };
   onTurn: () => void;
-  chess: MutableRefObject<Chess>;
 }
 
-export const ChessBoard = ({game, onTurn, chess}: ChessBoardProps) => {
+export const ChessBoard = ({game, onTurn}: ChessBoardProps) => {
+  const {chess} = useContext(ChessEngineContext);
   return (
     <Container>
       <ChessBoardBackground />

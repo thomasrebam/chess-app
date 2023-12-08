@@ -9,7 +9,7 @@ import {LastMoveContext} from '../../shared/views/components/ChessBoard/LastMove
 import {View} from 'react-native';
 import styled from '@emotion/native';
 import {AnalysisBottomBar} from '../../modules/bottomBar/AnalysisBottomBar/AnalysisBottomBar';
-import {ChessEngineProvider} from '../../shared/views/contexts/chessEngineContext';
+import {ChessEngineProvider} from '../../shared/views/contexts/ChessEngineContext';
 
 export const AnalysisPage = () => {
   const chess = useRef(new Chess());
@@ -58,7 +58,7 @@ export const AnalysisPage = () => {
                 row,
                 column,
               }}>
-              <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
+              <ChessBoard game={gameState} onTurn={onTurn} />
             </LastMoveContext.Provider>
             <Spacer height={4} />
             <PlayedMoves onRemove={onRemove} />

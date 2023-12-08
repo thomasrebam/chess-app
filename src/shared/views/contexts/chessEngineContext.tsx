@@ -2,9 +2,9 @@ import {Chess} from 'chess.js';
 import {MutableRefObject, ReactNode, createContext} from 'react';
 
 export const ChessEngineContext = createContext<{
-  chess: MutableRefObject<Chess> | null;
+  chess: MutableRefObject<Chess>;
 }>({
-  chess: null,
+  chess: {current: new Chess()},
 });
 
 interface ChessEngineProviderProps {
