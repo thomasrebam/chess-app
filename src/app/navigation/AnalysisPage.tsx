@@ -9,6 +9,7 @@ import {LastMoveContext} from '../../shared/views/components/ChessBoard/LastMove
 import {View} from 'react-native';
 import styled from '@emotion/native';
 import {AnalysisBottomBar} from '../../modules/bottomBar/AnalysisBottomBar/AnalysisBottomBar';
+import {ChessEngineProvider} from '../../shared/views/contexts/chessEngineContext';
 
 export const AnalysisPage = () => {
   const chess = useRef(new Chess());
@@ -49,24 +50,26 @@ export const AnalysisPage = () => {
       };
   return (
     <PlayedMovesProvider>
-      <Container>
-        <TopContentContainer>
-          <LastMoveContext.Provider
-            value={{
-              row,
-              column,
-            }}>
-            <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
-          </LastMoveContext.Provider>
-          <Spacer height={4} />
-          <PlayedMoves onRemove={onRemove} />
-        </TopContentContainer>
-        <AnalysisBottomBar
-          chess={chess}
-          onLeftArrowPress={onRemove}
-          onRightArrowPress={onTurn}
-        />
-      </Container>
+      <ChessEngineProvider value={{chess}}>
+        <Container>
+          <TopContentContainer>
+            <LastMoveContext.Provider
+              value={{
+                row,
+                column,
+              }}>
+              <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
+            </LastMoveContext.Provider>
+            <Spacer height={4} />
+            <PlayedMoves onRemove={onRemove} />
+          </TopContentContainer>
+          <AnalysisBottomBar
+            chess={chess}
+            onLeftArrowPress={onRemove}
+            onRightArrowPress={onTurn}
+          />
+        </Container>
+      </ChessEngineProvider>
     </PlayedMovesProvider>
   );
 };
