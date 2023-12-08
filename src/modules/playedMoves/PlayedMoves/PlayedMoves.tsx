@@ -5,6 +5,7 @@ import {useContext} from 'react';
 import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMoveContext';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 import {getCompleteMovesListFromMovesTree} from '../../../shared/views/helpers/getMovesListFromMovesTree';
+import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 
 interface PlayedMovesProps {
   onRemove: () => void;
@@ -13,7 +14,7 @@ interface PlayedMovesProps {
 export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
   const {playedMoves, currentMoveKey, removeLastMove, setCurrentMoveKey} =
     useContext(PlayedMovesContext);
-  const highlightedMove = playedMoves[currentMoveKey].moveDepth - 1;
+  const {chess} = useContext(ChessEngineContext);
   return (
     <PlayedMovesBackground>
       <Spacer width={4} />
@@ -21,9 +22,15 @@ export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
         tree: playedMoves,
       }).map((move, index) => {
         const onPress = () => {
-          setCurrentMoveKey(move.key);
+          if (
+            move.key !== 'leftParenthesis' &&
+            move.key !== 'rightParenthesis'
+          ) {
+            setCurrentMoveKey(move.key);
+            chess.current.load(playedMoves[move.key].fen);
+          }
         };
-        if (index === highlightedMove) {
+        if (move.key === currentMoveKey) {
           const onLongPress = () => {
             removeLastMove();
             onRemove();

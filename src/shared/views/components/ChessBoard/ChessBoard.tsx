@@ -2,28 +2,22 @@ import styled from '@emotion/native';
 import {View} from 'react-native';
 import {ChessBoardBackground} from './ChessBoardBackground';
 import {Piece} from '../Piece/Piece';
-import {Color, PieceSymbol, Square} from 'chess.js';
 import {useContext} from 'react';
 import {ChessEngineContext} from '../../contexts/ChessEngineContext';
+import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 
 interface ChessBoardProps {
-  game: {
-    player: Color;
-    board: ({
-      square: Square;
-      type: PieceSymbol;
-      color: Color;
-    } | null)[][];
-  };
   onTurn: () => void;
 }
 
-export const ChessBoard = ({game, onTurn}: ChessBoardProps) => {
+export const ChessBoard = ({onTurn}: ChessBoardProps) => {
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const {currentMoveKey} = useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
   return (
     <Container>
       <ChessBoardBackground />
-      {game.board.map(file =>
+      {chess.current.board().map(file =>
         file.map((square, index) => {
           if (square === null) return null;
           return (
