@@ -85,8 +85,9 @@ export const AnalysisPage = () => {
           />
         </TopContentContainer>
         <AnalysisBottomBar
+          chess={chess}
           onLeftArrowPress={onRemove}
-          onRightArrowPress={incrementSelectedMove}
+          onRightArrowPress={onTurn}
         />
       </Container>
     </PlayedMovesProvider>
