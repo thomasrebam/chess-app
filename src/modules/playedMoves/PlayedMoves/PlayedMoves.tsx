@@ -8,21 +8,13 @@ import {getCompleteMovesListFromMovesTree} from '../../../shared/views/helpers/g
 
 interface PlayedMovesProps {
   onRemove: () => void;
-  selectedMove?: number;
   onSelectMove: (move: number) => void;
 }
 
-export const PlayedMoves = ({
-  onRemove,
-  selectedMove,
-  onSelectMove,
-}: PlayedMovesProps) => {
+export const PlayedMoves = ({onRemove, onSelectMove}: PlayedMovesProps) => {
   const {playedMoves, currentMoveKey, removeLastMove} =
     useContext(PlayedMovesContext);
-  const highlightedMove =
-    selectedMove !== -1
-      ? selectedMove
-      : playedMoves[currentMoveKey].moveDepth - 1;
+  const highlightedMove = playedMoves[currentMoveKey].moveDepth - 1;
   return (
     <PlayedMovesBackground>
       <Spacer width={4} />

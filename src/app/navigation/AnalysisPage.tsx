@@ -19,30 +19,12 @@ export const AnalysisPage = () => {
     moves: [],
   });
 
-  const [selectedMove, setSelectedMove] = useState<number>(-1);
-
-  const onSelectMove = (move: number) => {
-    setSelectedMove(move);
-  };
-  const incrementSelectedMove = () => {
-    setSelectedMove(selectedMove =>
-      selectedMove !== chess.current.history().length - 1
-        ? selectedMove + 1
-        : selectedMove,
-    );
-  };
-  const decrementSelectedMove = () => {
-    setSelectedMove(selectedMove =>
-      selectedMove !== 0 ? selectedMove - 1 : selectedMove,
-    );
-  };
   const onTurn = () => {
     setGameState({
       player: gameState.player === 'w' ? 'b' : 'w',
       board: chess.current.board(),
       moves: gameState.moves,
     });
-    incrementSelectedMove();
   };
 
   const onRemove = () => {
@@ -52,7 +34,6 @@ export const AnalysisPage = () => {
       board: chess.current.board(),
       moves: gameState.moves,
     });
-    decrementSelectedMove();
   };
   const lastMove = chess.current.history({verbose: true})[
     chess.current.history().length - 1
@@ -78,11 +59,7 @@ export const AnalysisPage = () => {
             <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
           </LastMoveContext.Provider>
           <Spacer height={4} />
-          <PlayedMoves
-            onRemove={onRemove}
-            selectedMove={selectedMove}
-            onSelectMove={onSelectMove}
-          />
+          <PlayedMoves onRemove={onRemove} onSelectMove={() => undefined} />
         </TopContentContainer>
         <AnalysisBottomBar
           chess={chess}
