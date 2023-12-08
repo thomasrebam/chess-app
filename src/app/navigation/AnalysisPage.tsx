@@ -28,14 +28,6 @@ export const AnalysisPage = () => {
     });
   };
 
-  const onRemove = () => {
-    chess.current.undo();
-    setGameState({
-      player: chess.current.turn(),
-      board: chess.current.board(),
-      moves: gameState.moves,
-    });
-  };
   const lastMove = chess.current.history({verbose: true})[
     chess.current.history().length - 1
   ];
@@ -61,12 +53,10 @@ export const AnalysisPage = () => {
               <ChessBoard onTurn={onTurn} />
             </LastMoveContext.Provider>
             <Spacer height={4} />
-            <PlayedMoves onRemove={onRemove} />
+            <PlayedMoves onRemove={() => undefined} />
+            {/* TODO: Add deletion of the move */}
           </TopContentContainer>
-          <AnalysisBottomBar
-            onLeftArrowPress={onRemove}
-            onRightArrowPress={onTurn}
-          />
+          <AnalysisBottomBar onRightArrowPress={onTurn} />
         </Container>
       </ChessEngineProvider>
     </PlayedMovesProvider>

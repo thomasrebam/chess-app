@@ -10,12 +10,10 @@ import {emptyMovesTree} from '../../../shared/domain/entities/MovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 
 interface AnalysisBottomBarProps {
-  onLeftArrowPress: () => void;
   onRightArrowPress: () => void;
 }
 
 export const AnalysisBottomBar = ({
-  onLeftArrowPress,
   onRightArrowPress,
 }: AnalysisBottomBarProps) => {
   const {playedMoves, currentMoveKey, addPlayedMove, removeLastMove} =
@@ -42,8 +40,9 @@ export const AnalysisBottomBar = ({
     ) {
       return;
     }
+    const parentKey = playedMoves[currentMoveKey].parentKey;
+    chess.current.load(playedMoves[parentKey].fen);
     removeLastMove();
-    onLeftArrowPress();
   };
   return (
     <BottomBar>
