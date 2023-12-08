@@ -17,8 +17,13 @@ export const addMoveToMovesTree = ({
 }: addMoveProps): {tree: MovesTree; key: string} => {
   const key = keyGenerator();
   if (!tree[parentKey]) {
-    // Reste à tester si le coup a déjà été joué ou non
     return {tree, key: '-1'};
+  }
+  const alreadyExists = tree[parentKey].children.find(
+    childKey => tree[childKey].move === move,
+  );
+  if (alreadyExists) {
+    return {tree, key: alreadyExists};
   }
   tree[parentKey].children.push(key);
   tree[key] = {
