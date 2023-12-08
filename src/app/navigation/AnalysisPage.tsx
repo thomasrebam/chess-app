@@ -13,9 +13,11 @@ import styled from '@emotion/native';
 
 export const AnalysisPage = () => {
   const chess = useRef(new Chess());
+
   const [gameState, setGameState] = useState({
     player: chess.current.turn(),
     board: chess.current.board(),
+    moves: [],
   });
 
   const [selectedMove, setSelectedMove] = useState<number>(-1);
@@ -39,13 +41,19 @@ export const AnalysisPage = () => {
     setGameState({
       player: gameState.player === 'w' ? 'b' : 'w',
       board: chess.current.board(),
+      moves: gameState.moves,
     });
     incrementSelectedMove();
   };
 
   const onRemove = () => {
     chess.current.undo();
-    setGameState({player: chess.current.turn(), board: chess.current.board()});
+    setGameState({
+      player: chess.current.turn(),
+      board: chess.current.board(),
+      moves: gameState.moves,
+    });
+    decrementSelectedMove();
   };
   const lastMove = chess.current.history({verbose: true})[
     chess.current.history().length - 1
@@ -78,7 +86,7 @@ export const AnalysisPage = () => {
           />
         </TopContentContainer>
         <BottomBar>
-          <TouchableOpacity onPress={decrementSelectedMove}>
+          <TouchableOpacity onPress={onRemove}>
             <Icon.RightArrow
               style={{transform: [{rotate: '180deg'}]}}
               color={colors.white}
