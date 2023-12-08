@@ -12,8 +12,8 @@ export const PlayedMovesContext = createContext<{
   addPlayedMove: ({move, fen}: {move: string; fen: string}) => void;
   removeLastMove: () => void;
 }>({
-  playedMoves: emptyMovesTree,
-  currentMoveKey: Object.keys(emptyMovesTree)[0],
+  playedMoves: JSON.parse(JSON.stringify(emptyMovesTree)),
+  currentMoveKey: Object.keys({...emptyMovesTree})[0],
   addPlayedMove: ({move, fen}: {move: string; fen: string}) => {
     console.warn(
       `PlayedMovesContext.addPlayedMove was not initialized correctly with ${move} and ${fen}`,
@@ -27,7 +27,9 @@ interface PlayedMovesProviderProps {
 }
 
 export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
-  const [playedMoves, setPlayedMoves] = useState<MovesTree>(emptyMovesTree);
+  const [playedMoves, setPlayedMoves] = useState<MovesTree>(
+    JSON.parse(JSON.stringify(emptyMovesTree)),
+  );
   const [currentMoveKey, setCurrentMoveKey] = useState<string>(
     Object.keys(emptyMovesTree)[0],
   );
@@ -47,7 +49,7 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
     setCurrentMoveKey(key);
   };
   const removeLastMove = () => {
-    //setPlayedMoves(playedMoves.slice(0, playedMoves.length - 1));
+    setCurrentMoveKey(playedMoves[currentMoveKey].parentKey);
   };
   return (
     <PlayedMovesContext.Provider

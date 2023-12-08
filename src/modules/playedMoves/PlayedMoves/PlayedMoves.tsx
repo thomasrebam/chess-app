@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {useContext} from 'react';
 import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMoveContext';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
-import {getMovesListFromMovesTree} from '../../../shared/views/helpers/getMovesListFromMovesTree';
+import {getCompleteMovesListFromMovesTree} from '../../../shared/views/helpers/getMovesListFromMovesTree';
 
 interface PlayedMovesProps {
   onRemove: () => void;
@@ -26,29 +26,29 @@ export const PlayedMoves = ({
   return (
     <PlayedMovesBackground>
       <Spacer width={4} />
-      {getMovesListFromMovesTree({tree: playedMoves, currentMoveKey}).map(
-        (move, index) => {
-          const onPress = () => {
-            onSelectMove(index);
+      {getCompleteMovesListFromMovesTree({
+        tree: playedMoves,
+      }).map((move, index) => {
+        const onPress = () => {
+          onSelectMove(index);
+        };
+        if (index === highlightedMove) {
+          const onLongPress = () => {
+            removeLastMove();
+            onRemove();
           };
-          if (index === highlightedMove) {
-            const onLongPress = () => {
-              removeLastMove();
-              onRemove();
-            };
-            return (
-              <PlayedMove
-                key={index}
-                move={move}
-                isHighlighted
-                onLongPress={onLongPress}
-                onPress={onPress}
-              />
-            );
-          }
-          return <PlayedMove key={index} move={move} onPress={onPress} />;
-        },
-      )}
+          return (
+            <PlayedMove
+              key={index}
+              move={move}
+              isHighlighted
+              onLongPress={onLongPress}
+              onPress={onPress}
+            />
+          );
+        }
+        return <PlayedMove key={index} move={move} onPress={onPress} />;
+      })}
     </PlayedMovesBackground>
   );
 };

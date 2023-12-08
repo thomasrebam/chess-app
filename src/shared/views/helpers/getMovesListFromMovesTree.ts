@@ -16,3 +16,31 @@ export const getMovesListFromMovesTree = ({
     }).concat(tree[currentMoveKey].move);
   }
 };
+
+export const getCompleteMovesListFromMovesTree = ({
+  tree,
+  currentMoveKey = Object.keys(emptyMovesTree)[0],
+}: {
+  tree: MovesTree;
+  currentMoveKey?: string;
+}): Array<string> => {
+  if (tree[currentMoveKey].children.length > 0) {
+    const nextMoveKey = tree[currentMoveKey].children[0];
+    if (currentMoveKey === Object.keys(emptyMovesTree)[0]) {
+      return getCompleteMovesListFromMovesTree({
+        tree,
+        currentMoveKey: nextMoveKey,
+      });
+    } else {
+      return [
+        tree[currentMoveKey].move,
+        ...getCompleteMovesListFromMovesTree({
+          tree,
+          currentMoveKey: nextMoveKey,
+        }),
+      ];
+    }
+  } else {
+    return [tree[currentMoveKey].move];
+  }
+};
