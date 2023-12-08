@@ -23,7 +23,7 @@ export const getCompleteMovesListFromMovesTree = ({
 }: {
   tree: MovesTree;
   currentMoveKey?: string;
-}): Array<string> => {
+}): Array<{key: string; move: string}> => {
   if (tree[currentMoveKey].children.length > 0) {
     const nextMoveKey = tree[currentMoveKey].children[0];
     if (currentMoveKey === Object.keys(emptyMovesTree)[0]) {
@@ -33,7 +33,7 @@ export const getCompleteMovesListFromMovesTree = ({
       });
     } else {
       return [
-        tree[currentMoveKey].move,
+        {key: currentMoveKey, move: tree[currentMoveKey].move},
         ...getCompleteMovesListFromMovesTree({
           tree,
           currentMoveKey: nextMoveKey,
@@ -41,6 +41,6 @@ export const getCompleteMovesListFromMovesTree = ({
       ];
     }
   } else {
-    return [tree[currentMoveKey].move];
+    return [{key: currentMoveKey, move: tree[currentMoveKey].move}];
   }
 };

@@ -11,6 +11,8 @@ export const PlayedMovesContext = createContext<{
   // eslint-disable-next-line unused-imports/no-unused-vars
   addPlayedMove: ({move, fen}: {move: string; fen: string}) => void;
   removeLastMove: () => void;
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  setCurrentMoveKey: (key: string) => void;
 }>({
   playedMoves: JSON.parse(JSON.stringify(emptyMovesTree)),
   currentMoveKey: Object.keys({...emptyMovesTree})[0],
@@ -20,6 +22,11 @@ export const PlayedMovesContext = createContext<{
     );
   },
   removeLastMove: () => undefined,
+  setCurrentMoveKey: (key: string) => {
+    console.warn(
+      `PlayedMovesContext.setCurrentMoveKey was not initialized correctly with ${key}`,
+    );
+  },
 });
 
 interface PlayedMovesProviderProps {
@@ -55,7 +62,13 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
   };
   return (
     <PlayedMovesContext.Provider
-      value={{playedMoves, currentMoveKey, addPlayedMove, removeLastMove}}>
+      value={{
+        playedMoves,
+        currentMoveKey,
+        addPlayedMove,
+        removeLastMove,
+        setCurrentMoveKey,
+      }}>
       {children}
     </PlayedMovesContext.Provider>
   );

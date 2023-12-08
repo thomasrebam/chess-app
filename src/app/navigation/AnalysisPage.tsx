@@ -59,7 +59,7 @@ export const AnalysisPage = () => {
             <ChessBoard game={gameState} onTurn={onTurn} chess={chess} />
           </LastMoveContext.Provider>
           <Spacer height={4} />
-          <PlayedMoves onRemove={onRemove} onSelectMove={() => undefined} />
+          <PlayedMoves onRemove={onRemove} />
         </TopContentContainer>
         <AnalysisBottomBar
           chess={chess}

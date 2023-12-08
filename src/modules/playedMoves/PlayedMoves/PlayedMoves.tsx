@@ -8,11 +8,10 @@ import {getCompleteMovesListFromMovesTree} from '../../../shared/views/helpers/g
 
 interface PlayedMovesProps {
   onRemove: () => void;
-  onSelectMove: (move: number) => void;
 }
 
-export const PlayedMoves = ({onRemove, onSelectMove}: PlayedMovesProps) => {
-  const {playedMoves, currentMoveKey, removeLastMove} =
+export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
+  const {playedMoves, currentMoveKey, removeLastMove, setCurrentMoveKey} =
     useContext(PlayedMovesContext);
   const highlightedMove = playedMoves[currentMoveKey].moveDepth - 1;
   return (
@@ -22,7 +21,7 @@ export const PlayedMoves = ({onRemove, onSelectMove}: PlayedMovesProps) => {
         tree: playedMoves,
       }).map((move, index) => {
         const onPress = () => {
-          onSelectMove(index);
+          setCurrentMoveKey(move.key);
         };
         if (index === highlightedMove) {
           const onLongPress = () => {
@@ -32,14 +31,14 @@ export const PlayedMoves = ({onRemove, onSelectMove}: PlayedMovesProps) => {
           return (
             <PlayedMove
               key={index}
-              move={move}
+              move={move.move}
               isHighlighted
               onLongPress={onLongPress}
               onPress={onPress}
             />
           );
         }
-        return <PlayedMove key={index} move={move} onPress={onPress} />;
+        return <PlayedMove key={index} move={move.move} onPress={onPress} />;
       })}
     </PlayedMovesBackground>
   );
