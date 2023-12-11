@@ -7,6 +7,7 @@ interface addMoveProps {
   parentKey: string;
   move: string;
   fen: string;
+  squareTo: string;
 }
 
 export const addMoveToMovesTree = ({
@@ -14,6 +15,7 @@ export const addMoveToMovesTree = ({
   parentKey,
   move,
   fen,
+  squareTo,
 }: addMoveProps): {tree: MovesTree; key: string} => {
   const key = keyGenerator();
   if (!tree[parentKey]) {
@@ -33,6 +35,7 @@ export const addMoveToMovesTree = ({
     parentKey,
     player: tree[parentKey].player === 'w' ? 'b' : 'w',
     moveDepth: tree[parentKey].moveDepth + 1,
+    squareTo,
   };
   return {tree, key};
 };

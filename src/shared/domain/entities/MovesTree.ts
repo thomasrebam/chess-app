@@ -7,6 +7,7 @@ type MoveInformation = {
   parentKey: string;
   player: Player;
   moveDepth: number;
+  squareTo: string;
 };
 
 export type MovesTree = Record<string, MoveInformation>;
@@ -19,5 +20,6 @@ export const emptyMovesTree: MovesTree = {
     children: [],
     parentKey: '-1',
     moveDepth: 0,
+    squareTo: '',
   },
 };

@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 import {ReactNode, createContext, useState} from 'react';
 import {
   MovesTree,
@@ -8,10 +9,16 @@ import {addMoveToMovesTree} from '../../../shared/views/helpers/addMoveToMovesTr
 export const PlayedMovesContext = createContext<{
   playedMoves: MovesTree;
   currentMoveKey: string;
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  addPlayedMove: ({move, fen}: {move: string; fen: string}) => void;
+  addPlayedMove: ({
+    move,
+    fen,
+    squareTo,
+  }: {
+    move: string;
+    fen: string;
+    squareTo: string;
+  }) => void;
   removeLastMove: () => void;
-  // eslint-disable-next-line unused-imports/no-unused-vars
   setCurrentMoveKey: (key: string) => void;
 }>({
   playedMoves: JSON.parse(JSON.stringify(emptyMovesTree)),
@@ -40,7 +47,15 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
   const [currentMoveKey, setCurrentMoveKey] = useState<string>(
     Object.keys(emptyMovesTree)[0],
   );
-  const addPlayedMove = ({move, fen}: {move: string; fen: string}) => {
+  const addPlayedMove = ({
+    move,
+    fen,
+    squareTo,
+  }: {
+    move: string;
+    fen: string;
+    squareTo: string;
+  }) => {
     if (!move.includes(' ')) {
       if (playedMoves[currentMoveKey].moveDepth % 2 === 0) {
         move = ` ${playedMoves[currentMoveKey].moveDepth / 2 + 1}. ${move}`;
@@ -53,6 +68,7 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
       move,
       fen,
       parentKey: currentMoveKey,
+      squareTo,
     });
     setPlayedMoves(tree);
     setCurrentMoveKey(key);

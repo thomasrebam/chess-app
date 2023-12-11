@@ -84,6 +84,7 @@ export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
         addPlayedMove({
           move: chess.history()[chess.history().length - 1],
           fen: chess.fen(),
+          squareTo: validMove.to,
         });
         onTurn();
         return;

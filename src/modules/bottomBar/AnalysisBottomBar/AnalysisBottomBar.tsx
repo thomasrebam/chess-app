@@ -28,6 +28,7 @@ export const AnalysisBottomBar = ({
     addPlayedMove({
       move: playedMoves[nextMoveKey].move,
       fen: playedMoves[nextMoveKey].fen,
+      squareTo: playedMoves[nextMoveKey].squareTo,
     });
     chess.current.move(cleanMove(playedMoves[nextMoveKey].move));
     onRightArrowPress();
