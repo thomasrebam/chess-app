@@ -12,9 +12,12 @@ interface PlayedMovesProps {
 }
 
 export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
-  const {playedMoves, currentMoveKey, removeLastMove, setCurrentMoveKey} =
+  const {playedMoves, currentMoveKey, setCurrentMoveKey} =
     useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
+  const onLongPress = () => {
+    onRemove();
+  };
   return (
     <PlayedMovesBackground>
       <Spacer width={4} />
@@ -30,22 +33,15 @@ export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
             chess.current.load(playedMoves[move.key].fen);
           }
         };
-        if (move.key === currentMoveKey) {
-          const onLongPress = () => {
-            removeLastMove();
-            onRemove();
-          };
-          return (
-            <PlayedMove
-              key={index}
-              move={move.move}
-              isHighlighted
-              onLongPress={onLongPress}
-              onPress={onPress}
-            />
-          );
-        }
-        return <PlayedMove key={index} move={move.move} onPress={onPress} />;
+        return (
+          <PlayedMove
+            key={index}
+            move={move.move}
+            isHighlighted={move.key === currentMoveKey}
+            onLongPress={onLongPress}
+            onPress={onPress}
+          />
+        );
       })}
     </PlayedMovesBackground>
   );
