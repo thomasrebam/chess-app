@@ -4,51 +4,59 @@ import {View} from 'react-native';
 import {useContext} from 'react';
 import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMoveContext';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
+import {getMovesListToDisplay} from '../../../shared/views/helpers/getMovesListFromMovesTree';
+import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 
 interface PlayedMovesProps {
   onRemove: () => void;
-  selectedMove?: number;
-  onSelectMove: (move: number) => void;
 }
 
-export const PlayedMoves = ({
-  onRemove,
-  selectedMove,
-  onSelectMove,
-}: PlayedMovesProps) => {
-  const {playedMoves, removeLastMove} = useContext(PlayedMovesContext);
-  const highlightedMove =
-    selectedMove !== -1 ? selectedMove : playedMoves.length - 1;
+export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
+  const {playedMoves, currentMoveKey, setCurrentMoveKey} =
+    useContext(PlayedMovesContext);
+  const {chess} = useContext(ChessEngineContext);
+  const onLongPress = () => {
+    onRemove();
+  };
+
+  const movesListToDisplay = getMovesListToDisplay({
+    tree: playedMoves,
+  });
+
   return (
     <PlayedMovesBackground>
-      <Spacer width={4} />
-      {playedMoves.map((move, index) => {
-        const onPress = () => {
-          onSelectMove(index);
-        };
-        if (index === highlightedMove) {
-          const onLongPress = () => {
-            removeLastMove();
-            onRemove();
-          };
-          return (
-            <PlayedMove
-              key={index}
-              move={move}
-              isHighlighted
-              onLongPress={onLongPress}
-              onPress={onPress}
-            />
-          );
-        }
-        return <PlayedMove key={index} move={move} onPress={onPress} />;
+      {movesListToDisplay.map((movesList, index) => {
+        return (
+          <PlayedMovesLine key={index}>
+            <Spacer width={movesList.depth * 8} />
+            {movesList.movesList.map((move, moveIndex) => {
+              const onPress = () => {
+                setCurrentMoveKey(move.key);
+                chess.current.load(playedMoves[move.key].fen);
+              };
+              return (
+                <PlayedMove
+                  key={moveIndex}
+                  move={move.move}
+                  isHighlighted={move.key === currentMoveKey}
+                  onLongPress={onLongPress}
+                  onPress={onPress}
+                />
+              );
+            })}
+          </PlayedMovesLine>
+        );
       })}
+      <Spacer height={32} />
     </PlayedMovesBackground>
   );
 };
 
-const PlayedMovesBackground = styled(View)({
+const PlayedMovesLine = styled(View)({
   flexWrap: 'wrap',
-  backgroundColor: 'black',
   flexDirection: 'row',
+});
+
+const PlayedMovesBackground = styled(View)({
+  backgroundColor: 'black',
 });
