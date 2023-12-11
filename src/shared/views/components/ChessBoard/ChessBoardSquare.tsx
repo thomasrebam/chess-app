@@ -1,7 +1,8 @@
 import styled from '@emotion/native';
 import {useContext} from 'react';
 import {View} from 'react-native';
-import {LastMoveContext} from './LastMoveContext';
+import {getPositionFromAlgebraicNotation} from '../../helpers/getAbsolutePositionFromAlgebraicPosition';
+import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 
 const WHITE = 'rgb(230, 233, 198)';
 const BLACK = 'rgb(100, 133, 68)';
@@ -15,8 +16,14 @@ export const ChessBoardSquare = ({
   row: number;
   column: number;
 }) => {
+  const {playedMoves, currentMoveKey} = useContext(PlayedMovesContext);
+
+  const lastMove = playedMoves[currentMoveKey];
   const {row: lastMoveRow, column: lastMoveColumn} =
-    useContext(LastMoveContext);
+    lastMove.squareTo === ''
+      ? {row: -1, column: -1}
+      : getPositionFromAlgebraicNotation(lastMove.squareTo);
+
   let backgroundColor;
   if ((row + column) % 2 === 0) {
     if (row === 8 - lastMoveRow && column === lastMoveColumn) {
