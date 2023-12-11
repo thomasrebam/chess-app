@@ -7,16 +7,14 @@ import {SafeAreaView} from 'react-native';
 
 export const MainPage = () => {
   const navigation =
-    useNavigation<
-      Navigation<AuthenticatedNavigatorStackParamList, 'MainPage'>
-    >();
+    useNavigation<Navigation<AuthenticatedNavigatorStackParamList, 'Menu'>>();
   return (
     <SafeAreaView>
       <Spacer height={16} />
       <Button.Primary
         label="Analysis"
         onPress={() => {
-          navigation.navigate('AnalysisPage');
+          navigation.navigate('Analysis');
         }}
       />
     </SafeAreaView>

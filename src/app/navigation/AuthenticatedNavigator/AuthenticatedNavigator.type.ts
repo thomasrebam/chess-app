@@ -1,4 +1,4 @@
 export type AuthenticatedNavigatorStackParamList = {
-  MainPage: undefined;
-  AnalysisPage: undefined;
+  Menu: undefined;
+  Analysis: undefined;
 };
