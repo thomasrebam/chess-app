@@ -18,3 +18,9 @@ export const getAbsolutePositionFromAlgebraicNotation = (notation: string) => {
   const column = Number(notation[1]);
   return getAbsolutePositionFromAlgebraicPosition({file, column});
 };
+
+export const getPositionFromAlgebraicNotation = (notation: string) => {
+  const column = notation[0];
+  const row = Number(notation[1]);
+  return {row, column: getFileCodeFromFile(column)};
+};
