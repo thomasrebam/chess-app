@@ -35,8 +35,7 @@ export const AnalysisBottomBar = ({
 
   const passPreviousMove = () => {
     if (
-      playedMoves[currentMoveKey].parentKey ===
-      emptyMovesTree['empty'].parentKey
+      playedMoves[currentMoveKey].parentKey === Object.keys(emptyMovesTree)[0]
     ) {
       return;
     }
