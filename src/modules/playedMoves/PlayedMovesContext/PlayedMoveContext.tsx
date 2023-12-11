@@ -5,6 +5,7 @@ import {
   emptyMovesTree,
 } from '../../../shared/domain/entities/MovesTree';
 import {addMoveToMovesTree} from '../../../shared/views/helpers/addMoveToMovesTree';
+import {removePlayedMoveFromTree} from '../../../shared/views/helpers/removePlayedMoveFromTree';
 
 export const PlayedMovesContext = createContext<{
   playedMoves: MovesTree;
@@ -18,8 +19,9 @@ export const PlayedMovesContext = createContext<{
     fen: string;
     squareTo: string;
   }) => void;
-  removeLastMove: () => void;
+  goBackToLastMove: () => void;
   setCurrentMoveKey: (key: string) => void;
+  removePlayedMove: (moveKey: string) => void;
 }>({
   playedMoves: JSON.parse(JSON.stringify(emptyMovesTree)),
   currentMoveKey: Object.keys({...emptyMovesTree})[0],
@@ -28,10 +30,15 @@ export const PlayedMovesContext = createContext<{
       `PlayedMovesContext.addPlayedMove was not initialized correctly with ${move} and ${fen}`,
     );
   },
-  removeLastMove: () => undefined,
+  goBackToLastMove: () => undefined,
   setCurrentMoveKey: (key: string) => {
     console.warn(
       `PlayedMovesContext.setCurrentMoveKey was not initialized correctly with ${key}`,
+    );
+  },
+  removePlayedMove: (moveKey: string) => {
+    console.warn(
+      `PlayedMovesContext.removePlayedMove was not initialized correctly with ${moveKey}`,
     );
   },
 });
@@ -73,8 +80,14 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
     setPlayedMoves(tree);
     setCurrentMoveKey(key);
   };
-  const removeLastMove = () => {
+  const goBackToLastMove = () => {
     setCurrentMoveKey(playedMoves[currentMoveKey].parentKey);
+  };
+
+  const removePlayedMove = (moveKey: string) => {
+    setPlayedMoves(prevPlayedMoves =>
+      removePlayedMoveFromTree({tree: prevPlayedMoves, moveKey}),
+    );
   };
   return (
     <PlayedMovesContext.Provider
@@ -82,8 +95,9 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
         playedMoves,
         currentMoveKey,
         addPlayedMove,
-        removeLastMove,
+        goBackToLastMove,
         setCurrentMoveKey,
+        removePlayedMove,
       }}>
       {children}
     </PlayedMovesContext.Provider>
