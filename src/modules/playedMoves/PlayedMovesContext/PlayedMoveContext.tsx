@@ -18,7 +18,7 @@ export const PlayedMovesContext = createContext<{
     fen: string;
     squareTo: string;
   }) => void;
-  removeLastMove: () => void;
+  goBackToLastMove: () => void;
   setCurrentMoveKey: (key: string) => void;
 }>({
   playedMoves: JSON.parse(JSON.stringify(emptyMovesTree)),
@@ -28,7 +28,7 @@ export const PlayedMovesContext = createContext<{
       `PlayedMovesContext.addPlayedMove was not initialized correctly with ${move} and ${fen}`,
     );
   },
-  removeLastMove: () => undefined,
+  goBackToLastMove: () => undefined,
   setCurrentMoveKey: (key: string) => {
     console.warn(
       `PlayedMovesContext.setCurrentMoveKey was not initialized correctly with ${key}`,
@@ -73,7 +73,7 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
     setPlayedMoves(tree);
     setCurrentMoveKey(key);
   };
-  const removeLastMove = () => {
+  const goBackToLastMove = () => {
     setCurrentMoveKey(playedMoves[currentMoveKey].parentKey);
   };
   return (
@@ -82,7 +82,7 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
         playedMoves,
         currentMoveKey,
         addPlayedMove,
-        removeLastMove,
+        goBackToLastMove,
         setCurrentMoveKey,
       }}>
       {children}
