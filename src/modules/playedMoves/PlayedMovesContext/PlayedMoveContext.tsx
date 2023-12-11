@@ -5,6 +5,7 @@ import {
   emptyMovesTree,
 } from '../../../shared/domain/entities/MovesTree';
 import {addMoveToMovesTree} from '../../../shared/views/helpers/addMoveToMovesTree';
+import {removePlayedMoveFromTree} from '../../../shared/views/helpers/removePlayedMoveFromTree';
 
 export const PlayedMovesContext = createContext<{
   playedMoves: MovesTree;
@@ -20,6 +21,7 @@ export const PlayedMovesContext = createContext<{
   }) => void;
   goBackToLastMove: () => void;
   setCurrentMoveKey: (key: string) => void;
+  removePlayedMove: (moveKey: string) => void;
 }>({
   playedMoves: JSON.parse(JSON.stringify(emptyMovesTree)),
   currentMoveKey: Object.keys({...emptyMovesTree})[0],
@@ -32,6 +34,11 @@ export const PlayedMovesContext = createContext<{
   setCurrentMoveKey: (key: string) => {
     console.warn(
       `PlayedMovesContext.setCurrentMoveKey was not initialized correctly with ${key}`,
+    );
+  },
+  removePlayedMove: (moveKey: string) => {
+    console.warn(
+      `PlayedMovesContext.removePlayedMove was not initialized correctly with ${moveKey}`,
     );
   },
 });
@@ -76,6 +83,12 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
   const goBackToLastMove = () => {
     setCurrentMoveKey(playedMoves[currentMoveKey].parentKey);
   };
+
+  const removePlayedMove = (moveKey: string) => {
+    setPlayedMoves(prevPlayedMoves =>
+      removePlayedMoveFromTree({tree: prevPlayedMoves, moveKey}),
+    );
+  };
   return (
     <PlayedMovesContext.Provider
       value={{
@@ -84,6 +97,7 @@ export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
         addPlayedMove,
         goBackToLastMove,
         setCurrentMoveKey,
+        removePlayedMove,
       }}>
       {children}
     </PlayedMovesContext.Provider>

@@ -33,8 +33,7 @@ export const AnalysisPage = () => {
           <TopContentContainer>
             <ChessBoard onTurn={onTurn} />
             <Spacer height={4} />
-            <PlayedMoves onRemove={() => undefined} />
-            {/* TODO: Add deletion of the move */}
+            <PlayedMoves />
           </TopContentContainer>
           <AnalysisBottomBar onRightArrowPress={onTurn} />
         </Container>

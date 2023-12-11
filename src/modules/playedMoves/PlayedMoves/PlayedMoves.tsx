@@ -7,17 +7,10 @@ import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 import {getMovesListToDisplay} from '../../../shared/views/helpers/getMovesListFromMovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 
-interface PlayedMovesProps {
-  onRemove: () => void;
-}
-
-export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
-  const {playedMoves, currentMoveKey, setCurrentMoveKey} =
+export const PlayedMoves = () => {
+  const {playedMoves, currentMoveKey, setCurrentMoveKey, removePlayedMove} =
     useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
-  const onLongPress = () => {
-    onRemove();
-  };
 
   const movesListToDisplay = getMovesListToDisplay({
     tree: playedMoves,
@@ -33,6 +26,12 @@ export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
               const onPress = () => {
                 setCurrentMoveKey(move.key);
                 chess.current.load(playedMoves[move.key].fen);
+              };
+              const onLongPress = () => {
+                const parentKey = playedMoves[move.key].parentKey;
+                chess.current.load(playedMoves[parentKey].fen);
+                removePlayedMove(move.key);
+                setCurrentMoveKey(parentKey);
               };
               return (
                 <PlayedMove
