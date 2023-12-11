@@ -36,37 +36,63 @@ export const getCompleteMovesListFromMovesTree = ({
       });
     } else {
       if (currentMove.children.length > 1) {
-        const [mainMove, ...variants] = currentMove.children;
-        const variantsResponse = variants.reduce(
+        const variantsResponse = currentMove.children.reduce(
           (acc: MovesList, childKey) => [
             ...acc,
+            {key: 'leftParenthesis', move: '('},
             ...getCompleteMovesListFromMovesTree({
               tree,
               currentMoveKey: childKey,
             }),
+            {key: 'rightParenthesis', move: ')'},
           ],
           [],
         );
-        const [firstMainMove, ...restMainMove] =
-          getCompleteMovesListFromMovesTree({tree, currentMoveKey: mainMove});
         return [
           {key: currentMoveKey, move: currentMove.move},
-          firstMainMove,
-          {key: 'leftParenthesis', move: '('},
           ...variantsResponse,
-          {key: 'rightParenthesis', move: ')'},
-          ...restMainMove,
+        ];
+      } else {
+        return [
+          {key: currentMoveKey, move: currentMove.move},
+          ...getCompleteMovesListFromMovesTree({
+            tree,
+            currentMoveKey: nextMoveKey,
+          }),
         ];
       }
-      return [
-        {key: currentMoveKey, move: currentMove.move},
-        ...getCompleteMovesListFromMovesTree({
-          tree,
-          currentMoveKey: nextMoveKey,
-        }),
-      ];
     }
   } else {
     return [{key: currentMoveKey, move: currentMove.move}];
   }
+};
+
+type MovesListWithDepth = {movesList: MovesList; depth: number};
+
+export const getMovesListToDisplay = ({
+  tree,
+}: {
+  tree: MovesTree;
+}): MovesListWithDepth[] => {
+  const movesList = getCompleteMovesListFromMovesTree({tree});
+
+  let currentMoveList: MovesList = [];
+  let currentDepth = 0;
+  const response: MovesListWithDepth[] = [];
+
+  movesList.forEach(move => {
+    if (move.key === 'leftParenthesis') {
+      response.push({movesList: currentMoveList, depth: currentDepth});
+      currentDepth++;
+      currentMoveList = [];
+    } else if (move.key === 'rightParenthesis') {
+      response.push({movesList: currentMoveList, depth: currentDepth});
+      currentDepth--;
+      currentMoveList = [];
+    } else {
+      currentMoveList.push(move);
+    }
+  });
+  response.push({movesList: currentMoveList, depth: currentDepth});
+  return response;
 };

@@ -4,7 +4,7 @@ import {View} from 'react-native';
 import {useContext} from 'react';
 import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMoveContext';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
-import {getCompleteMovesListFromMovesTree} from '../../../shared/views/helpers/getMovesListFromMovesTree';
+import {getMovesListToDisplay} from '../../../shared/views/helpers/getMovesListFromMovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 
 interface PlayedMovesProps {
@@ -18,37 +18,45 @@ export const PlayedMoves = ({onRemove}: PlayedMovesProps) => {
   const onLongPress = () => {
     onRemove();
   };
+
+  const movesListToDisplay = getMovesListToDisplay({
+    tree: playedMoves,
+  });
+
   return (
     <PlayedMovesBackground>
-      <Spacer width={4} />
-      {getCompleteMovesListFromMovesTree({
-        tree: playedMoves,
-      }).map((move, index) => {
-        const onPress = () => {
-          if (
-            move.key !== 'leftParenthesis' &&
-            move.key !== 'rightParenthesis'
-          ) {
-            setCurrentMoveKey(move.key);
-            chess.current.load(playedMoves[move.key].fen);
-          }
-        };
+      {movesListToDisplay.map((movesList, index) => {
         return (
-          <PlayedMove
-            key={index}
-            move={move.move}
-            isHighlighted={move.key === currentMoveKey}
-            onLongPress={onLongPress}
-            onPress={onPress}
-          />
+          <PlayedMovesLine key={index}>
+            <Spacer width={movesList.depth * 8} />
+            {movesList.movesList.map((move, moveIndex) => {
+              const onPress = () => {
+                setCurrentMoveKey(move.key);
+                chess.current.load(playedMoves[move.key].fen);
+              };
+              return (
+                <PlayedMove
+                  key={moveIndex}
+                  move={move.move}
+                  isHighlighted={move.key === currentMoveKey}
+                  onLongPress={onLongPress}
+                  onPress={onPress}
+                />
+              );
+            })}
+          </PlayedMovesLine>
         );
       })}
+      <Spacer height={32} />
     </PlayedMovesBackground>
   );
 };
 
-const PlayedMovesBackground = styled(View)({
+const PlayedMovesLine = styled(View)({
   flexWrap: 'wrap',
-  backgroundColor: 'black',
   flexDirection: 'row',
+});
+
+const PlayedMovesBackground = styled(View)({
+  backgroundColor: 'black',
 });
