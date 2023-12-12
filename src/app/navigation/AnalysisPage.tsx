@@ -58,8 +58,8 @@ export const AnalysisPage = () => {
           <TopContentContainer>
             <ChessBoard onTurn={onTurn} />
             <Spacer height={4} />
-            <PlayedMoves />
           </TopContentContainer>
+          <PlayedMoves />
           <AnalysisBottomBar onRightArrowPress={onTurn} />
         </Container>
       </ChessEngineProvider>
