@@ -16,10 +16,14 @@ export const emptyMovesTree: MovesTree = {
   empty: {
     move: '',
     fen: '',
-    player: 'w',
+    player: 'b',
     children: [],
     parentKey: '-1',
     moveDepth: 0,
     squareTo: '',
   },
+};
+
+export const getEmptyMovesTree = (): MovesTree => {
+  return JSON.parse(JSON.stringify(emptyMovesTree));
 };

@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import {Text, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native';
 
 interface PlayedMoveProps {
   move: string;
@@ -15,21 +15,22 @@ export const PlayedMove = ({
   onPress,
 }: PlayedMoveProps) => {
   return (
-    <TouchableOpacity onLongPress={onLongPress} onPress={onPress}>
-      {isHighlighted ? (
-        <HighlightedText>{`${move} `}</HighlightedText>
-      ) : (
-        <NormalText>{`${move} `}</NormalText>
-      )}
-    </TouchableOpacity>
+    <ButtonMove
+      onLongPress={onLongPress}
+      onPress={onPress}
+      isHighlighted={isHighlighted}>
+      <StyledText>{`${move} `}</StyledText>
+    </ButtonMove>
   );
 };
 
-const NormalText = styled(Text)({
+const StyledText = styled(Text)({
   color: 'white',
 });
 
-const HighlightedText = styled(Text)({
-  color: 'white',
-  backgroundColor: 'grey',
-});
+const ButtonMove = styled.TouchableOpacity(
+  ({isHighlighted}: {isHighlighted: boolean}) => ({
+    backgroundColor: isHighlighted ? 'grey' : 'transparent',
+    borderRadius: 3,
+  }),
+);

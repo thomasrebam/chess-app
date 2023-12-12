@@ -6,11 +6,7 @@ import {useContext} from 'react';
 import {ChessEngineContext} from '../../contexts/ChessEngineContext';
 import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 
-interface ChessBoardProps {
-  onTurn: () => void;
-}
-
-export const ChessBoard = ({onTurn}: ChessBoardProps) => {
+export const ChessBoard = () => {
   // eslint-disable-next-line unused-imports/no-unused-vars
   const {currentMoveKey} = useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
@@ -27,7 +23,6 @@ export const ChessBoard = ({onTurn}: ChessBoardProps) => {
               player={square.color}
               position={square.square}
               chess={chess.current}
-              onTurn={onTurn}
             />
           );
         }),

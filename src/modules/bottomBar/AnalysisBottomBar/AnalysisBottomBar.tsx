@@ -9,19 +9,9 @@ import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {emptyMovesTree} from '../../../shared/domain/entities/MovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 
-interface AnalysisBottomBarProps {
-  onRightArrowPress: () => void;
-}
-
-export const AnalysisBottomBar = ({
-  onRightArrowPress,
-}: AnalysisBottomBarProps) => {
-  const {
-    playedMoves,
-    currentMoveKey,
-    addPlayedMove,
-    goBackToLastMove: removeLastMove,
-  } = useContext(PlayedMovesContext);
+export const AnalysisBottomBar = () => {
+  const {playedMoves, currentMoveKey, addPlayedMove, goBackToLastMove} =
+    useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
 
   const passNextMove = () => {
@@ -35,7 +25,6 @@ export const AnalysisBottomBar = ({
       squareTo: playedMoves[nextMoveKey].squareTo,
     });
     chess.current.move(cleanMove(playedMoves[nextMoveKey].move));
-    onRightArrowPress();
   };
 
   const passPreviousMove = () => {
@@ -46,7 +35,7 @@ export const AnalysisBottomBar = ({
     }
     const parentKey = playedMoves[currentMoveKey].parentKey;
     chess.current.load(playedMoves[parentKey].fen);
-    removeLastMove();
+    goBackToLastMove();
   };
   return (
     <BottomBar>

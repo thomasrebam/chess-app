@@ -18,5 +18,8 @@ export const removePlayedMoveFromTree = ({
     );
     tree[parentKey].children = children;
   }
+
+  // TODO: Remove the move and its children from the tree
+
   return tree;
 };

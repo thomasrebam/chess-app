@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import {PlayedMove} from '../PlayedMove/PlayedMove';
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {useContext} from 'react';
 import {PlayedMovesContext} from '../PlayedMovesContext/PlayedMoveContext';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
@@ -46,7 +46,7 @@ export const PlayedMoves = () => {
           </PlayedMovesLine>
         );
       })}
-      <Spacer height={32} />
+      <Spacer height={8} />
     </PlayedMovesBackground>
   );
 };
@@ -56,6 +56,6 @@ const PlayedMovesLine = styled(View)({
   flexDirection: 'row',
 });
 
-const PlayedMovesBackground = styled(View)({
+const PlayedMovesBackground = styled(ScrollView)({
   backgroundColor: 'black',
 });
