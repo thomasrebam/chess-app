@@ -8,15 +8,24 @@ import {Spacer} from '../../shared/views/components/Spacer/Spacer';
 import {Typography} from '../../shared/boson/components/Typography/Typography';
 import {PlayedMoves} from '../../modules/playedMoves/PlayedMoves/PlayedMoves';
 import {TestingBoard} from '../../modules/testing/testingBoard/TestingBoard';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {AuthenticatedNavigatorStackParamList} from './AuthenticatedNavigator/AuthenticatedNavigator.type';
 
 export const TestingPage = () => {
   const chess = useRef(new Chess());
 
+  const {params} =
+    useRoute<
+      RouteProp<AuthenticatedNavigatorStackParamList, 'Testing Repertoire'>
+    >();
+  const testingMoves = params.movesToTest
+    ? params.movesToTest
+    : ['e4', 'c5', 'Nf3', 'Nc6', 'd4', 'cxd4'];
   return (
     <PlayedMovesProvider value={{playedMoves: undefined}}>
       <ChessEngineProvider value={{chess}}>
         <Container>
-          <TestingBoard pgn={['e4', 'e5', 'Nf3', 'Nf6', 'Nxe5', 'Nxe4']} />
+          <TestingBoard pgn={testingMoves} />
           <Spacer height={32} />
           <BottomContentContainer>
             <StyledText>What to do in this position ?</StyledText>

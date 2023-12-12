@@ -11,7 +11,9 @@ export const TestingMenu = () => {
       Navigation<AuthenticatedNavigatorStackParamList, 'Choose Repertoire'>
     >();
   const onPressE4 = () => {
-    navigation.navigate('Testing Repertoire', {});
+    navigation.navigate('Testing Repertoire', {
+      movesToTest: ['e4', 'e5', 'Nf3', 'Nf6', 'Nxe5', 'Nxe4'],
+    });
   };
   return (
     <SafeAreaView>
