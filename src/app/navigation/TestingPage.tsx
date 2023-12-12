@@ -7,7 +7,7 @@ import {View} from 'react-native';
 import {Spacer} from '../../shared/views/components/Spacer/Spacer';
 import {Typography} from '../../shared/boson/components/Typography/Typography';
 import {PlayedMoves} from '../../modules/playedMoves/PlayedMoves/PlayedMoves';
-import {TestingBoard} from '../../modules/testingBoard/TestingBoard';
+import {TestingBoard} from '../../modules/testing/testingBoard/TestingBoard';
 
 export const TestingPage = () => {
   const chess = useRef(new Chess());

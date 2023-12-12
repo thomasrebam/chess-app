@@ -1,5 +1,6 @@
 export type AuthenticatedNavigatorStackParamList = {
   Menu: undefined;
   Analysis: {pgn: string | undefined};
-  Test: undefined;
+  'Testing Repertoire': {movesToTest?: string[]};
+  'Choose Repertoire': undefined;
 };

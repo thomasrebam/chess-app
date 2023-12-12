@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
-import {ChessBoard} from '../../shared/views/components/ChessBoard/ChessBoard';
-import {PlayedMovesContext} from '../playedMoves/PlayedMovesContext/PlayedMoveContext';
-import {ChessEngineContext} from '../../shared/views/contexts/ChessEngineContext';
+import {ChessBoard} from '../../../shared/views/components/ChessBoard/ChessBoard';
+import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMoveContext';
+import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 
 interface TestingBoardProps {
   pgn: string[];

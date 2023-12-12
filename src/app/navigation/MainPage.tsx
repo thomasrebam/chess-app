@@ -40,7 +40,7 @@ export const MainPage = () => {
       <Button.Primary
         label="Test yourself"
         onPress={() => {
-          navigation.navigate('Test');
+          navigation.navigate('Choose Repertoire');
         }}
       />
     </SafeAreaView>
