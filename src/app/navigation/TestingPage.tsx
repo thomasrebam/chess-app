@@ -21,6 +21,7 @@ export const TestingPage = () => {
   const testingMoves = params.movesToTest
     ? params.movesToTest
     : ['e4', 'c5', 'Nf3', 'Nc6', 'd4', 'cxd4'];
+  // TODO: use the MovesTree type and handle variants choice (random at first)
   return (
     <PlayedMovesProvider value={{playedMoves: undefined}}>
       <ChessEngineProvider value={{chess}}>
