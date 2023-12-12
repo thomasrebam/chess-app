@@ -40,10 +40,9 @@ interface PieceProps {
   player: Player;
   position: Chess.Square;
   chess: Chess.Chess;
-  onTurn: () => void;
 }
 
-export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
+export const Piece = ({piece, player, position, chess}: PieceProps) => {
   const coloredPieceName: ColoredPieceName = `${player}${piece}`;
   const isGestureActive = useSharedValue(false);
   const {addPlayedMove} = useContext(PlayedMovesContext);
@@ -86,7 +85,6 @@ export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
           fen: chess.fen(),
           squareTo: validMove.to,
         });
-        onTurn();
         return;
       }
       translateX.value = withTiming(from.x);
@@ -94,7 +92,7 @@ export const Piece = ({piece, player, position, chess, onTurn}: PieceProps) => {
         isGestureActive.value = false;
       });
     },
-    [chess, onTurn, translateX, translateY, isGestureActive, addPlayedMove],
+    [chess, translateX, translateY, isGestureActive, addPlayedMove],
   );
   const movePiece = useAnimatedGestureHandler({
     onStart: () => {

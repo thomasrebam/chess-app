@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useRef} from 'react';
 import {PlayedMovesProvider} from '../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {ChessBoard} from '../../shared/views/components/ChessBoard/ChessBoard';
 import {Chess} from 'chess.js';
@@ -37,30 +37,16 @@ export const AnalysisPage = () => {
     }
   }
 
-  const [gameState, setGameState] = useState({
-    player: chess.current.turn(),
-    board: chess.current.board(),
-    moves: [],
-  });
-
-  const onTurn = () => {
-    setGameState({
-      player: gameState.player === 'w' ? 'b' : 'w',
-      board: chess.current.board(),
-      moves: gameState.moves,
-    });
-  };
-
   return (
     <PlayedMovesProvider value={{playedMoves}}>
       <ChessEngineProvider value={{chess}}>
         <Container>
           <TopContentContainer>
-            <ChessBoard onTurn={onTurn} />
+            <ChessBoard />
             <Spacer height={4} />
           </TopContentContainer>
           <PlayedMoves />
-          <AnalysisBottomBar onRightArrowPress={onTurn} />
+          <AnalysisBottomBar />
         </Container>
       </ChessEngineProvider>
     </PlayedMovesProvider>
