@@ -36,6 +36,13 @@ export const MainPage = () => {
           navigation.navigate('Analysis', {pgn});
         }}
       />
+      <Spacer height={16} />
+      <Button.Primary
+        label="Test yourself"
+        onPress={() => {
+          navigation.navigate('Test');
+        }}
+      />
     </SafeAreaView>
   );
 };
