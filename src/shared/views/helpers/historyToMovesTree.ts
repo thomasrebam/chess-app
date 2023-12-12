@@ -17,13 +17,16 @@ export const historyToMovesTree = ({
     chess.move(move.san);
 
     currentMoveKey = keyGenerator();
+    const moveDepth = tree[currentParentMoveKey].moveDepth + 1;
+
     tree[currentMoveKey] = {
-      move: move.san,
+      move:
+        moveDepth % 2 === 1 ? `${(moveDepth + 1) / 2}. ${move.san}` : move.san,
       fen: chess.fen(),
       children: [],
       parentKey: currentParentMoveKey,
       player: move.color,
-      moveDepth: tree[currentParentMoveKey].moveDepth + 1,
+      moveDepth: moveDepth,
       squareTo: move.to,
     };
     tree[currentParentMoveKey].children.push(currentMoveKey);
