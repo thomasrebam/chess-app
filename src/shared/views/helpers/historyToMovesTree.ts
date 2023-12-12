@@ -21,7 +21,9 @@ export const historyToMovesTree = ({
 
     tree[currentMoveKey] = {
       move:
-        moveDepth % 2 === 1 ? `${(moveDepth + 1) / 2}. ${move.san}` : move.san,
+        moveDepth % 2 === 1
+          ? ` ${(moveDepth + 1) / 2}. ${move.san}`
+          : ` ${move.san}`,
       fen: chess.fen(),
       children: [],
       parentKey: currentParentMoveKey,
