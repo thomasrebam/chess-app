@@ -16,7 +16,7 @@ export const emptyMovesTree: MovesTree = {
   empty: {
     move: '',
     fen: '',
-    player: 'w',
+    player: 'b',
     children: [],
     parentKey: '-1',
     moveDepth: 0,

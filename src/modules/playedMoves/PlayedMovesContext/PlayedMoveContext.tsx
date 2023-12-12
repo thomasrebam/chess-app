@@ -45,11 +45,17 @@ export const PlayedMovesContext = createContext<{
 
 interface PlayedMovesProviderProps {
   children: ReactNode;
+  value: {playedMoves?: MovesTree};
 }
 
-export const PlayedMovesProvider = ({children}: PlayedMovesProviderProps) => {
+export const PlayedMovesProvider = ({
+  children,
+  value,
+}: PlayedMovesProviderProps) => {
   const [playedMoves, setPlayedMoves] = useState<MovesTree>(
-    JSON.parse(JSON.stringify(emptyMovesTree)),
+    value.playedMoves
+      ? value.playedMoves
+      : JSON.parse(JSON.stringify(emptyMovesTree)),
   );
   const [currentMoveKey, setCurrentMoveKey] = useState<string>(
     Object.keys(emptyMovesTree)[0],
