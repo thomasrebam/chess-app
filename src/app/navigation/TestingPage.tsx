@@ -30,6 +30,7 @@ export const TestingPage = () => {
           <BottomContentContainer>
             <StyledText>What to do in this position ?</StyledText>
           </BottomContentContainer>
+          <Spacer height={16} />
           <PlayedMoves />
         </Container>
       </ChessEngineProvider>
