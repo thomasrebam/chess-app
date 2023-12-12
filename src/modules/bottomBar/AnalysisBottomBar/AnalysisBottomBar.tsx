@@ -16,12 +16,8 @@ interface AnalysisBottomBarProps {
 export const AnalysisBottomBar = ({
   onRightArrowPress,
 }: AnalysisBottomBarProps) => {
-  const {
-    playedMoves,
-    currentMoveKey,
-    addPlayedMove,
-    goBackToLastMove: removeLastMove,
-  } = useContext(PlayedMovesContext);
+  const {playedMoves, currentMoveKey, addPlayedMove, goBackToLastMove} =
+    useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
 
   const passNextMove = () => {
@@ -46,7 +42,7 @@ export const AnalysisBottomBar = ({
     }
     const parentKey = playedMoves[currentMoveKey].parentKey;
     chess.current.load(playedMoves[parentKey].fen);
-    removeLastMove();
+    goBackToLastMove();
   };
   return (
     <BottomBar>
