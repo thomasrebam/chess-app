@@ -12,7 +12,7 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {AuthenticatedNavigatorStackParamList} from './AuthenticatedNavigator/AuthenticatedNavigator.type';
 import {
   MovesTree,
-  emptyMovesTree,
+  getEmptyMovesTree,
 } from '../../shared/domain/entities/MovesTree';
 import {historyToMovesTree} from '../../shared/views/helpers/historyToMovesTree';
 
@@ -20,7 +20,7 @@ export const AnalysisPage = () => {
   const {params} =
     useRoute<RouteProp<AuthenticatedNavigatorStackParamList, 'Analysis'>>();
   const chess = useRef(new Chess());
-  let playedMoves: MovesTree = emptyMovesTree;
+  let playedMoves: MovesTree = getEmptyMovesTree();
   if (params.pgn) {
     const pgn = params.pgn;
     if (pgn.includes(']')) {
@@ -35,6 +35,8 @@ export const AnalysisPage = () => {
         moves: chess.current.history({verbose: true}),
       });
     }
+  } else {
+    playedMoves = getEmptyMovesTree();
   }
 
   return (

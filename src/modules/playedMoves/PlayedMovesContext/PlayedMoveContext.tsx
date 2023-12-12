@@ -3,6 +3,7 @@ import {ReactNode, createContext, useState} from 'react';
 import {
   MovesTree,
   emptyMovesTree,
+  getEmptyMovesTree,
 } from '../../../shared/domain/entities/MovesTree';
 import {addMoveToMovesTree} from '../../../shared/views/helpers/addMoveToMovesTree';
 import {removePlayedMoveFromTree} from '../../../shared/views/helpers/removePlayedMoveFromTree';
@@ -23,7 +24,7 @@ export const PlayedMovesContext = createContext<{
   setCurrentMoveKey: (key: string) => void;
   removePlayedMove: (moveKey: string) => void;
 }>({
-  playedMoves: JSON.parse(JSON.stringify(emptyMovesTree)),
+  playedMoves: getEmptyMovesTree(),
   currentMoveKey: Object.keys({...emptyMovesTree})[0],
   addPlayedMove: ({move, fen}: {move: string; fen: string}) => {
     console.warn(
@@ -53,9 +54,7 @@ export const PlayedMovesProvider = ({
   value,
 }: PlayedMovesProviderProps) => {
   const [playedMoves, setPlayedMoves] = useState<MovesTree>(
-    value.playedMoves
-      ? value.playedMoves
-      : JSON.parse(JSON.stringify(emptyMovesTree)),
+    value.playedMoves ? value.playedMoves : getEmptyMovesTree(),
   );
   const [currentMoveKey, setCurrentMoveKey] = useState<string>(
     Object.keys(emptyMovesTree)[0],

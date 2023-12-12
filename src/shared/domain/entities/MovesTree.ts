@@ -23,3 +23,7 @@ export const emptyMovesTree: MovesTree = {
     squareTo: '',
   },
 };
+
+export const getEmptyMovesTree = (): MovesTree => {
+  return JSON.parse(JSON.stringify(emptyMovesTree));
+};

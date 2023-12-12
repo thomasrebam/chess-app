@@ -1,5 +1,5 @@
 import {Chess, Move} from 'chess.js';
-import {MovesTree, emptyMovesTree} from '../../domain/entities/MovesTree';
+import {MovesTree, getEmptyMovesTree} from '../../domain/entities/MovesTree';
 import {keyGenerator} from './keyGenerator';
 
 interface HistoryToMovesTreeProps {
@@ -10,7 +10,7 @@ export const historyToMovesTree = ({
   moves,
 }: HistoryToMovesTreeProps): MovesTree => {
   const chess = new Chess();
-  const tree = JSON.parse(JSON.stringify(emptyMovesTree));
+  const tree = getEmptyMovesTree();
   let currentParentMoveKey = 'empty';
   let currentMoveKey = '';
   moves.forEach(move => {
