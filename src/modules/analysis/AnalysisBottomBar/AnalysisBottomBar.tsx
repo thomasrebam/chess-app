@@ -12,7 +12,11 @@ import {Button} from '../../../shared/boson/components/Button/Button';
 import {PersistentStorageService} from '../../../shared/views/services/PersistentStorageService';
 import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
 
-export const AnalysisBottomBar = () => {
+interface AnalysisBottomBarProps {
+  onPressSave: () => void;
+}
+
+export const AnalysisBottomBar = ({onPressSave}: AnalysisBottomBarProps) => {
   const {playedMoves, currentMoveKey, addPlayedMove, goBackToLastMove} =
     useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
@@ -42,7 +46,7 @@ export const AnalysisBottomBar = () => {
     goBackToLastMove();
   };
 
-  const onPressSave = () => {
+  const onSavePress = () => {
     PersistentStorageService.setValue(
       'playedMoves',
       JSON.stringify(playedMoves),
@@ -52,11 +56,12 @@ export const AnalysisBottomBar = () => {
       JSON.stringify([...savedAnalysis, 'e4']),
     );
     addSavedAnalysis({newAnalysis: 'e4'});
+    onPressSave();
   };
   return (
     <BottomBar>
       <Spacer width={8} />
-      <Button.Primary label="Save" onPress={onPressSave} />
+      <Button.Primary label="Save" onPress={onSavePress} />
       <TouchableOpacity onPress={passPreviousMove}>
         <Icon.RightArrow
           style={{transform: [{rotate: '180deg'}]}}

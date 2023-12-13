@@ -1,4 +1,4 @@
-import {useRef} from 'react';
+import {useRef, useState} from 'react';
 import {PlayedMovesProvider} from '../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {ChessBoard} from '../../shared/views/components/ChessBoard/ChessBoard';
 import {Chess} from 'chess.js';
@@ -15,11 +15,17 @@ import {
   getEmptyMovesTree,
 } from '../../shared/domain/entities/MovesTree';
 import {historyToMovesTree} from '../../shared/views/helpers/historyToMovesTree';
+import {AnalysisModal} from '../../modules/analysis/AnalysisModal/AnalysisModal';
 
 export const AnalysisPage = () => {
   const {params} =
     useRoute<RouteProp<AuthenticatedNavigatorStackParamList, 'Analysis'>>();
   const chess = useRef(new Chess());
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const closeModal = () => setIsModalVisible(false);
+  const openModal = () => setIsModalVisible(true);
+
   let playedMoves: MovesTree = getEmptyMovesTree();
   if (params.pgn) {
     const pgn = params.pgn;
@@ -48,7 +54,12 @@ export const AnalysisPage = () => {
             <Spacer height={4} />
           </TopContentContainer>
           <PlayedMoves />
-          <AnalysisBottomBar />
+          <AnalysisBottomBar onPressSave={openModal} />
+          <AnalysisModal
+            isModalVisible={isModalVisible}
+            onPressSave={() => undefined}
+            onPressClose={closeModal}
+          />
         </Container>
       </ChessEngineProvider>
     </PlayedMovesProvider>
