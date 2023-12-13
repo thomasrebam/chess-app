@@ -6,6 +6,8 @@ import {
 } from '@react-navigation/native-stack';
 import {MainPage} from '../MainPage';
 import {AuthenticatedNavigatorStackParamList} from './AuthenticatedNavigator.type';
+import {TestingPage} from '../TestingPage';
+import {TestingMenu} from '../../../modules/testing/testingMenu/TestingMenu';
 
 const AuthenticatedStack =
   createNativeStackNavigator<AuthenticatedNavigatorStackParamList>();
@@ -15,6 +17,14 @@ export const AuthenticatedNavigator = () => {
     <AuthenticatedStack.Navigator initialRouteName="Menu">
       <AuthenticatedStack.Screen name={'Analysis'} component={AnalysisPage} />
       <AuthenticatedStack.Screen name={'Menu'} component={MainPage} />
+      <AuthenticatedStack.Screen
+        name={'Testing Repertoire'}
+        component={TestingPage}
+      />
+      <AuthenticatedStack.Screen
+        name={'Choose Repertoire'}
+        component={TestingMenu}
+      />
     </AuthenticatedStack.Navigator>
   );
 };
