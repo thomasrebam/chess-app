@@ -10,6 +10,7 @@ import {PlayedMoves} from '../../modules/playedMoves/PlayedMoves/PlayedMoves';
 import {TestingBoard} from '../../modules/testing/testingBoard/TestingBoard';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {AuthenticatedNavigatorStackParamList} from './AuthenticatedNavigator/AuthenticatedNavigator.type';
+import {getEmptyMovesTree} from '../../shared/domain/entities/MovesTree';
 
 export const TestingPage = () => {
   const chess = useRef(new Chess());
@@ -20,13 +21,13 @@ export const TestingPage = () => {
     >();
   const testingMoves = params.movesToTest
     ? params.movesToTest
-    : ['e4', 'c5', 'Nf3', 'Nc6', 'd4', 'cxd4'];
+    : getEmptyMovesTree();
   // TODO: use the MovesTree type and handle variants choice (random at first)
   return (
     <PlayedMovesProvider value={{playedMoves: undefined}}>
       <ChessEngineProvider value={{chess}}>
         <Container>
-          <TestingBoard pgn={testingMoves} />
+          <TestingBoard movesTree={testingMoves} />
           <Spacer height={32} />
           <BottomContentContainer>
             <StyledText>What to do in this position ?</StyledText>
