@@ -12,13 +12,21 @@ import {AuthenticatedNavigator} from './src/app/navigation/AuthenticatedNavigato
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from '@emotion/react';
 import {theme} from './src/shared/boson/theme/theme';
-import {SavedAnalysisProvider} from './src/shared/views/contexts/SavedAnalysisContext';
+import {
+  SavedAnalysis,
+  SavedAnalysisProvider,
+} from './src/shared/views/contexts/SavedAnalysisContext';
+import {PersistentStorageService} from './src/shared/views/services/PersistentStorageService';
 
 function App(): JSX.Element {
+  const savedAnalysis = PersistentStorageService.getValue('savedAnalysis');
+  const parsedSavedAnalysis: SavedAnalysis | undefined = savedAnalysis
+    ? JSON.parse(savedAnalysis)
+    : undefined;
   return (
     <StyledGestureHandlerRootView>
       <ThemeProvider theme={theme}>
-        <SavedAnalysisProvider>
+        <SavedAnalysisProvider savedAnalysis={parsedSavedAnalysis}>
           <NavigationContainer theme={DarkTheme}>
             <AuthenticatedNavigator />
           </NavigationContainer>

@@ -10,11 +10,13 @@ import {emptyMovesTree} from '../../../shared/domain/entities/MovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 import {Button} from '../../../shared/boson/components/Button/Button';
 import {PersistentStorageService} from '../../../shared/views/services/PersistentStorageService';
+import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
 
 export const AnalysisBottomBar = () => {
   const {playedMoves, currentMoveKey, addPlayedMove, goBackToLastMove} =
     useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
+  const {savedAnalysis, addSavedAnalysis} = useContext(SavedAnalysisContext);
 
   const passNextMove = () => {
     if (playedMoves[currentMoveKey].children.length === 0) {
@@ -41,7 +43,15 @@ export const AnalysisBottomBar = () => {
   };
 
   const onPressSave = () => {
-    PersistentStorageService.setValue('playedMoves', 'e4');
+    PersistentStorageService.setValue(
+      'playedMoves',
+      JSON.stringify(playedMoves),
+    );
+    PersistentStorageService.setValue(
+      'savedAnalysis',
+      JSON.stringify([...savedAnalysis, 'e4']),
+    );
+    addSavedAnalysis({newAnalysis: 'e4'});
   };
   return (
     <BottomBar>

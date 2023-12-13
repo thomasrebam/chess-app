@@ -1,6 +1,6 @@
 import {createContext, useState} from 'react';
 
-type SavedAnalysis = string[];
+export type SavedAnalysis = string[];
 
 interface SavedAnalysisContextProps {
   savedAnalysis: SavedAnalysis;
