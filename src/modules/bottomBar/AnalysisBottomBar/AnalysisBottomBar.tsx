@@ -8,6 +8,8 @@ import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMov
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {emptyMovesTree} from '../../../shared/domain/entities/MovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
+import {Button} from '../../../shared/boson/components/Button/Button';
+import {PersistentStorageService} from '../../../shared/views/services/PersistentStorageService';
 
 export const AnalysisBottomBar = () => {
   const {playedMoves, currentMoveKey, addPlayedMove, goBackToLastMove} =
@@ -37,8 +39,14 @@ export const AnalysisBottomBar = () => {
     chess.current.load(playedMoves[parentKey].fen);
     goBackToLastMove();
   };
+
+  const onPressSave = () => {
+    PersistentStorageService.setValue('playedMoves', 'e4');
+  };
   return (
     <BottomBar>
+      <Spacer width={8} />
+      <Button.Primary label="Save" onPress={onPressSave} />
       <TouchableOpacity onPress={passPreviousMove}>
         <Icon.RightArrow
           style={{transform: [{rotate: '180deg'}]}}
@@ -47,7 +55,7 @@ export const AnalysisBottomBar = () => {
           height={32}
         />
       </TouchableOpacity>
-      <Spacer width={40} />
+      <Spacer width={8} />
       <TouchableOpacity onPress={passNextMove}>
         <Icon.RightArrow color={colors.white} width={32} height={32} />
       </TouchableOpacity>
@@ -61,4 +69,5 @@ const BottomBar = styled(View)({
   borderRadius: 4,
   flexDirection: 'row',
   justifyContent: 'space-between',
+  alignItems: 'center',
 });
