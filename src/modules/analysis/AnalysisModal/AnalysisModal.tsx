@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import {Button} from '../../../shared/boson/components/Button/Button';
 import {PersistentStorageService} from '../../../shared/views/services/PersistentStorageService';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
 import {TextInput} from '../../../shared/boson/components/TextInput/TextInput';
@@ -23,17 +23,23 @@ export const AnalysisModal = ({
   const {playedMoves} = useContext(PlayedMovesContext);
   const {savedAnalysis, addSavedAnalysis} = useContext(SavedAnalysisContext);
 
+  const [analysisName, setAnalysisName] = useState<string>('');
+
   const onSavePress = () => {
+    if (analysisName === '') {
+      return;
+    }
     PersistentStorageService.setValue(
-      'playedMoves',
+      `playedMoves.${analysisName}`,
       JSON.stringify(playedMoves),
     );
     PersistentStorageService.setValue(
       'savedAnalysis',
-      JSON.stringify([...savedAnalysis, 'e4']),
+      JSON.stringify([...savedAnalysis, analysisName]),
     );
-    addSavedAnalysis({newAnalysis: 'e4'});
+    addSavedAnalysis({newAnalysis: analysisName});
     onPressSave();
+    onPressClose();
   };
   return (
     <Modal isVisible={isModalVisible}>
@@ -41,7 +47,11 @@ export const AnalysisModal = ({
         <StyledText>
           You are saving this analysis, please give it a name
         </StyledText>
-        <StyledTextInput placeholder="Analysis name" focusable />
+        <StyledTextInput
+          placeholder="Analysis name"
+          focusable
+          onChangeText={event => setAnalysisName(event)}
+        />
         <ButtonsContainer>
           <ButtonContainer>
             <Button.Primary label={'Save analysis'} onPress={onSavePress} />
