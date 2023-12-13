@@ -12,14 +12,17 @@ import {AuthenticatedNavigator} from './src/app/navigation/AuthenticatedNavigato
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from '@emotion/react';
 import {theme} from './src/shared/boson/theme/theme';
+import {SavedAnalysisProvider} from './src/shared/views/contexts/SavedAnalysisContext';
 
 function App(): JSX.Element {
   return (
     <StyledGestureHandlerRootView>
       <ThemeProvider theme={theme}>
-        <NavigationContainer theme={DarkTheme}>
-          <AuthenticatedNavigator />
-        </NavigationContainer>
+        <SavedAnalysisProvider>
+          <NavigationContainer theme={DarkTheme}>
+            <AuthenticatedNavigator />
+          </NavigationContainer>
+        </SavedAnalysisProvider>
       </ThemeProvider>
     </StyledGestureHandlerRootView>
   );
