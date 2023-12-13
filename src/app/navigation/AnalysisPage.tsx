@@ -6,7 +6,7 @@ import {Spacer} from '../../shared/views/components/Spacer/Spacer';
 import {PlayedMoves} from '../../modules/playedMoves/PlayedMoves/PlayedMoves';
 import {View} from 'react-native';
 import styled from '@emotion/native';
-import {AnalysisBottomBar} from '../../modules/bottomBar/AnalysisBottomBar/AnalysisBottomBar';
+import {AnalysisBottomBar} from '../../modules/analysis/AnalysisBottomBar/AnalysisBottomBar';
 import {ChessEngineProvider} from '../../shared/views/contexts/ChessEngineContext';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {AuthenticatedNavigatorStackParamList} from './AuthenticatedNavigator/AuthenticatedNavigator.type';
