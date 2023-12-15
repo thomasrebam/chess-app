@@ -90,7 +90,9 @@ export const getMovesListToDisplay = ({
       currentDepth--;
       currentMoveList = [];
     } else {
-      currentMoveList.push(move);
+      if (move.key !== Object.keys(emptyMovesTree)[0]) {
+        currentMoveList.push(move);
+      }
     }
   });
   response.push({movesList: currentMoveList, depth: currentDepth});
