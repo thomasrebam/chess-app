@@ -41,6 +41,7 @@ export const TestingBoard = ({
   useEffect(() => {
     const history = chess.current.history({verbose: true});
     if (movesTree[currentTestMoveKey].children.length === 0) {
+      onLastMove();
       return;
     } else {
       if (checkRealisedMove({history, movesTree, currentTestMoveKey})) {
@@ -50,6 +51,7 @@ export const TestingBoard = ({
           currentMoveKey: currentTestMoveKey,
         });
         if (movesTree[realisedMoveKey].children.length === 0) {
+          onLastMove();
           return;
         }
         const automaticMoveKey = getNextMove({movesTree, realisedMoveKey});

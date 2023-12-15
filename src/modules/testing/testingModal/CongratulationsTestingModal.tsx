@@ -24,12 +24,12 @@ export const CongratulationsTestingModal = ({
 
 const ModalContainer = styled(View)({
   flexShrink: 1,
-  flexWrap: 'wrap',
   paddingHorizontal: 16,
   minHeight: 150,
   borderRadius: 16,
   justifyContent: 'space-evenly',
   backgroundColor: 'black',
+  alignItems: 'center',
 });
 
 const StyledText = styled(Text)({
