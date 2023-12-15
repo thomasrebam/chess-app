@@ -35,7 +35,7 @@ export const TestingBoard = ({movesTree}: TestingBoardProps) => {
         if (movesTree[realisedMoveKey].children.length === 0) {
           return;
         }
-        const automaticMoveKey = movesTree[realisedMoveKey].children[0];
+        const automaticMoveKey = getNextMove({movesTree, realisedMoveKey});
         const automaticMove = movesTree[automaticMoveKey];
         chess.current.move(cleanMove(automaticMove.move));
         const newHistory = chess.current.history({verbose: true});
@@ -56,4 +56,16 @@ export const TestingBoard = ({movesTree}: TestingBoardProps) => {
     addPlayedMove,
   ]);
   return <ChessBoard />;
+};
+
+interface GetNextMoveProps {
+  movesTree: MovesTree;
+  realisedMoveKey: string;
+}
+
+const getNextMove = ({movesTree, realisedMoveKey}: GetNextMoveProps) => {
+  const possibleMovesNumber = movesTree[realisedMoveKey].children.length;
+  const randomNumber = Math.floor(Math.random() * possibleMovesNumber);
+  const automaticMoveKey = movesTree[realisedMoveKey].children[randomNumber];
+  return automaticMoveKey;
 };
