@@ -17,7 +17,6 @@ export const TestingBoard = ({movesTree}: TestingBoardProps) => {
   const [currentTestMoveKey, setCurrentTestMoveKey] = useState(
     Object.keys(emptyMovesTree)[0],
   );
-  // eslint-disable-next-line unused-imports/no-unused-vars
   const {addPlayedMove, currentMoveKey} = useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
 
