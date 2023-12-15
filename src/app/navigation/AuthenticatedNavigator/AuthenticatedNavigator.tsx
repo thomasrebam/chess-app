@@ -8,6 +8,7 @@ import {MainPage} from '../MainPage';
 import {AuthenticatedNavigatorStackParamList} from './AuthenticatedNavigator.type';
 import {TestingPage} from '../TestingPage';
 import {TestingMenu} from '../../../modules/testing/testingMenu/TestingMenu';
+import {AnalysisMenu} from '../../../modules/analysis/AnalysisMenu/AnalysisMenu';
 
 const AuthenticatedStack =
   createNativeStackNavigator<AuthenticatedNavigatorStackParamList>();
@@ -24,6 +25,10 @@ export const AuthenticatedNavigator = () => {
       <AuthenticatedStack.Screen
         name={'Choose Repertoire'}
         component={TestingMenu}
+      />
+      <AuthenticatedStack.Screen
+        name={'Modify Analysis'}
+        component={AnalysisMenu}
       />
     </AuthenticatedStack.Navigator>
   );

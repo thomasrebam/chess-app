@@ -5,4 +5,5 @@ export type AuthenticatedNavigatorStackParamList = {
   Analysis: {pgn: string | undefined};
   'Testing Repertoire': {movesToTest?: MovesTree};
   'Choose Repertoire': undefined;
+  'Modify Analysis': undefined;
 };

@@ -18,7 +18,7 @@ export const MainPage = () => {
     <SafeAreaView>
       <Spacer height={16} />
       <Button.Primary
-        label="Analysis"
+        label="New analysis"
         onPress={() => {
           navigation.navigate('Analysis', {pgn: undefined});
         }}
@@ -31,9 +31,16 @@ export const MainPage = () => {
       />
       <Spacer height={4} />
       <Button.Primary
-        label="Analyse PGN"
+        label="PGN analysis"
         onPress={() => {
           navigation.navigate('Analysis', {pgn});
+        }}
+      />
+      <Spacer height={16} />
+      <Button.Primary
+        label="Modify analysis"
+        onPress={() => {
+          navigation.navigate('Modify Analysis');
         }}
       />
       <Spacer height={16} />
