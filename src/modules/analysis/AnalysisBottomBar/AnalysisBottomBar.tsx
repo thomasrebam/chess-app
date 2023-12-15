@@ -9,14 +9,15 @@ import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {emptyMovesTree} from '../../../shared/domain/entities/MovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 import {Button} from '../../../shared/boson/components/Button/Button';
-import {PersistentStorageService} from '../../../shared/views/services/PersistentStorageService';
-import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
 
-export const AnalysisBottomBar = () => {
+interface AnalysisBottomBarProps {
+  onPressSave: () => void;
+}
+
+export const AnalysisBottomBar = ({onPressSave}: AnalysisBottomBarProps) => {
   const {playedMoves, currentMoveKey, addPlayedMove, goBackToLastMove} =
     useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
-  const {savedAnalysis, addSavedAnalysis} = useContext(SavedAnalysisContext);
 
   const passNextMove = () => {
     if (playedMoves[currentMoveKey].children.length === 0) {
@@ -40,18 +41,6 @@ export const AnalysisBottomBar = () => {
     const parentKey = playedMoves[currentMoveKey].parentKey;
     chess.current.load(playedMoves[parentKey].fen);
     goBackToLastMove();
-  };
-
-  const onPressSave = () => {
-    PersistentStorageService.setValue(
-      'playedMoves',
-      JSON.stringify(playedMoves),
-    );
-    PersistentStorageService.setValue(
-      'savedAnalysis',
-      JSON.stringify([...savedAnalysis, 'e4']),
-    );
-    addSavedAnalysis({newAnalysis: 'e4'});
   };
   return (
     <BottomBar>
