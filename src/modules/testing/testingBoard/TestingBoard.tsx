@@ -10,6 +10,7 @@ import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {getNextMove} from '../helpers/getNextMove';
 import {checkRealisedMove} from '../helpers/checkRealisedMove';
 import {ErrorTestingModal} from '../testingModal/ErrorTestingModal';
+import {getRealisedMove} from '../helpers/getRealisedMove';
 
 interface TestingBoardProps {
   movesTree: MovesTree;
@@ -43,7 +44,11 @@ export const TestingBoard = ({
       return;
     } else {
       if (checkRealisedMove({history, movesTree, currentTestMoveKey})) {
-        const realisedMoveKey = movesTree[currentTestMoveKey].children[0];
+        const realisedMoveKey = getRealisedMove({
+          history,
+          movesTree,
+          currentMoveKey: currentTestMoveKey,
+        });
         if (movesTree[realisedMoveKey].children.length === 0) {
           return;
         }
