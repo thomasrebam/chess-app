@@ -15,12 +15,14 @@ interface TestingBoardProps {
   movesTree: MovesTree;
   onCorrectMove: () => void;
   onIncorrectMove: () => void;
+  onLastMove: () => void;
 }
 
 export const TestingBoard = ({
   movesTree,
   onCorrectMove,
   onIncorrectMove,
+  onLastMove,
 }: TestingBoardProps) => {
   const [currentTestMoveKey, setCurrentTestMoveKey] = useState(
     Object.keys(emptyMovesTree)[0],
@@ -75,6 +77,7 @@ export const TestingBoard = ({
     addPlayedMove,
     onCorrectMove,
     onIncorrectMove,
+    onLastMove,
   ]);
 
   const onPressClose = () => {
