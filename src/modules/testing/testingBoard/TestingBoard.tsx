@@ -7,7 +7,8 @@ import {
   emptyMovesTree,
 } from '../../../shared/domain/entities/MovesTree';
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
-import {Move} from 'chess.js';
+import {getNextMove} from '../helpers/getNextMove';
+import {checkRealisedMove} from '../helpers/checkRealisedMove';
 
 interface TestingBoardProps {
   movesTree: MovesTree;
@@ -67,46 +68,4 @@ export const TestingBoard = ({
     onIncorrectMove,
   ]);
   return <ChessBoard />;
-};
-
-interface GetNextMoveProps {
-  movesTree: MovesTree;
-  realisedMoveKey: string;
-}
-
-const getNextMove = ({
-  movesTree,
-  realisedMoveKey,
-}: GetNextMoveProps): string => {
-  const possibleMovesNumber = movesTree[realisedMoveKey].children.length;
-  const randomNumber = Math.floor(Math.random() * possibleMovesNumber);
-  const automaticMoveKey = movesTree[realisedMoveKey].children[randomNumber];
-  return automaticMoveKey;
-};
-
-interface CheckRealisedMoveProps {
-  history: Move[];
-  movesTree: MovesTree;
-  currentTestMoveKey: string;
-}
-
-const checkRealisedMove = ({
-  history,
-  movesTree,
-  currentTestMoveKey,
-}: CheckRealisedMoveProps): boolean => {
-  let res = false;
-  if (!history[history.length - 1]) {
-    return res;
-  }
-  const realisedMove = history[history.length - 1];
-  if (realisedMove.color === 'b') {
-    return res;
-  }
-  movesTree[currentTestMoveKey].children.forEach(childKey => {
-    if (cleanMove(movesTree[childKey].move) === realisedMove.san) {
-      res = true;
-    }
-  });
-  return res;
 };
