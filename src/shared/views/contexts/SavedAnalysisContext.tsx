@@ -5,12 +5,15 @@ export type SavedAnalysis = string[];
 interface SavedAnalysisContextProps {
   savedAnalysis: SavedAnalysis;
   addSavedAnalysis: ({newAnalysis}: {newAnalysis: string}) => void;
+  setSavedAnalysis: ({analysis}: {analysis: string[]}) => void;
 }
 
 export const SavedAnalysisContext = createContext<SavedAnalysisContextProps>({
   savedAnalysis: [],
   // eslint-disable-next-line unused-imports/no-unused-vars
   addSavedAnalysis: ({newAnalysis}: {newAnalysis: string}) => {},
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  setSavedAnalysis: ({analysis}: {analysis: string[]}) => {},
 });
 
 interface SavedAnalysisProviderProps {
@@ -29,9 +32,13 @@ export const SavedAnalysisProvider = ({
   const addSavedAnalysis = ({newAnalysis}: {newAnalysis: string}) => {
     setCurrentSavedAnalysis([...currentSavedAnalysis, newAnalysis]);
   };
+  const setSavedAnalysis = ({analysis}: {analysis: string[]}) => {
+    setCurrentSavedAnalysis(analysis);
+  };
   const providerValue: SavedAnalysisContextProps = {
     savedAnalysis: currentSavedAnalysis,
     addSavedAnalysis,
+    setSavedAnalysis,
   };
   return (
     <SavedAnalysisContext.Provider value={providerValue}>
