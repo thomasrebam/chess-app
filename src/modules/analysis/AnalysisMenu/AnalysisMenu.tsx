@@ -13,6 +13,7 @@ import {useContext} from 'react';
 import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
 
 export const AnalysisMenu = () => {
+  // TODO: Make a common component for the Menu pages (lots of similarities)
   const {savedAnalysis, setSavedAnalysis} = useContext(SavedAnalysisContext);
   const navigation =
     useNavigation<
@@ -20,6 +21,7 @@ export const AnalysisMenu = () => {
     >();
   const onPressButton = ({label}: {label: string}) => {
     const savedAnalysis = getMovesToTest({analysisName: label});
+    // TODO: add the stored analysis to the analysis page
     navigation.navigate('Analysis', {pgn: undefined});
   };
 
