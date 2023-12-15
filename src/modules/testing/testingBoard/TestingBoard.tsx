@@ -9,6 +9,7 @@ import {
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {getNextMove} from '../helpers/getNextMove';
 import {checkRealisedMove} from '../helpers/checkRealisedMove';
+import {TestingModal} from '../testingModal/TestingModal';
 
 interface TestingBoardProps {
   movesTree: MovesTree;
@@ -24,7 +25,14 @@ export const TestingBoard = ({
   const [currentTestMoveKey, setCurrentTestMoveKey] = useState(
     Object.keys(emptyMovesTree)[0],
   );
-  const {addPlayedMove, currentMoveKey} = useContext(PlayedMovesContext);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {
+    playedMoves,
+    addPlayedMove,
+    currentMoveKey,
+    removePlayedMove,
+    goBackToLastMove,
+  } = useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
 
   useEffect(() => {
@@ -54,6 +62,7 @@ export const TestingBoard = ({
           history[history.length - 1].color === 'w'
         ) {
           onIncorrectMove();
+          setIsModalVisible(true);
         }
       }
     }
@@ -67,5 +76,21 @@ export const TestingBoard = ({
     onCorrectMove,
     onIncorrectMove,
   ]);
-  return <ChessBoard />;
+
+  const onPressClose = () => {
+    setIsModalVisible(false);
+    const parentKey = playedMoves[currentMoveKey].parentKey;
+    chess.current.load(playedMoves[parentKey].fen);
+    removePlayedMove(currentMoveKey);
+    goBackToLastMove();
+  };
+  return (
+    <>
+      <ChessBoard />
+      <TestingModal
+        isModalVisible={isModalVisible}
+        onPressClose={onPressClose}
+      />
+    </>
+  );
 };
