@@ -7,33 +7,51 @@ import {
   emptyMovesTree,
 } from '../../../shared/domain/entities/MovesTree';
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
-import {Move} from 'chess.js';
+import {getNextMove} from '../helpers/getNextMove';
+import {checkRealisedMove} from '../helpers/checkRealisedMove';
+import {ErrorTestingModal} from '../testingModal/ErrorTestingModal';
+import {getRealisedMove} from '../helpers/getRealisedMove';
 
 interface TestingBoardProps {
   movesTree: MovesTree;
   onCorrectMove: () => void;
   onIncorrectMove: () => void;
+  onLastMove: () => void;
 }
 
 export const TestingBoard = ({
   movesTree,
   onCorrectMove,
   onIncorrectMove,
+  onLastMove,
 }: TestingBoardProps) => {
   const [currentTestMoveKey, setCurrentTestMoveKey] = useState(
     Object.keys(emptyMovesTree)[0],
   );
-  const {addPlayedMove, currentMoveKey} = useContext(PlayedMovesContext);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {
+    playedMoves,
+    addPlayedMove,
+    currentMoveKey,
+    removePlayedMove,
+    goBackToLastMove,
+  } = useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
 
   useEffect(() => {
     const history = chess.current.history({verbose: true});
     if (movesTree[currentTestMoveKey].children.length === 0) {
+      onLastMove();
       return;
     } else {
       if (checkRealisedMove({history, movesTree, currentTestMoveKey})) {
-        const realisedMoveKey = movesTree[currentTestMoveKey].children[0];
+        const realisedMoveKey = getRealisedMove({
+          history,
+          movesTree,
+          currentMoveKey: currentTestMoveKey,
+        });
         if (movesTree[realisedMoveKey].children.length === 0) {
+          onLastMove();
           return;
         }
         const automaticMoveKey = getNextMove({movesTree, realisedMoveKey});
@@ -53,6 +71,7 @@ export const TestingBoard = ({
           history[history.length - 1].color === 'w'
         ) {
           onIncorrectMove();
+          setIsModalVisible(true);
         }
       }
     }
@@ -65,48 +84,23 @@ export const TestingBoard = ({
     addPlayedMove,
     onCorrectMove,
     onIncorrectMove,
+    onLastMove,
   ]);
-  return <ChessBoard />;
-};
 
-interface GetNextMoveProps {
-  movesTree: MovesTree;
-  realisedMoveKey: string;
-}
-
-const getNextMove = ({
-  movesTree,
-  realisedMoveKey,
-}: GetNextMoveProps): string => {
-  const possibleMovesNumber = movesTree[realisedMoveKey].children.length;
-  const randomNumber = Math.floor(Math.random() * possibleMovesNumber);
-  const automaticMoveKey = movesTree[realisedMoveKey].children[randomNumber];
-  return automaticMoveKey;
-};
-
-interface CheckRealisedMoveProps {
-  history: Move[];
-  movesTree: MovesTree;
-  currentTestMoveKey: string;
-}
-
-const checkRealisedMove = ({
-  history,
-  movesTree,
-  currentTestMoveKey,
-}: CheckRealisedMoveProps): boolean => {
-  let res = false;
-  if (!history[history.length - 1]) {
-    return res;
-  }
-  const realisedMove = history[history.length - 1];
-  if (realisedMove.color === 'b') {
-    return res;
-  }
-  movesTree[currentTestMoveKey].children.forEach(childKey => {
-    if (cleanMove(movesTree[childKey].move) === realisedMove.san) {
-      res = true;
-    }
-  });
-  return res;
+  const onPressClose = () => {
+    setIsModalVisible(false);
+    const parentKey = playedMoves[currentMoveKey].parentKey;
+    chess.current.load(playedMoves[parentKey].fen);
+    removePlayedMove(currentMoveKey);
+    goBackToLastMove();
+  };
+  return (
+    <>
+      <ChessBoard />
+      <ErrorTestingModal
+        isModalVisible={isModalVisible}
+        onPressClose={onPressClose}
+      />
+    </>
+  );
 };

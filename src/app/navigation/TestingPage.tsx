@@ -8,15 +8,19 @@ import {Spacer} from '../../shared/views/components/Spacer/Spacer';
 import {Typography} from '../../shared/boson/components/Typography/Typography';
 import {PlayedMoves} from '../../modules/playedMoves/PlayedMoves/PlayedMoves';
 import {TestingBoard} from '../../modules/testing/testingBoard/TestingBoard';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {AuthenticatedNavigatorStackParamList} from './AuthenticatedNavigator/AuthenticatedNavigator.type';
 import {getEmptyMovesTree} from '../../shared/domain/entities/MovesTree';
 import {MoveStatus} from '../../shared/domain/entities/MoveStatus';
 import {Icon} from '../../../assets/icons';
+import {CongratulationsTestingModal} from '../../modules/testing/testingModal/CongratulationsTestingModal';
+import {Navigation} from './AuthenticatedNavigator/AuthenticatedNavigator';
 
 export const TestingPage = () => {
   const chess = useRef(new Chess());
   const [lastMoveStatus, setLastMoveStatus] = useState<MoveStatus>('');
+  const [isCongratulationsModalVisible, setIsCongratulationsModalVisible] =
+    useState(false);
   const onCorrectMove = () => {
     setLastMoveStatus('correct');
   };
@@ -27,10 +31,23 @@ export const TestingPage = () => {
     useRoute<
       RouteProp<AuthenticatedNavigatorStackParamList, 'Testing Repertoire'>
     >();
+  const navigation =
+    useNavigation<
+      Navigation<AuthenticatedNavigatorStackParamList, 'Testing Repertoire'>
+    >();
+
   const testingMoves = params.movesToTest
     ? params.movesToTest
     : getEmptyMovesTree();
   // TODO: use the MovesTree type and handle variants choice (random at first)
+
+  const onCloseCongratsModal = () => {
+    setIsCongratulationsModalVisible(false);
+    navigation.navigate('Menu');
+  };
+  const onLastMove = () => {
+    setIsCongratulationsModalVisible(true);
+  };
   return (
     <PlayedMovesProvider value={{playedMoves: undefined}}>
       <ChessEngineProvider value={{chess}}>
@@ -39,6 +56,7 @@ export const TestingPage = () => {
             movesTree={testingMoves}
             onCorrectMove={onCorrectMove}
             onIncorrectMove={onIncorrectMove}
+            onLastMove={onLastMove}
           />
           <Spacer height={32} />
           <BottomContentContainer>
@@ -53,6 +71,10 @@ export const TestingPage = () => {
           </BottomContentContainer>
           <Spacer height={16} />
           <PlayedMoves />
+          <CongratulationsTestingModal
+            isModalVisible={isCongratulationsModalVisible}
+            onPressClose={onCloseCongratsModal}
+          />
         </Container>
       </ChessEngineProvider>
     </PlayedMovesProvider>
