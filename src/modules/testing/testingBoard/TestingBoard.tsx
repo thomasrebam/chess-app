@@ -9,7 +9,7 @@ import {
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {getNextMove} from '../helpers/getNextMove';
 import {checkRealisedMove} from '../helpers/checkRealisedMove';
-import {TestingModal} from '../testingModal/TestingModal';
+import {ErrorTestingModal} from '../testingModal/ErrorTestingModal';
 
 interface TestingBoardProps {
   movesTree: MovesTree;
@@ -87,7 +87,7 @@ export const TestingBoard = ({
   return (
     <>
       <ChessBoard />
-      <TestingModal
+      <ErrorTestingModal
         isModalVisible={isModalVisible}
         onPressClose={onPressClose}
       />

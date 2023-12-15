@@ -8,7 +8,7 @@ interface TestingModalProps {
   onPressClose: () => void;
 }
 
-export const TestingModal = ({
+export const ErrorTestingModal = ({
   isModalVisible,
   onPressClose,
 }: TestingModalProps) => {
