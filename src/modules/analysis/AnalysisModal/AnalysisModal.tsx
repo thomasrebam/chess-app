@@ -13,12 +13,14 @@ interface AnalysisModalProps {
   isModalVisible: boolean;
   onPressSave: () => void;
   onPressClose: () => void;
+  currentAnalysisName?: string;
 }
 
 export const AnalysisModal = ({
   isModalVisible,
   onPressSave,
   onPressClose,
+  currentAnalysisName,
 }: AnalysisModalProps) => {
   const {playedMoves} = useContext(PlayedMovesContext);
   const {savedAnalysis, addSavedAnalysis} = useContext(SavedAnalysisContext);
@@ -49,6 +51,7 @@ export const AnalysisModal = ({
         </StyledText>
         <StyledTextInput
           placeholder="Analysis name"
+          value={currentAnalysisName ? currentAnalysisName : ''}
           focusable
           onChangeText={event => setAnalysisName(event)}
         />

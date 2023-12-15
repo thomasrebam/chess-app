@@ -21,8 +21,11 @@ export const AnalysisMenu = () => {
     >();
   const onPressButton = ({label}: {label: string}) => {
     const savedAnalysis = getMovesToTest({analysisName: label});
-    // TODO: add the stored analysis to the analysis page
-    navigation.navigate('Analysis', {pgn: undefined});
+    navigation.navigate('Analysis', {
+      pgn: undefined,
+      movesTree: savedAnalysis,
+      analysisName: label,
+    });
   };
 
   const onPressTrashCan = ({label}: {label: string}) => {
