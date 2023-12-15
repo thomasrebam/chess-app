@@ -11,9 +11,15 @@ import {Move} from 'chess.js';
 
 interface TestingBoardProps {
   movesTree: MovesTree;
+  onCorrectMove: () => void;
+  onIncorrectMove: () => void;
 }
 
-export const TestingBoard = ({movesTree}: TestingBoardProps) => {
+export const TestingBoard = ({
+  movesTree,
+  onCorrectMove,
+  onIncorrectMove,
+}: TestingBoardProps) => {
   const [currentTestMoveKey, setCurrentTestMoveKey] = useState(
     Object.keys(emptyMovesTree)[0],
   );
@@ -40,6 +46,14 @@ export const TestingBoard = ({movesTree}: TestingBoardProps) => {
           squareTo: newHistory[newHistory.length - 1].to,
         });
         setCurrentTestMoveKey(automaticMoveKey);
+        onCorrectMove();
+      } else {
+        if (
+          history[history.length - 1] &&
+          history[history.length - 1].color === 'w'
+        ) {
+          onIncorrectMove();
+        }
       }
     }
   }, [
@@ -49,6 +63,8 @@ export const TestingBoard = ({movesTree}: TestingBoardProps) => {
     currentMoveKey,
     setCurrentTestMoveKey,
     addPlayedMove,
+    onCorrectMove,
+    onIncorrectMove,
   ]);
   return <ChessBoard />;
 };
