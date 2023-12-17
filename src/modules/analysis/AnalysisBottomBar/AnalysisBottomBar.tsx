@@ -1,5 +1,5 @@
 import styled from '@emotion/native';
-import {TouchableOpacity, View} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../../shared/boson/theme/colors';
 import {Icon} from '../../../../assets/icons';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
@@ -9,6 +9,8 @@ import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {emptyMovesTree} from '../../../shared/domain/entities/MovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 import {Button} from '../../../shared/boson/components/Button/Button';
+import {PIECES, SIZE} from '../../../shared/views/components/Piece/Piece';
+import {PlayerColorContext} from '../../../shared/views/contexts/PlayerColorContext';
 
 interface AnalysisBottomBarProps {
   onPressSave: () => void;
@@ -18,6 +20,7 @@ export const AnalysisBottomBar = ({onPressSave}: AnalysisBottomBarProps) => {
   const {playedMoves, currentMoveKey, addPlayedMove, goBackToLastMove} =
     useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
+  const {playerColor, rotatePlayerColor} = useContext(PlayerColorContext);
 
   const passNextMove = () => {
     if (playedMoves[currentMoveKey].children.length === 0) {
@@ -44,8 +47,10 @@ export const AnalysisBottomBar = ({onPressSave}: AnalysisBottomBarProps) => {
   };
   return (
     <BottomBar>
-      <Spacer width={8} />
       <Button.Primary label="Save" onPress={onPressSave} />
+      <TouchableOpacity onPress={rotatePlayerColor}>
+        <StyledImage source={PIECES[`${playerColor}p`]} />
+      </TouchableOpacity>
       <TouchableOpacity onPress={passPreviousMove}>
         <Icon.RightArrow
           style={{transform: [{rotate: '180deg'}]}}
@@ -67,6 +72,11 @@ const BottomBar = styled(View)({
   paddingVertical: 4,
   borderRadius: 4,
   flexDirection: 'row',
-  justifyContent: 'space-between',
+  justifyContent: 'space-around',
   alignItems: 'center',
+});
+
+const StyledImage = styled(Image)({
+  width: SIZE,
+  height: SIZE,
 });
