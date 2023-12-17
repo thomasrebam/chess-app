@@ -139,6 +139,6 @@ const isLastMoveSquare = ({
   if (playerColor === 'w') {
     return row === 8 - lastMoveRow && column === lastMoveColumn;
   } else {
-    return row === lastMoveRow && column === 7 - lastMoveColumn;
+    return row === lastMoveRow - 1 && column === 7 - lastMoveColumn;
   }
 };
