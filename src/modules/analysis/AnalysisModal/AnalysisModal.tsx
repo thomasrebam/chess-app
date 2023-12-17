@@ -13,31 +13,41 @@ interface AnalysisModalProps {
   isModalVisible: boolean;
   onPressSave: () => void;
   onPressClose: () => void;
+  currentAnalysisName?: string;
 }
 
 export const AnalysisModal = ({
   isModalVisible,
   onPressSave,
   onPressClose,
+  currentAnalysisName,
 }: AnalysisModalProps) => {
   const {playedMoves} = useContext(PlayedMovesContext);
   const {savedAnalysis, addSavedAnalysis} = useContext(SavedAnalysisContext);
 
   const [analysisName, setAnalysisName] = useState<string>('');
 
+  const textInputValue = analysisName
+    ? analysisName
+    : currentAnalysisName
+      ? currentAnalysisName
+      : '';
+
   const onSavePress = () => {
-    if (analysisName === '') {
+    if (textInputValue === '') {
       return;
     }
     PersistentStorageService.setValue(
-      `playedMoves.${analysisName}`,
+      `playedMoves.${textInputValue}`,
       JSON.stringify(playedMoves),
     );
-    PersistentStorageService.setValue(
-      'savedAnalysis',
-      JSON.stringify([...savedAnalysis, analysisName]),
-    );
-    addSavedAnalysis({newAnalysis: analysisName});
+    if (!savedAnalysis.includes(textInputValue)) {
+      PersistentStorageService.setValue(
+        'savedAnalysis',
+        JSON.stringify([...savedAnalysis, textInputValue]),
+      );
+      addSavedAnalysis({newAnalysis: textInputValue});
+    }
     onPressSave();
     onPressClose();
   };
@@ -49,6 +59,7 @@ export const AnalysisModal = ({
         </StyledText>
         <StyledTextInput
           placeholder="Analysis name"
+          value={textInputValue}
           focusable
           onChangeText={event => setAnalysisName(event)}
         />

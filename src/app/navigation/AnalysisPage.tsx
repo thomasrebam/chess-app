@@ -42,7 +42,11 @@ export const AnalysisPage = () => {
       });
     }
   } else {
-    playedMoves = getEmptyMovesTree();
+    if (params.movesTree) {
+      playedMoves = params.movesTree;
+    } else {
+      playedMoves = getEmptyMovesTree();
+    }
   }
 
   return (
@@ -59,6 +63,7 @@ export const AnalysisPage = () => {
             isModalVisible={isModalVisible}
             onPressSave={() => undefined}
             onPressClose={closeModal}
+            currentAnalysisName={params.analysisName}
           />
         </Container>
       </ChessEngineProvider>
