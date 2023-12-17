@@ -20,6 +20,7 @@ import {
 import Chess from 'chess.js';
 import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {usePiecePosition} from '../../hooks/usePiecePosition';
+import {PlayerColorContext} from '../../contexts/PlayerColorContext';
 
 export const PIECES: Record<ColoredPieceName, number> = {
   wk: require('../../../../../assets/images/WhiteKing.png'),
@@ -45,22 +46,33 @@ interface PieceProps {
 
 export const Piece = ({piece, player, position, chess}: PieceProps) => {
   const {addPlayedMove} = useContext(PlayedMovesContext);
+  const {playerColor} = useContext(PlayerColorContext);
   const coloredPieceName: ColoredPieceName = `${player}${piece}`;
 
   const isGestureActive = useSharedValue(false);
 
-  const absolutePosition = getAbsolutePositionFromAlgebraicNotation(position);
+  const absolutePosition = getAbsolutePositionFromAlgebraicNotation(
+    position,
+    playerColor,
+  );
   const {offsetX, offsetY, translateX, translateY} = usePiecePosition({
     absolutePosition,
   });
+  translateX.value = withTiming(absolutePosition.x, {duration: 300});
+  translateY.value = withTiming(absolutePosition.y, {duration: 500});
 
-  const animatedPieceStyle = useAnimatedStyle(() => ({
-    position: 'absolute',
-    width: SIZE,
-    height: SIZE,
-    transform: [{translateX: translateX.value}, {translateY: translateY.value}],
-    zIndex: isGestureActive.value ? 1 : 0,
-  }));
+  const animatedPieceStyle = useAnimatedStyle(() => {
+    return {
+      position: 'absolute',
+      width: SIZE,
+      height: SIZE,
+      transform: [
+        {translateX: translateX.value},
+        {translateY: translateY.value},
+      ],
+      zIndex: isGestureActive.value ? 1 : 0,
+    };
+  }, [translateX.value, translateY.value, playerColor]);
 
   const checkMovePiece = useCallback(
     (from: PositionNumber, to: PositionNumber) => {
@@ -78,6 +90,7 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
         const newPos = getAbsolutePositionFromAlgebraicPosition({
           file: fileTo,
           column: rankTo,
+          playerColor,
         });
         translateX.value = withTiming(newPos.x);
         translateY.value = withTiming(newPos.y, {}, () => {
@@ -96,7 +109,14 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
         isGestureActive.value = false;
       });
     },
-    [chess, translateX, translateY, isGestureActive, addPlayedMove],
+    [
+      chess,
+      translateX,
+      translateY,
+      isGestureActive,
+      addPlayedMove,
+      playerColor,
+    ],
   );
   const movePiece = useAnimatedGestureHandler({
     onStart: () => {
