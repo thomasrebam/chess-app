@@ -19,6 +19,7 @@ import {
 } from '../../helpers/getAbsolutePositionFromAlgebraicPosition';
 import Chess from 'chess.js';
 import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
+import {usePiecePosition} from '../../hooks/usePiecePosition';
 
 export const PIECES: Record<ColoredPieceName, number> = {
   wk: require('../../../../../assets/images/WhiteKing.png'),
@@ -43,14 +44,16 @@ interface PieceProps {
 }
 
 export const Piece = ({piece, player, position, chess}: PieceProps) => {
-  const coloredPieceName: ColoredPieceName = `${player}${piece}`;
-  const isGestureActive = useSharedValue(false);
   const {addPlayedMove} = useContext(PlayedMovesContext);
+  const coloredPieceName: ColoredPieceName = `${player}${piece}`;
+
+  const isGestureActive = useSharedValue(false);
+
   const absolutePosition = getAbsolutePositionFromAlgebraicNotation(position);
-  const offsetX = useSharedValue(0);
-  const offsetY = useSharedValue(0);
-  const translateX = useSharedValue(absolutePosition.x);
-  const translateY = useSharedValue(absolutePosition.y);
+  const {offsetX, offsetY, translateX, translateY} = usePiecePosition({
+    absolutePosition,
+  });
+
   const animatedPieceStyle = useAnimatedStyle(() => ({
     position: 'absolute',
     width: SIZE,
@@ -58,6 +61,7 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
     transform: [{translateX: translateX.value}, {translateY: translateY.value}],
     zIndex: isGestureActive.value ? 1 : 0,
   }));
+
   const checkMovePiece = useCallback(
     (from: PositionNumber, to: PositionNumber) => {
       const {complete: completeFrom} =
