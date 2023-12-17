@@ -5,10 +5,13 @@ import {Piece} from '../Piece/Piece';
 import {useContext} from 'react';
 import {ChessEngineContext} from '../../contexts/ChessEngineContext';
 import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
+import {PlayerColorContext} from '../../contexts/PlayerColorContext';
 
 export const ChessBoard = () => {
   // eslint-disable-next-line unused-imports/no-unused-vars
   const {currentMoveKey} = useContext(PlayedMovesContext);
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const {playerColor} = useContext(PlayerColorContext);
   const {chess} = useContext(ChessEngineContext);
   return (
     <Container>
