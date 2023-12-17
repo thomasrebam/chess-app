@@ -88,8 +88,8 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
         .find(move => move.from === completeFrom && move.to === completeTo);
       if (validMove !== undefined) {
         const newPos = getAbsolutePositionFromAlgebraicPosition({
-          file: fileTo,
-          column: rankTo,
+          column: fileTo,
+          row: rankTo,
           playerColor,
         });
         translateX.value = withTiming(newPos.x);
