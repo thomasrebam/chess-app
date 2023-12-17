@@ -27,27 +27,30 @@ export const AnalysisModal = ({
 
   const [analysisName, setAnalysisName] = useState<string>('');
 
-  const onSavePress = () => {
-    if (analysisName === '') {
-      return;
-    }
-    PersistentStorageService.setValue(
-      `playedMoves.${analysisName}`,
-      JSON.stringify(playedMoves),
-    );
-    PersistentStorageService.setValue(
-      'savedAnalysis',
-      JSON.stringify([...savedAnalysis, analysisName]),
-    );
-    addSavedAnalysis({newAnalysis: analysisName});
-    onPressSave();
-    onPressClose();
-  };
   const textInputValue = analysisName
     ? analysisName
     : currentAnalysisName
       ? currentAnalysisName
       : '';
+
+  const onSavePress = () => {
+    if (textInputValue === '') {
+      return;
+    }
+    PersistentStorageService.setValue(
+      `playedMoves.${textInputValue}`,
+      JSON.stringify(playedMoves),
+    );
+    if (!savedAnalysis.includes(textInputValue)) {
+      PersistentStorageService.setValue(
+        'savedAnalysis',
+        JSON.stringify([...savedAnalysis, textInputValue]),
+      );
+      addSavedAnalysis({newAnalysis: textInputValue});
+    }
+    onPressSave();
+    onPressClose();
+  };
   return (
     <Modal isVisible={isModalVisible}>
       <ModalContainer>
