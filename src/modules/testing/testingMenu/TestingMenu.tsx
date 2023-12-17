@@ -19,9 +19,9 @@ export const TestingMenu = () => {
       Navigation<AuthenticatedNavigatorStackParamList, 'Choose Repertoire'>
     >();
   const onPressButton = ({label}: {label: string}) => {
-    const savedAnalysis = getMovesToTest({analysisName: label});
+    const movesToTest = getMovesToTest({analysisName: label});
     navigation.navigate('Testing Repertoire', {
-      movesToTest: savedAnalysis,
+      movesToTest,
     });
   };
 
