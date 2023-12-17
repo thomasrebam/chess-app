@@ -40,7 +40,6 @@ export const TestingPage = () => {
   const testingMoves = params.movesToTest
     ? params.movesToTest
     : getEmptyMovesTree();
-  // TODO: use the MovesTree type and handle variants choice (random at first)
 
   const onCloseCongratsModal = () => {
     setIsCongratulationsModalVisible(false);
