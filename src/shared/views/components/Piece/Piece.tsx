@@ -76,13 +76,17 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
 
   const checkMovePiece = useCallback(
     (from: PositionNumber, to: PositionNumber) => {
-      const {complete: completeFrom} =
-        getAlgebraicPositionFromAbsolutePosition(from);
+      const {complete: completeFrom} = getAlgebraicPositionFromAbsolutePosition(
+        {absolutePosition: from, playerColor},
+      );
       const {
         column: fileTo,
         row: rankTo,
         complete: completeTo,
-      } = getAlgebraicPositionFromAbsolutePosition(to);
+      } = getAlgebraicPositionFromAbsolutePosition({
+        absolutePosition: to,
+        playerColor,
+      });
       const validMove = chess
         .moves({verbose: true})
         .find(move => move.from === completeFrom && move.to === completeTo);
