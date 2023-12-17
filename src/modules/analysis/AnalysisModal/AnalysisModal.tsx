@@ -43,6 +43,11 @@ export const AnalysisModal = ({
     onPressSave();
     onPressClose();
   };
+  const textInputValue = analysisName
+    ? analysisName
+    : currentAnalysisName
+      ? currentAnalysisName
+      : '';
   return (
     <Modal isVisible={isModalVisible}>
       <ModalContainer>
@@ -51,7 +56,7 @@ export const AnalysisModal = ({
         </StyledText>
         <StyledTextInput
           placeholder="Analysis name"
-          value={currentAnalysisName ? currentAnalysisName : ''}
+          value={textInputValue}
           focusable
           onChangeText={event => setAnalysisName(event)}
         />
