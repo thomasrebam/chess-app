@@ -15,6 +15,7 @@ import {MoveStatus} from '../../shared/domain/entities/MoveStatus';
 import {Icon} from '../../../assets/icons';
 import {CongratulationsTestingModal} from '../../modules/testing/testingModal/CongratulationsTestingModal';
 import {Navigation} from './AuthenticatedNavigator/AuthenticatedNavigator';
+import {PlayerColorProvider} from '../../shared/views/contexts/PlayerColorContext';
 
 export const TestingPage = () => {
   const chess = useRef(new Chess());
@@ -51,31 +52,33 @@ export const TestingPage = () => {
   return (
     <PlayedMovesProvider value={{playedMoves: undefined}}>
       <ChessEngineProvider value={{chess}}>
-        <Container>
-          <TestingBoard
-            movesTree={testingMoves}
-            onCorrectMove={onCorrectMove}
-            onIncorrectMove={onIncorrectMove}
-            onLastMove={onLastMove}
-          />
-          <Spacer height={32} />
-          <BottomContentContainer>
-            <StyledText>What to do in this position ?</StyledText>
-            <Spacer width={16} />
-            {lastMoveStatus === 'correct' && (
-              <Icon.TrueCheck height={30} width={30} color={'green'} />
-            )}
-            {lastMoveStatus === 'incorrect' && (
-              <Icon.FalseCross height={30} width={30} color={'red'} />
-            )}
-          </BottomContentContainer>
-          <Spacer height={16} />
-          <PlayedMoves />
-          <CongratulationsTestingModal
-            isModalVisible={isCongratulationsModalVisible}
-            onPressClose={onCloseCongratsModal}
-          />
-        </Container>
+        <PlayerColorProvider>
+          <Container>
+            <TestingBoard
+              movesTree={testingMoves}
+              onCorrectMove={onCorrectMove}
+              onIncorrectMove={onIncorrectMove}
+              onLastMove={onLastMove}
+            />
+            <Spacer height={32} />
+            <BottomContentContainer>
+              <StyledText>What to do in this position ?</StyledText>
+              <Spacer width={16} />
+              {lastMoveStatus === 'correct' && (
+                <Icon.TrueCheck height={30} width={30} color={'green'} />
+              )}
+              {lastMoveStatus === 'incorrect' && (
+                <Icon.FalseCross height={30} width={30} color={'red'} />
+              )}
+            </BottomContentContainer>
+            <Spacer height={16} />
+            <PlayedMoves />
+            <CongratulationsTestingModal
+              isModalVisible={isCongratulationsModalVisible}
+              onPressClose={onCloseCongratsModal}
+            />
+          </Container>
+        </PlayerColorProvider>
       </ChessEngineProvider>
     </PlayedMovesProvider>
   );

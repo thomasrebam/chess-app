@@ -16,6 +16,7 @@ import {
 } from '../../shared/domain/entities/MovesTree';
 import {historyToMovesTree} from '../../shared/views/helpers/historyToMovesTree';
 import {AnalysisModal} from '../../modules/analysis/AnalysisModal/AnalysisModal';
+import {PlayerColorProvider} from '../../shared/views/contexts/PlayerColorContext';
 
 export const AnalysisPage = () => {
   const {params} =
@@ -52,20 +53,22 @@ export const AnalysisPage = () => {
   return (
     <PlayedMovesProvider value={{playedMoves}}>
       <ChessEngineProvider value={{chess}}>
-        <Container>
-          <TopContentContainer>
-            <ChessBoard />
-            <Spacer height={4} />
-          </TopContentContainer>
-          <PlayedMoves />
-          <AnalysisBottomBar onPressSave={openModal} />
-          <AnalysisModal
-            isModalVisible={isModalVisible}
-            onPressSave={() => undefined}
-            onPressClose={closeModal}
-            currentAnalysisName={params.analysisName}
-          />
-        </Container>
+        <PlayerColorProvider>
+          <Container>
+            <TopContentContainer>
+              <ChessBoard />
+              <Spacer height={4} />
+            </TopContentContainer>
+            <PlayedMoves />
+            <AnalysisBottomBar onPressSave={openModal} />
+            <AnalysisModal
+              isModalVisible={isModalVisible}
+              onPressSave={() => undefined}
+              onPressClose={closeModal}
+              currentAnalysisName={params.analysisName}
+            />
+          </Container>
+        </PlayerColorProvider>
       </ChessEngineProvider>
     </PlayedMovesProvider>
   );
