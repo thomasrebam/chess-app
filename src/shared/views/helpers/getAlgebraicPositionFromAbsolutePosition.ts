@@ -5,13 +5,13 @@ export const getAlgebraicPositionFromAbsolutePosition = (
   absolutePosition: PositionNumber,
 ) => {
   'worklet';
-  const row = Math.round(absolutePosition.x / SIZE);
-  const column = Math.round(absolutePosition.y / SIZE);
-  const rowAlgebraic = String.fromCharCode('a'.charCodeAt(0) + row);
-  const columnAlgebraic = 8 - column;
+  const column = Math.round(absolutePosition.x / SIZE);
+  const row = Math.round(absolutePosition.y / SIZE);
+  const columnAlgebraic = String.fromCharCode('a'.charCodeAt(0) + column);
+  const rowAlgebraic = 8 - row;
   return {
-    complete: rowAlgebraic + columnAlgebraic.toString(),
-    file: rowAlgebraic,
+    complete: columnAlgebraic + rowAlgebraic.toString(),
     column: columnAlgebraic,
+    row: rowAlgebraic,
   };
 };

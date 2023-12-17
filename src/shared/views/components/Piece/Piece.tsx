@@ -79,8 +79,8 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
       const {complete: completeFrom} =
         getAlgebraicPositionFromAbsolutePosition(from);
       const {
-        file: fileTo,
-        column: rankTo,
+        column: fileTo,
+        row: rankTo,
         complete: completeTo,
       } = getAlgebraicPositionFromAbsolutePosition(to);
       const validMove = chess
