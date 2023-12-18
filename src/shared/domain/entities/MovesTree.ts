@@ -15,7 +15,7 @@ export type MovesTree = Record<string, MoveInformation>;
 export const emptyMovesTree: MovesTree = {
   empty: {
     move: '',
-    fen: '',
+    fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
     player: 'b',
     children: [],
     parentKey: '-1',
