@@ -72,7 +72,7 @@ export const Piece = ({piece, player, position, chess}: PieceProps) => {
       ],
       zIndex: isGestureActive.value ? 1 : 0,
     };
-  }, [translateX.value, translateY.value, playerColor]);
+  });
 
   const checkMovePiece = useCallback(
     (from: PositionNumber, to: PositionNumber) => {
