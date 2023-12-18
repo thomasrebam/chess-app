@@ -13,8 +13,8 @@ interface PlayedMovesProps {
 }
 
 export const PlayedMoves = ({
-  navigationEnabled,
-  deletionEnabled,
+  navigationEnabled = true,
+  deletionEnabled = true,
 }: PlayedMovesProps) => {
   const {playedMoves, currentMoveKey, setCurrentMoveKey, removePlayedMove} =
     useContext(PlayedMovesContext);
