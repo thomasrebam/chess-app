@@ -71,7 +71,7 @@ export const TestingPage = () => {
               )}
             </BottomContentContainer>
             <Spacer height={16} />
-            <PlayedMoves />
+            <PlayedMoves navigationEnabled={false} deletionEnabled={false} />
             <CongratulationsTestingModal
               isModalVisible={isCongratulationsModalVisible}
               onPressClose={onCloseCongratsModal}
