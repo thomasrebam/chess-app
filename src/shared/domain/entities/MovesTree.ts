@@ -1,3 +1,4 @@
+import {KnowledgeLevel} from './KnowledgeLevel';
 import {Player} from './Player';
 
 type MoveInformation = {
@@ -8,6 +9,7 @@ type MoveInformation = {
   player: Player;
   moveDepth: number;
   squareTo: string;
+  knowledgeLevel: KnowledgeLevel;
 };
 
 export type MovesTree = Record<string, MoveInformation>;
@@ -21,6 +23,7 @@ export const emptyMovesTree: MovesTree = {
     parentKey: '-1',
     moveDepth: 0,
     squareTo: '',
+    knowledgeLevel: '1',
   },
 };
 
