@@ -36,6 +36,7 @@ export const AnalysisModal = ({
       : '';
 
   const onSavePress = () => {
+    // TODO: check if analysis is not empty before saving
     if (textInputValue === '') {
       return;
     }
