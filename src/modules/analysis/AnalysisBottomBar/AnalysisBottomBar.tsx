@@ -6,7 +6,7 @@ import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 import {useContext} from 'react';
 import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
-import {emptyMovesTree} from '../../../shared/domain/entities/MovesTree';
+import {EMPTY_MOVES_TREE_ROOT} from '../../../shared/domain/entities/MovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 import {Button} from '../../../shared/boson/components/Button/Button';
 import {PIECES, SIZE} from '../../../shared/views/components/Piece/Piece';
@@ -36,9 +36,7 @@ export const AnalysisBottomBar = ({onPressSave}: AnalysisBottomBarProps) => {
   };
 
   const passPreviousMove = () => {
-    if (
-      playedMoves[currentMoveKey].parentKey === Object.keys(emptyMovesTree)[0]
-    ) {
+    if (playedMoves[currentMoveKey].parentKey === EMPTY_MOVES_TREE_ROOT) {
       return;
     }
     const parentKey = playedMoves[currentMoveKey].parentKey;

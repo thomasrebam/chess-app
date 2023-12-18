@@ -27,3 +27,5 @@ export const emptyMovesTree: MovesTree = {
 export const getEmptyMovesTree = (): MovesTree => {
   return JSON.parse(JSON.stringify(emptyMovesTree));
 };
+
+export const EMPTY_MOVES_TREE_ROOT: string = Object.keys(emptyMovesTree)[0];
