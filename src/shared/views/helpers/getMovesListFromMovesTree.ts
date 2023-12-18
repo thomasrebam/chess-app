@@ -1,4 +1,7 @@
-import {MovesTree, emptyMovesTree} from '../../domain/entities/MovesTree';
+import {
+  EMPTY_MOVES_TREE_ROOT,
+  MovesTree,
+} from '../../domain/entities/MovesTree';
 
 export const getMovesListFromMovesTree = ({
   tree,
@@ -7,7 +10,7 @@ export const getMovesListFromMovesTree = ({
   tree: MovesTree;
   currentMoveKey: string;
 }): Array<string> => {
-  if (currentMoveKey === Object.keys(emptyMovesTree)[0]) {
+  if (currentMoveKey === EMPTY_MOVES_TREE_ROOT) {
     return [];
   } else {
     return getMovesListFromMovesTree({
@@ -21,7 +24,7 @@ type MovesList = Array<{key: string; move: string}>;
 
 export const getCompleteMovesListFromMovesTree = ({
   tree,
-  currentMoveKey = Object.keys(emptyMovesTree)[0],
+  currentMoveKey = EMPTY_MOVES_TREE_ROOT,
 }: {
   tree: MovesTree;
   currentMoveKey?: string;
@@ -29,7 +32,7 @@ export const getCompleteMovesListFromMovesTree = ({
   const currentMove = tree[currentMoveKey];
   if (currentMove.children.length > 0) {
     const nextMoveKey = tree[currentMoveKey].children[0];
-    if (currentMoveKey === Object.keys(emptyMovesTree)[0]) {
+    if (currentMoveKey === EMPTY_MOVES_TREE_ROOT) {
       return getCompleteMovesListFromMovesTree({
         tree,
         currentMoveKey: nextMoveKey,
@@ -90,7 +93,7 @@ export const getMovesListToDisplay = ({
       currentDepth--;
       currentMoveList = [];
     } else {
-      if (move.key !== Object.keys(emptyMovesTree)[0]) {
+      if (move.key !== EMPTY_MOVES_TREE_ROOT) {
         currentMoveList.push(move);
       }
     }

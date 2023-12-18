@@ -1,4 +1,5 @@
 import {MovesTree} from '../../../shared/domain/entities/MovesTree';
+import {Player} from '../../../shared/domain/entities/Player';
 
 export type AuthenticatedNavigatorStackParamList = {
   Menu: undefined;
@@ -7,7 +8,7 @@ export type AuthenticatedNavigatorStackParamList = {
     movesTree?: MovesTree;
     analysisName?: string;
   };
-  'Testing Repertoire': {movesToTest?: MovesTree};
+  'Testing Repertoire': {playerColor: Player; movesToTest?: MovesTree};
   'Choose Repertoire': undefined;
   'Modify Analysis': undefined;
 };

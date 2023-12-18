@@ -3,6 +3,8 @@ import {useContext} from 'react';
 import {View} from 'react-native';
 import {getPositionFromAlgebraicNotation} from '../../helpers/getAbsolutePositionFromAlgebraicPosition';
 import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
+import {PlayerColorContext} from '../../contexts/PlayerColorContext';
+import {Color} from 'chess.js';
 
 const WHITE = 'rgb(230, 233, 198)';
 const BLACK = 'rgb(100, 133, 68)';
@@ -16,6 +18,7 @@ export const ChessBoardSquare = ({
   row: number;
   column: number;
 }) => {
+  const {playerColor} = useContext(PlayerColorContext);
   const {playedMoves, currentMoveKey} = useContext(PlayedMovesContext);
 
   const lastMove = playedMoves[currentMoveKey];
@@ -26,13 +29,17 @@ export const ChessBoardSquare = ({
 
   let backgroundColor;
   if ((row + column) % 2 === 0) {
-    if (row === 8 - lastMoveRow && column === lastMoveColumn) {
+    if (
+      isLastMoveSquare({row, column, lastMoveRow, lastMoveColumn, playerColor})
+    ) {
       backgroundColor = HIGHLITED_WHITE;
     } else {
       backgroundColor = WHITE;
     }
   } else {
-    if (row === 8 - lastMoveRow && column === lastMoveColumn) {
+    if (
+      isLastMoveSquare({row, column, lastMoveRow, lastMoveColumn, playerColor})
+    ) {
       backgroundColor = HIGHLITED_BLACK;
     } else {
       backgroundColor = BLACK;
@@ -48,10 +55,10 @@ export const ChessBoardSquare = ({
         backgroundColor,
       }}>
       <RowText color={color} column={column}>
-        {8 - row}
+        {getRowNumber({row, playerColor})}
       </RowText>
       <ColumnText row={row} color={color}>
-        {String.fromCharCode('a'.charCodeAt(0) + column)}
+        {getColumnLetter({column, playerColor})}
       </ColumnText>
     </Square>
   );
@@ -85,3 +92,53 @@ const ColumnText = styled.Text(({row, color}: ColumnTextProps) => ({
   opacity: row === 7 ? 1 : 0,
   fontWeight: 'bold',
 }));
+
+const getRowNumber = ({
+  row,
+  playerColor,
+}: {
+  row: number;
+  playerColor: Color;
+}) => {
+  if (playerColor === 'w') {
+    return 8 - row;
+  } else {
+    return row + 1;
+  }
+};
+
+const getColumnLetter = ({
+  column,
+  playerColor,
+}: {
+  column: number;
+  playerColor: Color;
+}) => {
+  if (playerColor === 'w') {
+    return String.fromCharCode('a'.charCodeAt(0) + column);
+  } else {
+    return String.fromCharCode('a'.charCodeAt(0) + 7 - column);
+  }
+};
+
+interface IsLastMoveSquareProps {
+  row: number;
+  column: number;
+  lastMoveRow: number;
+  lastMoveColumn: number;
+  playerColor: Color;
+}
+
+const isLastMoveSquare = ({
+  row,
+  column,
+  lastMoveRow,
+  lastMoveColumn,
+  playerColor,
+}: IsLastMoveSquareProps) => {
+  if (playerColor === 'w') {
+    return row === 8 - lastMoveRow && column === lastMoveColumn;
+  } else {
+    return row === lastMoveRow - 1 && column === 7 - lastMoveColumn;
+  }
+};

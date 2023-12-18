@@ -7,7 +7,15 @@ import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 import {getMovesListToDisplay} from '../../../shared/views/helpers/getMovesListFromMovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 
-export const PlayedMoves = () => {
+interface PlayedMovesProps {
+  navigationEnabled?: boolean;
+  deletionEnabled?: boolean;
+}
+
+export const PlayedMoves = ({
+  navigationEnabled,
+  deletionEnabled,
+}: PlayedMovesProps) => {
   const {playedMoves, currentMoveKey, setCurrentMoveKey, removePlayedMove} =
     useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
@@ -23,16 +31,20 @@ export const PlayedMoves = () => {
           <PlayedMovesLine key={index}>
             <Spacer width={movesList.depth * 8} />
             {movesList.movesList.map((move, moveIndex) => {
-              const onPress = () => {
-                setCurrentMoveKey(move.key);
-                chess.current.load(playedMoves[move.key].fen);
-              };
-              const onLongPress = () => {
-                const parentKey = playedMoves[move.key].parentKey;
-                chess.current.load(playedMoves[parentKey].fen);
-                removePlayedMove(move.key);
-                setCurrentMoveKey(parentKey);
-              };
+              const onPress = navigationEnabled
+                ? () => {
+                    setCurrentMoveKey(move.key);
+                    chess.current.load(playedMoves[move.key].fen);
+                  }
+                : () => undefined;
+              const onLongPress = deletionEnabled
+                ? () => {
+                    const parentKey = playedMoves[move.key].parentKey;
+                    chess.current.load(playedMoves[parentKey].fen);
+                    removePlayedMove(move.key);
+                    setCurrentMoveKey(parentKey);
+                  }
+                : () => undefined;
               return (
                 <PlayedMove
                   key={moveIndex}

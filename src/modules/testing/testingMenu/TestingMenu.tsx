@@ -11,6 +11,7 @@ import {colors} from '../../../shared/boson/theme/colors';
 import {getMovesToTest} from '../../../shared/views/helpers/getMovesToTest';
 import {useContext} from 'react';
 import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
+import {getPlayerColor} from '../../../shared/views/helpers/getPlayerColor';
 
 export const TestingMenu = () => {
   const {savedAnalysis, setSavedAnalysis} = useContext(SavedAnalysisContext);
@@ -19,9 +20,11 @@ export const TestingMenu = () => {
       Navigation<AuthenticatedNavigatorStackParamList, 'Choose Repertoire'>
     >();
   const onPressButton = ({label}: {label: string}) => {
-    const savedAnalysis = getMovesToTest({analysisName: label});
+    const movesToTest = getMovesToTest({analysisName: label});
+    const playerColor = getPlayerColor({analysisName: label});
     navigation.navigate('Testing Repertoire', {
-      movesToTest: savedAnalysis,
+      movesToTest,
+      playerColor,
     });
   };
 

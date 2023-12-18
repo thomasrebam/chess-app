@@ -1,6 +1,7 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import {ReactNode, createContext, useState} from 'react';
 import {
+  EMPTY_MOVES_TREE_ROOT,
   MovesTree,
   emptyMovesTree,
   getEmptyMovesTree,
@@ -57,7 +58,7 @@ export const PlayedMovesProvider = ({
     value.playedMoves ? value.playedMoves : getEmptyMovesTree(),
   );
   const [currentMoveKey, setCurrentMoveKey] = useState<string>(
-    Object.keys(emptyMovesTree)[0],
+    EMPTY_MOVES_TREE_ROOT,
   );
   const addPlayedMove = ({
     move,
