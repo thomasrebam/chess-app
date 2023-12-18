@@ -51,7 +51,7 @@ export const TestingPage = () => {
   return (
     <PlayedMovesProvider value={{playedMoves: undefined}}>
       <ChessEngineProvider value={{chess}}>
-        <PlayerColorProvider>
+        <PlayerColorProvider value={{playerColor: params.playerColor}}>
           <Container>
             <TestingBoard
               movesTree={testingMoves}

@@ -16,10 +16,16 @@ export const PlayerColorContext = createContext<PlayerColorContextInterface>({
 
 interface PlayerColorProviderProps {
   children: React.ReactNode;
+  value?: {playerColor?: Color};
 }
 
-export const PlayerColorProvider = ({children}: PlayerColorProviderProps) => {
-  const [playerColor, setPlayerColor] = useState<Color>('w');
+export const PlayerColorProvider = ({
+  children,
+  value,
+}: PlayerColorProviderProps) => {
+  const [playerColor, setPlayerColor] = useState<Color>(
+    value?.playerColor || 'w',
+  );
   const rotatePlayerColor = () => {
     if (playerColor === 'w') {
       setPlayerColor('b');

@@ -8,6 +8,7 @@ import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMov
 import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
 import {TextInput} from '../../../shared/boson/components/TextInput/TextInput';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
+import {PlayerColorContext} from '../../../shared/views/contexts/PlayerColorContext';
 
 interface AnalysisModalProps {
   isModalVisible: boolean;
@@ -23,6 +24,7 @@ export const AnalysisModal = ({
   currentAnalysisName,
 }: AnalysisModalProps) => {
   const {playedMoves} = useContext(PlayedMovesContext);
+  const {playerColor} = useContext(PlayerColorContext);
   const {savedAnalysis, addSavedAnalysis} = useContext(SavedAnalysisContext);
 
   const [analysisName, setAnalysisName] = useState<string>('');
@@ -48,6 +50,10 @@ export const AnalysisModal = ({
       );
       addSavedAnalysis({newAnalysis: textInputValue});
     }
+    PersistentStorageService.setValue(
+      `playerColor.${textInputValue}`,
+      JSON.stringify(playerColor),
+    );
     onPressSave();
     onPressClose();
   };
