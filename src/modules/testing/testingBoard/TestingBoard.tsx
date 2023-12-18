@@ -3,14 +3,15 @@ import {ChessBoard} from '../../../shared/views/components/ChessBoard/ChessBoard
 import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 import {
+  EMPTY_MOVES_TREE_ROOT,
   MovesTree,
-  emptyMovesTree,
 } from '../../../shared/domain/entities/MovesTree';
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {getNextMove} from '../helpers/getNextMove';
 import {checkRealisedMove} from '../helpers/checkRealisedMove';
 import {ErrorTestingModal} from '../testingModal/ErrorTestingModal';
 import {getRealisedMove} from '../helpers/getRealisedMove';
+import {PlayerColorContext} from '../../../shared/views/contexts/PlayerColorContext';
 
 interface TestingBoardProps {
   movesTree: MovesTree;
@@ -25,10 +26,7 @@ export const TestingBoard = ({
   onIncorrectMove,
   onLastMove,
 }: TestingBoardProps) => {
-  const [currentTestMoveKey, setCurrentTestMoveKey] = useState(
-    Object.keys(emptyMovesTree)[0],
-  );
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {playerColor} = useContext(PlayerColorContext);
   const {
     playedMoves,
     addPlayedMove,
@@ -38,13 +36,22 @@ export const TestingBoard = ({
   } = useContext(PlayedMovesContext);
   const {chess} = useContext(ChessEngineContext);
 
+  const [currentTestMoveKey, setCurrentTestMoveKey] = useState(
+    playerColor === 'w'
+      ? EMPTY_MOVES_TREE_ROOT
+      : movesTree[EMPTY_MOVES_TREE_ROOT].children[0],
+  );
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   useEffect(() => {
     const history = chess.current.history({verbose: true});
     if (movesTree[currentTestMoveKey].children.length === 0) {
       onLastMove();
       return;
     } else {
-      if (checkRealisedMove({history, movesTree, currentTestMoveKey})) {
+      if (
+        checkRealisedMove({history, movesTree, currentTestMoveKey, playerColor})
+      ) {
         const realisedMoveKey = getRealisedMove({
           history,
           movesTree,
@@ -68,7 +75,7 @@ export const TestingBoard = ({
       } else {
         if (
           history[history.length - 1] &&
-          history[history.length - 1].color === 'w'
+          history[history.length - 1].color === playerColor
         ) {
           onIncorrectMove();
           setIsModalVisible(true);
@@ -85,6 +92,7 @@ export const TestingBoard = ({
     onCorrectMove,
     onIncorrectMove,
     onLastMove,
+    playerColor,
   ]);
 
   const onPressClose = () => {
