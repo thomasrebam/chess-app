@@ -63,7 +63,6 @@ export const AnalysisPage = () => {
             <AnalysisBottomBar onPressSave={openModal} />
             <AnalysisModal
               isModalVisible={isModalVisible}
-              onPressSave={() => undefined}
               onPressClose={closeModal}
               currentAnalysisName={params.analysisName}
               isModificationNormal={!!params.analysisName}

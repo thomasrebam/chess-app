@@ -14,7 +14,6 @@ import {setColorInStorage} from '../helpers/setColorInStorage';
 
 interface AnalysisModalProps {
   isModalVisible: boolean;
-  onPressSave: () => void;
   onPressClose: () => void;
   currentAnalysisName?: string;
   isModificationNormal?: boolean;
@@ -22,7 +21,6 @@ interface AnalysisModalProps {
 
 export const AnalysisModal = ({
   isModalVisible,
-  onPressSave,
   onPressClose,
   currentAnalysisName,
   isModificationNormal = false,
@@ -47,7 +45,6 @@ export const AnalysisModal = ({
       addSavedAnalysis({newAnalysis: textInputValue});
     }
     setColorInStorage({playerColor, textInputValue});
-    onPressSave();
     onPressClose();
   };
 
