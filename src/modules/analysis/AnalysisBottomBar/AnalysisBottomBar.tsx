@@ -43,9 +43,16 @@ export const AnalysisBottomBar = ({onPressSave}: AnalysisBottomBarProps) => {
     chess.current.load(playedMoves[parentKey].fen);
     goBackToLastMove();
   };
+
+  const onPressSaveCheck = () => {
+    if (playedMoves[EMPTY_MOVES_TREE_ROOT].children.length === 0) {
+      return;
+    }
+    onPressSave();
+  };
   return (
     <BottomBar>
-      <Button.Primary label="Save" onPress={onPressSave} />
+      <Button.Primary label="Save" onPress={onPressSaveCheck} />
       <TouchableOpacity onPress={rotatePlayerColor}>
         <StyledImage source={PIECES[`${playerColor}p`]} />
       </TouchableOpacity>
