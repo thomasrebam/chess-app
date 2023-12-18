@@ -15,6 +15,7 @@ interface AnalysisModalProps {
   onPressSave: () => void;
   onPressClose: () => void;
   currentAnalysisName?: string;
+  isModificationNormal?: boolean;
 }
 
 export const AnalysisModal = ({
@@ -22,12 +23,14 @@ export const AnalysisModal = ({
   onPressSave,
   onPressClose,
   currentAnalysisName,
+  isModificationNormal = false,
 }: AnalysisModalProps) => {
   const {playedMoves} = useContext(PlayedMovesContext);
   const {playerColor} = useContext(PlayerColorContext);
   const {savedAnalysis, addSavedAnalysis} = useContext(SavedAnalysisContext);
 
   const [analysisName, setAnalysisName] = useState<string>('');
+  const [isConfirmShown, setIsConfirmShown] = useState<boolean>(false);
 
   const textInputValue = analysisName
     ? analysisName
@@ -40,6 +43,30 @@ export const AnalysisModal = ({
     if (textInputValue === '') {
       return;
     }
+    if (!savedAnalysis.includes(textInputValue) || isModificationNormal) {
+      PersistentStorageService.setValue(
+        `playedMoves.${textInputValue}`,
+        JSON.stringify(playedMoves),
+      );
+      if (!savedAnalysis.includes(textInputValue)) {
+        PersistentStorageService.setValue(
+          'savedAnalysis',
+          JSON.stringify([...savedAnalysis, textInputValue]),
+        );
+        addSavedAnalysis({newAnalysis: textInputValue});
+      }
+      PersistentStorageService.setValue(
+        `playerColor.${textInputValue}`,
+        JSON.stringify(playerColor),
+      );
+      onPressSave();
+      onPressClose();
+    } else {
+      setIsConfirmShown(true);
+    }
+  };
+
+  const onConfirmPress = () => {
     PersistentStorageService.setValue(
       `playedMoves.${textInputValue}`,
       JSON.stringify(playedMoves),
@@ -62,7 +89,9 @@ export const AnalysisModal = ({
     <Modal isVisible={isModalVisible}>
       <ModalContainer>
         <StyledText>
-          You are saving this analysis, please give it a name
+          {isConfirmShown
+            ? `This name is already used, do you want to override it ?`
+            : `You are saving this analysis, please give it a name`}
         </StyledText>
         <StyledTextInput
           placeholder="Analysis name"
@@ -72,7 +101,10 @@ export const AnalysisModal = ({
         />
         <ButtonsContainer>
           <ButtonContainer>
-            <Button.Primary label={'Save analysis'} onPress={onSavePress} />
+            <Button.Primary
+              label={isConfirmShown ? 'Confirm' : 'Save analysis'}
+              onPress={isConfirmShown ? onConfirmPress : onSavePress}
+            />
           </ButtonContainer>
           <Spacer width={16} />
           <ButtonContainer>

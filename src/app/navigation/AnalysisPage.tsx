@@ -66,6 +66,7 @@ export const AnalysisPage = () => {
               onPressSave={() => undefined}
               onPressClose={closeModal}
               currentAnalysisName={params.analysisName}
+              isModificationNormal={!!params.analysisName}
             />
           </Container>
         </PlayerColorProvider>
