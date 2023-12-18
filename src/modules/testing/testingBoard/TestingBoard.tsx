@@ -45,6 +45,18 @@ export const TestingBoard = ({
 
   useEffect(() => {
     const history = chess.current.history({verbose: true});
+    if (history.length === 0 && playerColor === 'b') {
+      const automaticFirstMoveForWhite = cleanMove(
+        movesTree[currentTestMoveKey].move,
+      );
+      chess.current.move(automaticFirstMoveForWhite);
+      addPlayedMove({
+        move: movesTree[currentTestMoveKey].move,
+        fen: chess.current.fen(),
+        squareTo: movesTree[currentTestMoveKey].squareTo,
+      });
+      return;
+    }
     if (movesTree[currentTestMoveKey].children.length === 0) {
       onLastMove();
       return;
