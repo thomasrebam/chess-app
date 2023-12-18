@@ -26,6 +26,12 @@ export const TestingBoard = ({
   onIncorrectMove,
   onLastMove,
 }: TestingBoardProps) => {
+  // TODO: Idea is => you have 7 levels of knowledge (1 to 7).
+  // We will check first the level 1. If all level 1 are checked, we check the level 2 etc...
+  // If you successfully play a level 1, it is marked as a level 2
+  // If you fail a level 3, it goes down to level 1.
+  // IDEA: put a global knowledge score on each testing sesssion
+
   const {playerColor} = useContext(PlayerColorContext);
   const {
     playedMoves,
