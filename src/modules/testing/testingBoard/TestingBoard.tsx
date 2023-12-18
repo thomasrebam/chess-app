@@ -41,11 +41,12 @@ export const TestingBoard = ({
       ? EMPTY_MOVES_TREE_ROOT
       : movesTree[EMPTY_MOVES_TREE_ROOT].children[0],
   );
+  const [hasPlayedFirstMove, setHasPlayedFirstMove] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const history = chess.current.history({verbose: true});
-    if (history.length === 0 && playerColor === 'b') {
+    if (!hasPlayedFirstMove && playerColor === 'b') {
       const automaticFirstMoveForWhite = cleanMove(
         movesTree[currentTestMoveKey].move,
       );
@@ -55,6 +56,7 @@ export const TestingBoard = ({
         fen: chess.current.fen(),
         squareTo: movesTree[currentTestMoveKey].squareTo,
       });
+      setHasPlayedFirstMove(true);
       return;
     }
     if (movesTree[currentTestMoveKey].children.length === 0) {
@@ -105,6 +107,7 @@ export const TestingBoard = ({
     onIncorrectMove,
     onLastMove,
     playerColor,
+    hasPlayedFirstMove,
   ]);
 
   const onPressClose = () => {
