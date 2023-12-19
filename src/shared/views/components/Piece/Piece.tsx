@@ -45,6 +45,7 @@ interface PieceProps {
 }
 
 export const Piece = ({piece, player, position, chess}: PieceProps) => {
+  // TODO: correct piece animation on android
   const {addPlayedMove} = useContext(PlayedMovesContext);
   const {playerColor} = useContext(PlayerColorContext);
   const coloredPieceName: ColoredPieceName = `${player}${piece}`;
