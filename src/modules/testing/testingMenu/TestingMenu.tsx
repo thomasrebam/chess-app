@@ -25,6 +25,7 @@ export const TestingMenu = () => {
     navigation.navigate('Testing Repertoire', {
       movesToTest,
       playerColor,
+      analysisName: label,
     });
   };
 
