@@ -12,6 +12,10 @@ import {checkRealisedMove} from '../helpers/checkRealisedMove';
 import {ErrorTestingModal} from '../testingModal/ErrorTestingModal';
 import {getRealisedMove} from '../helpers/getRealisedMove';
 import {PlayerColorContext} from '../../../shared/views/contexts/PlayerColorContext';
+import {
+  incrementKnowledge,
+  resetKnowledge,
+} from '../helpers/incrementsKnowledge';
 
 interface TestingBoardProps {
   movesTree: MovesTree;
@@ -81,6 +85,10 @@ export const TestingBoard = ({
           onLastMove();
           return;
         }
+
+        incrementKnowledge({moveKey: realisedMoveKey, movesTree});
+        incrementKnowledge({moveKey: currentTestMoveKey, movesTree});
+
         const automaticMoveKey = getNextMove({movesTree, realisedMoveKey});
         const automaticMove = movesTree[automaticMoveKey];
         chess.current.move(cleanMove(automaticMove.move));
@@ -98,6 +106,10 @@ export const TestingBoard = ({
           history[history.length - 1].color === playerColor
         ) {
           onIncorrectMove();
+          resetKnowledge({movesTree, moveKey: currentTestMoveKey});
+          movesTree[currentTestMoveKey].children.forEach(childKey => {
+            resetKnowledge({movesTree, moveKey: childKey});
+          });
           setIsModalVisible(true);
         }
       }
@@ -106,7 +118,6 @@ export const TestingBoard = ({
     chess,
     movesTree,
     currentTestMoveKey,
-    currentMoveKey,
     setCurrentTestMoveKey,
     addPlayedMove,
     onCorrectMove,
