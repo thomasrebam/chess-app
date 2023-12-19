@@ -27,3 +27,14 @@ export const computeKnowledgeLevelToChoose = ({
     return totalScore / currentMove.children.length;
   }
 };
+
+export const computeKnowledgeScore = ({movesTree}: {movesTree: MovesTree}) => {
+  const moves = Object.values(movesTree).filter(
+    move => move.parentKey !== '-1',
+  );
+  return (
+    moves.reduce((acc: number, move) => {
+      return acc + Number(move.knowledgeLevel);
+    }, 0) / moves.length
+  );
+};

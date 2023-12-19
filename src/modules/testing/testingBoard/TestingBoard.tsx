@@ -149,6 +149,10 @@ export const TestingBoard = ({
     removePlayedMove(currentMoveKey);
     goBackToLastMove();
   };
+
+  Object.values(movesTree).forEach(move => {
+    console.log(move.move, move.knowledgeLevel);
+  });
   return (
     <>
       <ChessBoard />

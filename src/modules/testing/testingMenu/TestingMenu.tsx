@@ -12,6 +12,9 @@ import {getMovesToTest} from '../../../shared/views/helpers/getMovesToTest';
 import {useContext} from 'react';
 import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
 import {getPlayerColor} from '../../../shared/views/helpers/getPlayerColor';
+import * as Progress from 'react-native-progress';
+import {computeKnowledgeScore} from '../helpers/computeKnowledgeScores';
+import {getEmptyMovesTree} from '../../../shared/domain/entities/MovesTree';
 
 export const TestingMenu = () => {
   const {savedAnalysis, setSavedAnalysis} = useContext(SavedAnalysisContext);
@@ -42,12 +45,18 @@ export const TestingMenu = () => {
   return (
     <SafeAreaView>
       {savedAnalysis?.map((analysis, index) => {
+        const movesToTest = getMovesToTest({analysisName: analysis});
+        const knowledgeScore = computeKnowledgeScore({
+          movesTree: movesToTest ? movesToTest : getEmptyMovesTree(),
+        });
+        const progress = (knowledgeScore - 1) / 6;
         return (
           <ButtonAndSpacer
             label={analysis}
             onPressButton={onPressButton}
             onPressTrashCan={onPressTrashCan}
             key={index}
+            progress={progress}
           />
         );
       })}
@@ -59,18 +68,29 @@ interface ButtonAndSpacerProps {
   label: string;
   onPressButton: ({label}: {label: string}) => void;
   onPressTrashCan: ({label}: {label: string}) => void;
+  progress: number;
 }
 
 const ButtonAndSpacer = ({
   label,
   onPressButton,
   onPressTrashCan,
+  progress,
 }: ButtonAndSpacerProps) => {
   return (
     <>
       <Spacer height={16} />
       <ButtonAndTrashContainer>
         <Button.Primary label={label} onPress={() => onPressButton({label})} />
+        <Progress.Circle
+          progress={progress}
+          direction="counter-clockwise"
+          color={colors.primary500}
+          animated={false}
+          borderWidth={0}
+          thickness={4}
+          fill={progress === 1 ? colors.primary500 : undefined}
+        />
         <TouchableOpacity onPress={() => onPressTrashCan({label})}>
           <Icon.TrashCan height={28} width={28} color={colors.primary500} />
         </TouchableOpacity>
