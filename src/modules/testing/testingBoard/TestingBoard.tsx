@@ -12,12 +12,18 @@ import {checkRealisedMove} from '../helpers/checkRealisedMove';
 import {ErrorTestingModal} from '../testingModal/ErrorTestingModal';
 import {getRealisedMove} from '../helpers/getRealisedMove';
 import {PlayerColorContext} from '../../../shared/views/contexts/PlayerColorContext';
+import {
+  incrementKnowledge,
+  resetKnowledge,
+} from '../helpers/incrementsKnowledge';
+import {saveMovesInStorage} from '../../analysis/helpers/saveMovesInStorage';
 
 interface TestingBoardProps {
   movesTree: MovesTree;
   onCorrectMove: () => void;
   onIncorrectMove: () => void;
   onLastMove: () => void;
+  analysisName: string;
 }
 
 export const TestingBoard = ({
@@ -25,7 +31,14 @@ export const TestingBoard = ({
   onCorrectMove,
   onIncorrectMove,
   onLastMove,
+  analysisName,
 }: TestingBoardProps) => {
+  // TODO: Idea is => you have 7 levels of knowledge (1 to 7).
+  // We will check first the level 1. If all level 1 are checked, we check the level 2 etc...
+  // If you successfully play a level 1, it is marked as a level 2
+  // If you fail a level 3, it goes down to level 1.
+  // IDEA: put a global knowledge score on each testing sesssion
+
   const {playerColor} = useContext(PlayerColorContext);
   const {
     playedMoves,
@@ -60,6 +73,7 @@ export const TestingBoard = ({
       return;
     }
     if (movesTree[currentTestMoveKey].children.length === 0) {
+      incrementKnowledge({moveKey: currentTestMoveKey, movesTree});
       onLastMove();
       return;
     } else {
@@ -71,10 +85,19 @@ export const TestingBoard = ({
           movesTree,
           currentMoveKey: currentTestMoveKey,
         });
+
+        incrementKnowledge({moveKey: realisedMoveKey, movesTree});
+        incrementKnowledge({moveKey: currentTestMoveKey, movesTree});
+        saveMovesInStorage({
+          playedMoves: movesTree,
+          textInputValue: analysisName,
+        });
+
         if (movesTree[realisedMoveKey].children.length === 0) {
           onLastMove();
           return;
         }
+
         const automaticMoveKey = getNextMove({movesTree, realisedMoveKey});
         const automaticMove = movesTree[automaticMoveKey];
         chess.current.move(cleanMove(automaticMove.move));
@@ -92,6 +115,16 @@ export const TestingBoard = ({
           history[history.length - 1].color === playerColor
         ) {
           onIncorrectMove();
+
+          resetKnowledge({movesTree, moveKey: currentTestMoveKey});
+          movesTree[currentTestMoveKey].children.forEach(childKey => {
+            resetKnowledge({movesTree, moveKey: childKey});
+          });
+          saveMovesInStorage({
+            playedMoves: movesTree,
+            textInputValue: analysisName,
+          });
+
           setIsModalVisible(true);
         }
       }
@@ -100,14 +133,13 @@ export const TestingBoard = ({
     chess,
     movesTree,
     currentTestMoveKey,
-    currentMoveKey,
-    setCurrentTestMoveKey,
     addPlayedMove,
     onCorrectMove,
     onIncorrectMove,
     onLastMove,
     playerColor,
     hasPlayedFirstMove,
+    analysisName,
   ]);
 
   const onPressClose = () => {
@@ -117,6 +149,7 @@ export const TestingBoard = ({
     removePlayedMove(currentMoveKey);
     goBackToLastMove();
   };
+
   return (
     <>
       <ChessBoard />

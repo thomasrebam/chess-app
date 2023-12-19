@@ -30,6 +30,7 @@ export const historyToMovesTree = ({
       player: move.color,
       moveDepth: moveDepth,
       squareTo: move.to,
+      knowledgeLevel: '1',
     };
     tree[currentParentMoveKey].children.push(currentMoveKey);
 

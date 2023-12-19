@@ -2,32 +2,35 @@ import styled from '@emotion/native';
 import {Text, View} from 'react-native';
 import Modal from 'react-native-modal';
 import {Button} from '../../../shared/boson/components/Button/Button';
-import {PersistentStorageService} from '../../../shared/views/services/PersistentStorageService';
 import {useContext, useState} from 'react';
 import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
 import {TextInput} from '../../../shared/boson/components/TextInput/TextInput';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 import {PlayerColorContext} from '../../../shared/views/contexts/PlayerColorContext';
+import {saveMovesInStorage} from '../helpers/saveMovesInStorage';
+import {saveAnalysisNameInStorage} from '../helpers/saveAnalysisNameInStorage';
+import {setColorInStorage} from '../helpers/setColorInStorage';
 
 interface AnalysisModalProps {
   isModalVisible: boolean;
-  onPressSave: () => void;
   onPressClose: () => void;
   currentAnalysisName?: string;
+  isModificationNormal?: boolean;
 }
 
 export const AnalysisModal = ({
   isModalVisible,
-  onPressSave,
   onPressClose,
   currentAnalysisName,
+  isModificationNormal = false,
 }: AnalysisModalProps) => {
   const {playedMoves} = useContext(PlayedMovesContext);
   const {playerColor} = useContext(PlayerColorContext);
   const {savedAnalysis, addSavedAnalysis} = useContext(SavedAnalysisContext);
 
   const [analysisName, setAnalysisName] = useState<string>('');
+  const [isConfirmShown, setIsConfirmShown] = useState<boolean>(false);
 
   const textInputValue = analysisName
     ? analysisName
@@ -35,34 +38,34 @@ export const AnalysisModal = ({
       ? currentAnalysisName
       : '';
 
+  const saveAnalysis = () => {
+    saveMovesInStorage({textInputValue, playedMoves});
+    if (!savedAnalysis.includes(textInputValue)) {
+      saveAnalysisNameInStorage({savedAnalysis, textInputValue});
+      addSavedAnalysis({newAnalysis: textInputValue});
+    }
+    setColorInStorage({playerColor, textInputValue});
+    onPressClose();
+  };
+
   const onSavePress = () => {
-    // TODO: check if analysis is not empty before saving
     if (textInputValue === '') {
       return;
     }
-    PersistentStorageService.setValue(
-      `playedMoves.${textInputValue}`,
-      JSON.stringify(playedMoves),
-    );
-    if (!savedAnalysis.includes(textInputValue)) {
-      PersistentStorageService.setValue(
-        'savedAnalysis',
-        JSON.stringify([...savedAnalysis, textInputValue]),
-      );
-      addSavedAnalysis({newAnalysis: textInputValue});
+    if (!savedAnalysis.includes(textInputValue) || isModificationNormal) {
+      saveAnalysis();
+    } else {
+      setIsConfirmShown(true);
     }
-    PersistentStorageService.setValue(
-      `playerColor.${textInputValue}`,
-      JSON.stringify(playerColor),
-    );
-    onPressSave();
-    onPressClose();
   };
+
   return (
     <Modal isVisible={isModalVisible}>
       <ModalContainer>
         <StyledText>
-          You are saving this analysis, please give it a name
+          {isConfirmShown
+            ? `This name is already used, do you want to override it ?`
+            : `You are saving this analysis, please give it a name`}
         </StyledText>
         <StyledTextInput
           placeholder="Analysis name"
@@ -72,7 +75,10 @@ export const AnalysisModal = ({
         />
         <ButtonsContainer>
           <ButtonContainer>
-            <Button.Primary label={'Save analysis'} onPress={onSavePress} />
+            <Button.Primary
+              label={isConfirmShown ? 'Confirm' : 'Save analysis'}
+              onPress={isConfirmShown ? saveAnalysis : onSavePress}
+            />
           </ButtonContainer>
           <Spacer width={16} />
           <ButtonContainer>

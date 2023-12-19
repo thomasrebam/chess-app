@@ -58,6 +58,7 @@ export const TestingPage = () => {
               onCorrectMove={onCorrectMove}
               onIncorrectMove={onIncorrectMove}
               onLastMove={onLastMove}
+              analysisName={params.analysisName}
             />
             <Spacer height={32} />
             <BottomContentContainer>

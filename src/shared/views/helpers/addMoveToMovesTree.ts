@@ -36,6 +36,7 @@ export const addMoveToMovesTree = ({
     player: tree[parentKey].player === 'w' ? 'b' : 'w',
     moveDepth: tree[parentKey].moveDepth + 1,
     squareTo,
+    knowledgeLevel: '1',
   };
   return {tree, key};
 };

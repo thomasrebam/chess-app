@@ -9,6 +9,7 @@ export const movesToTestExample: MovesTree = {
     parentKey: 'rcpfrc',
     player: 'b',
     squareTo: 'c3',
+    knowledgeLevel: '1',
   },
   '8ku41y': {
     children: ['ulca27'],
@@ -18,6 +19,7 @@ export const movesToTestExample: MovesTree = {
     parentKey: 'empty',
     player: 'w',
     squareTo: 'e4',
+    knowledgeLevel: '1',
   },
   '9ddgq2': {
     children: ['k6egs2'],
@@ -27,6 +29,7 @@ export const movesToTestExample: MovesTree = {
     parentKey: 'rbezrx',
     player: 'b',
     squareTo: 'f6',
+    knowledgeLevel: '2',
   },
   empty: {
     children: ['8ku41y'],
@@ -36,6 +39,7 @@ export const movesToTestExample: MovesTree = {
     parentKey: '-1',
     player: 'b',
     squareTo: '',
+    knowledgeLevel: '2',
   },
   k6egs2: {
     children: ['kb7zxr'],
@@ -45,6 +49,7 @@ export const movesToTestExample: MovesTree = {
     parentKey: '9ddgq2',
     player: 'w',
     squareTo: 'e5',
+    knowledgeLevel: '2',
   },
   kb7zxr: {
     children: ['rcpfrc'],
@@ -54,6 +59,7 @@ export const movesToTestExample: MovesTree = {
     parentKey: 'k6egs2',
     player: 'b',
     squareTo: 'e4',
+    knowledgeLevel: '2',
   },
   rbezrx: {
     children: ['9ddgq2'],
@@ -63,6 +69,7 @@ export const movesToTestExample: MovesTree = {
     parentKey: 'ulca27',
     player: 'w',
     squareTo: 'f3',
+    knowledgeLevel: '2',
   },
   rcpfrc: {
     children: ['6ydpev'],
@@ -72,6 +79,7 @@ export const movesToTestExample: MovesTree = {
     parentKey: 'kb7zxr',
     player: 'w',
     squareTo: 'c3',
+    knowledgeLevel: '2',
   },
   ulca27: {
     children: ['rbezrx'],
@@ -81,5 +89,6 @@ export const movesToTestExample: MovesTree = {
     parentKey: '8ku41y',
     player: 'b',
     squareTo: 'e5',
+    knowledgeLevel: '2',
   },
 };

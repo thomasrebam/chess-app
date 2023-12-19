@@ -8,7 +8,11 @@ export type AuthenticatedNavigatorStackParamList = {
     movesTree?: MovesTree;
     analysisName?: string;
   };
-  'Testing Repertoire': {playerColor: Player; movesToTest?: MovesTree};
+  'Testing Repertoire': {
+    playerColor: Player;
+    movesToTest?: MovesTree;
+    analysisName: string;
+  };
   'Choose Repertoire': undefined;
   'Modify Analysis': undefined;
 };
