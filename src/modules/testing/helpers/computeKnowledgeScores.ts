@@ -13,8 +13,16 @@ export const computeKnowledgeScore = ({
   if (currentMove.children.length === 0) {
     return Number(currentMove.knowledgeLevel);
   } else {
+    // The total score is calculated as the average of the scores of the children
+    // Where we include the knowledge level of the direct children, as half of the total score
+    // of it and its children
     const totalScore = currentMove.children.reduce((acc: number, childKey) => {
-      return acc + computeKnowledgeScore({movesTree, moveKey: childKey});
+      return (
+        acc +
+        (computeKnowledgeScore({movesTree, moveKey: childKey}) +
+          Number(movesTree[childKey].knowledgeLevel)) /
+          2
+      );
     }, 0);
     return totalScore / currentMove.children.length;
   }
