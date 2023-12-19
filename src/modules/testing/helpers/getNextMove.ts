@@ -1,5 +1,5 @@
 import {MovesTree} from '../../../shared/domain/entities/MovesTree';
-import {computeKnowledgeScore} from './computeKnowledgeScores';
+import {computeKnowledgeLevelToChoose} from './computeKnowledgeScores';
 
 interface GetNextMoveProps {
   movesTree: MovesTree;
@@ -15,7 +15,7 @@ export const getNextMove = ({
       move: childKey,
       coefficient:
         8 -
-        computeKnowledgeScore({
+        computeKnowledgeLevelToChoose({
           movesTree,
           moveKey: childKey,
         }),

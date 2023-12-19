@@ -5,7 +5,7 @@ interface ComputeKnowledgeScoreProps {
   movesTree: MovesTree;
 }
 
-export const computeKnowledgeScore = ({
+export const computeKnowledgeLevelToChoose = ({
   moveKey,
   movesTree,
 }: ComputeKnowledgeScoreProps): number => {
@@ -19,7 +19,7 @@ export const computeKnowledgeScore = ({
     const totalScore = currentMove.children.reduce((acc: number, childKey) => {
       return (
         acc +
-        (computeKnowledgeScore({movesTree, moveKey: childKey}) +
+        (computeKnowledgeLevelToChoose({movesTree, moveKey: childKey}) +
           Number(movesTree[childKey].knowledgeLevel)) /
           2
       );
