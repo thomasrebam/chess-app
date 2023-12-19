@@ -1,4 +1,4 @@
-import {SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, ScrollView, TouchableOpacity, View} from 'react-native';
 import {Button} from '../../../shared/boson/components/Button/Button';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 import {useNavigation} from '@react-navigation/native';
@@ -43,24 +43,26 @@ export const TestingMenu = () => {
     setSavedAnalysis({analysis: newSavedAnalysis});
   };
   return (
-    <SafeAreaView>
-      {savedAnalysis?.map((analysis, index) => {
-        const movesToTest = getMovesToTest({analysisName: analysis});
-        const knowledgeScore = computeKnowledgeScore({
-          movesTree: movesToTest ? movesToTest : getEmptyMovesTree(),
-        });
-        const progress = (knowledgeScore - 1) / 6;
-        return (
-          <ButtonAndSpacer
-            label={analysis}
-            onPressButton={onPressButton}
-            onPressTrashCan={onPressTrashCan}
-            key={index}
-            progress={progress}
-          />
-        );
-      })}
-    </SafeAreaView>
+    <StyledSafeAreaView>
+      <StyledScrollView>
+        {savedAnalysis?.map((analysis, index) => {
+          const movesToTest = getMovesToTest({analysisName: analysis});
+          const knowledgeScore = computeKnowledgeScore({
+            movesTree: movesToTest ? movesToTest : getEmptyMovesTree(),
+          });
+          const progress = (knowledgeScore - 1) / 6;
+          return (
+            <ButtonAndSpacer
+              label={analysis}
+              onPressButton={onPressButton}
+              onPressTrashCan={onPressTrashCan}
+              key={index}
+              progress={progress}
+            />
+          );
+        })}
+      </StyledScrollView>
+    </StyledSafeAreaView>
   );
 };
 
@@ -104,3 +106,7 @@ const ButtonAndTrashContainer = styled(View)({
   justifyContent: 'space-between',
   alignItems: 'center',
 });
+
+const StyledSafeAreaView = styled(SafeAreaView)({flex: 1});
+
+const StyledScrollView = styled(ScrollView)({flex: 1});
