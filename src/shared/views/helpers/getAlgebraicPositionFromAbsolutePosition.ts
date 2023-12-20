@@ -1,6 +1,6 @@
 import {Color} from 'chess.js';
 import {PositionNumber} from '../../domain/entities/PositionNumber';
-import {SIZE} from '../components/Piece/Piece';
+import {SIZE} from '../components/AnimatedPiece/AnimatedPiece';
 
 interface AlgebraicPositionProps {
   absolutePosition: PositionNumber;
