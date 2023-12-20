@@ -1,7 +1,6 @@
-import {Dimensions, Image} from 'react-native';
+import {Dimensions} from 'react-native';
 import {Player} from '../../../domain/entities/Player';
 import {ColoredPieceName, PieceCode} from '../../../domain/entities/PieceCode';
-import styled from '@emotion/native';
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -21,6 +20,7 @@ import Chess from 'chess.js';
 import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {usePiecePosition} from '../../hooks/usePiecePosition';
 import {PlayerColorContext} from '../../contexts/PlayerColorContext';
+import {Piece} from '../Piece/Piece';
 
 export const PIECES: Record<ColoredPieceName, number> = {
   wk: require('../../../../../assets/images/WhiteKing.png'),
@@ -72,6 +72,8 @@ export const AnimatedPiece = ({piece, player, position, chess}: PieceProps) => {
         {translateY: translateY.value},
       ],
       zIndex: isGestureActive.value ? 1 : 0,
+      alignItems: 'center',
+      justifyContent: 'center',
     };
   });
 
@@ -143,15 +145,10 @@ export const AnimatedPiece = ({piece, player, position, chess}: PieceProps) => {
   return (
     <PanGestureHandler onGestureEvent={movePiece}>
       <Animated.View style={animatedPieceStyle}>
-        <StyledImage source={PIECES[coloredPieceName]} />
+        <Piece piece={coloredPieceName} />
       </Animated.View>
     </PanGestureHandler>
   );
 };
 
 export const SIZE = Dimensions.get('window').width / 8;
-
-const StyledImage = styled(Image)({
-  width: SIZE,
-  height: SIZE,
-});
