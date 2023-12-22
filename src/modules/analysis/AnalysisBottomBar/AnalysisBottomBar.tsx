@@ -39,7 +39,10 @@ export const AnalysisBottomBar = ({onPressSave}: AnalysisBottomBarProps) => {
   };
 
   const passPreviousMove = () => {
-    if (playedMoves[currentMoveKey].parentKey === EMPTY_MOVES_TREE_ROOT) {
+    if (
+      playedMoves[currentMoveKey].parentKey === EMPTY_MOVES_TREE_ROOT ||
+      currentMoveKey === EMPTY_MOVES_TREE_ROOT
+    ) {
       return;
     }
     const parentKey = playedMoves[currentMoveKey].parentKey;
