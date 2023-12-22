@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import {View} from 'react-native';
 import {ChessBoardBackground} from './ChessBoardBackground';
-import {Piece} from '../Piece/Piece';
+import {AnimatedPiece} from '../AnimatedPiece/AnimatedPiece';
 import {useContext} from 'react';
 import {ChessEngineContext} from '../../contexts/ChessEngineContext';
 import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
@@ -20,7 +20,7 @@ export const ChessBoard = () => {
         file.map((square, index) => {
           if (square === null) return null;
           return (
-            <Piece
+            <AnimatedPiece
               key={index}
               piece={square.type}
               player={square.color}

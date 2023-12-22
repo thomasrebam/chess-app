@@ -1,5 +1,5 @@
 import {Color} from 'chess.js';
-import {SIZE} from '../components/Piece/Piece';
+import {SIZE} from '../components/AnimatedPiece/AnimatedPiece';
 import {getFileCodeFromFile} from './getFileCodeFromFile';
 
 type AlgebraicPosition = {

@@ -9,7 +9,10 @@ import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {EMPTY_MOVES_TREE_ROOT} from '../../../shared/domain/entities/MovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
 import {Button} from '../../../shared/boson/components/Button/Button';
-import {PIECES, SIZE} from '../../../shared/views/components/Piece/Piece';
+import {
+  PIECES,
+  SIZE,
+} from '../../../shared/views/components/AnimatedPiece/AnimatedPiece';
 import {PlayerColorContext} from '../../../shared/views/contexts/PlayerColorContext';
 
 interface AnalysisBottomBarProps {

@@ -18,6 +18,7 @@ import {Navigation} from './AuthenticatedNavigator/AuthenticatedNavigator';
 import {PlayerColorProvider} from '../../shared/views/contexts/PlayerColorContext';
 
 export const TestingPage = () => {
+  // TODO: Idea is having a start position (with a start fen)
   const chess = useRef(new Chess());
   const [lastMoveStatus, setLastMoveStatus] = useState<MoveStatus>('');
   const [isCongratulationsModalVisible, setIsCongratulationsModalVisible] =
