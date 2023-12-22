@@ -19,6 +19,7 @@ import {AnalysisModal} from '../../modules/analysis/AnalysisModal/AnalysisModal'
 import {PlayerColorProvider} from '../../shared/views/contexts/PlayerColorContext';
 
 export const AnalysisPage = () => {
+  // TODO: Add ability to analyse a position with database
   const {params} =
     useRoute<RouteProp<AuthenticatedNavigatorStackParamList, 'Analysis'>>();
   const chess = useRef(new Chess());
