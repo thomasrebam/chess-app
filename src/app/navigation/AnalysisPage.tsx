@@ -4,7 +4,7 @@ import {ChessBoard} from '../../shared/views/components/ChessBoard/ChessBoard';
 import {Chess} from 'chess.js';
 import {Spacer} from '../../shared/views/components/Spacer/Spacer';
 import {PlayedMoves} from '../../modules/playedMoves/PlayedMoves/PlayedMoves';
-import {View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import styled from '@emotion/native';
 import {AnalysisBottomBar} from '../../modules/analysis/AnalysisBottomBar/AnalysisBottomBar';
 import {ChessEngineProvider} from '../../shared/views/contexts/ChessEngineContext';
@@ -62,12 +62,14 @@ export const AnalysisPage = () => {
             </TopContentContainer>
             <PlayedMoves />
             <AnalysisBottomBar onPressSave={openModal} />
-            <AnalysisModal
-              isModalVisible={isModalVisible}
-              onPressClose={closeModal}
-              currentAnalysisName={params.analysisName}
-              isModificationNormal={!!params.analysisName}
-            />
+            <SafeAreaView>
+              <AnalysisModal
+                isModalVisible={isModalVisible}
+                onPressClose={closeModal}
+                currentAnalysisName={params.analysisName}
+                isModificationNormal={!!params.analysisName}
+              />
+            </SafeAreaView>
           </Container>
         </PlayerColorProvider>
       </ChessEngineProvider>
