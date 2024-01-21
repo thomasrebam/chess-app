@@ -1,5 +1,5 @@
 import {SafeAreaView, ScrollView, TouchableOpacity, View} from 'react-native';
-import {Button} from '../../../shared/boson/components/Button/Button';
+import {Button} from '../../../shared/views/utils/components/Button/Button';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 import {useNavigation} from '@react-navigation/native';
 import {Navigation} from '../../../app/navigation/AuthenticatedNavigator/AuthenticatedNavigator';
@@ -7,7 +7,7 @@ import {AuthenticatedNavigatorStackParamList} from '../../../app/navigation/Auth
 import {PersistentStorageService} from '../../../shared/views/services/PersistentStorageService';
 import styled from '@emotion/native';
 import {Icon} from '../../../../assets/icons';
-import {colors} from '../../../shared/boson/theme/colors';
+import {colors} from '../../../shared/views/utils/theme/colors';
 import {getMovesToTest} from '../../../shared/views/helpers/getMovesToTest';
 import {useContext} from 'react';
 import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';

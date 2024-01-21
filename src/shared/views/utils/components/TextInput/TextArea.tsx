@@ -4,9 +4,9 @@ import {Platform} from 'react-native';
 import {View} from 'react-native';
 import styled from '@emotion/native';
 
-import {Typography} from '../../components/Typography/Typography';
-import {Spacer} from '../../components/Spacer/Spacer';
-import {InputContainer} from '../../components/TextInput/TextInput';
+import {Typography} from '../Typography/Typography';
+import {Spacer} from '../Spacer/Spacer';
+import {InputContainer} from './TextInput';
 
 import {ErrorIcon} from '../../icons/Error.icon';
 

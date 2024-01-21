@@ -1,12 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import {AuthenticatedNavigatorStackParamList} from './AuthenticatedNavigator/AuthenticatedNavigator.type';
 import {Navigation} from './AuthenticatedNavigator/AuthenticatedNavigator';
-import {Button} from '../../shared/boson/components/Button/Button';
+import {Button} from '../../shared/views/utils/components/Button/Button';
 import {Spacer} from '../../shared/views/components/Spacer/Spacer';
 import {SafeAreaView, Text} from 'react-native';
-import {TextInput} from '../../shared/boson/components/TextInput/TextInput';
+import {TextInput} from '../../shared/views/utils/components/TextInput/TextInput';
 import styled from '@emotion/native';
-import {colors} from '../../shared/boson/theme/colors';
+import {colors} from '../../shared/views/utils/theme/colors';
 import {useState} from 'react';
 
 export const MainPage = () => {

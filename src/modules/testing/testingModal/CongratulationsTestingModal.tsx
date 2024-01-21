@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import {Text, View} from 'react-native';
 import Modal from 'react-native-modal';
-import {Button} from '../../../shared/boson/components/Button/Button';
+import {Button} from '../../../shared/views/utils/components/Button/Button';
 
 interface CongratulationsTestingModalProps {
   isModalVisible: boolean;

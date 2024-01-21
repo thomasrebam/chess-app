@@ -8,12 +8,8 @@ import {
   View,
 } from 'react-native';
 
-import {Typography} from '../../components/Typography/Typography';
-import {ErrorIcon} from '../../icons/Error.icon';
-
-import {Spacer} from '../Spacer/Spacer';
-
-const ERROR_ICON_SIZE = 24;
+import {Typography} from '../Typography/Typography';
+import {Spacer} from '../../../components/Spacer/Spacer';
 
 export type TextInputProps = Omit<RNTextInputProps, 'editable'> & {
   label?: string;
@@ -79,7 +75,7 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
               accessible={false}>
               {label}
             </Typography.P1Regular>
-            <Spacer vertical={4} />
+            <Spacer height={4} />
           </View>
         )}
         <InputContainer
@@ -95,15 +91,7 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
             {...textInputProps}
           />
 
-          <IconsBox>
-            {rightIcon}
-            {isError && (
-              <ErrorIcon
-                color={theme.textInput.contentColors.errorColor}
-                size={ERROR_ICON_SIZE}
-              />
-            )}
-          </IconsBox>
+          <IconsBox>{rightIcon}</IconsBox>
         </InputContainer>
         {!!errorLabel && (
           <Typography.P2Regular

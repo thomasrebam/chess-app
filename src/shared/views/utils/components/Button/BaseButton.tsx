@@ -1,8 +1,6 @@
 import styled from '@emotion/native';
 import React from 'react';
 import {Pressable, TextStyle} from 'react-native';
-
-import {Loader} from '../Loader/Loader';
 import {Typography} from '../Typography/Typography';
 import {BaseButtonStyle, ButtonState} from '../../theme/button';
 import {ThemeColor} from '../../theme/colors.types';
@@ -64,20 +62,9 @@ type ButtonContentProps = Pick<
 const ButtonContent = ({
   StartIcon,
   EndIcon,
-  isLoading,
   label,
   textStyle,
 }: ButtonContentProps) => {
-  if (isLoading) {
-    return (
-      <Loader
-        size={BUTTON_ICON_SIZE_PX}
-        color={textStyle.color}
-        testID="activity-indicator"
-      />
-    );
-  }
-
   return (
     <>
       {StartIcon ? (

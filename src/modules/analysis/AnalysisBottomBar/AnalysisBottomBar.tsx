@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import {Image, TouchableOpacity, View} from 'react-native';
-import {colors} from '../../../shared/boson/theme/colors';
+import {colors} from '../../../shared/views/utils/theme/colors';
 import {Icon} from '../../../../assets/icons';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 import {useContext} from 'react';
@@ -8,7 +8,7 @@ import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMov
 import {cleanMove} from '../../../shared/views/helpers/cleanMove';
 import {EMPTY_MOVES_TREE_ROOT} from '../../../shared/domain/entities/MovesTree';
 import {ChessEngineContext} from '../../../shared/views/contexts/ChessEngineContext';
-import {Button} from '../../../shared/boson/components/Button/Button';
+import {Button} from '../../../shared/views/utils/components/Button/Button';
 import {
   PIECES,
   SIZE,

@@ -1,11 +1,11 @@
 import styled from '@emotion/native';
 import {Text, View} from 'react-native';
 import Modal from 'react-native-modal';
-import {Button} from '../../../shared/boson/components/Button/Button';
+import {Button} from '../../../shared/views/utils/components/Button/Button';
 import {useContext, useState} from 'react';
 import {PlayedMovesContext} from '../../playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {SavedAnalysisContext} from '../../../shared/views/contexts/SavedAnalysisContext';
-import {TextInput} from '../../../shared/boson/components/TextInput/TextInput';
+import {TextInput} from '../../../shared/views/utils/components/TextInput/TextInput';
 import {Spacer} from '../../../shared/views/components/Spacer/Spacer';
 import {PlayerColorContext} from '../../../shared/views/contexts/PlayerColorContext';
 import {saveMovesInStorage} from '../helpers/saveMovesInStorage';
