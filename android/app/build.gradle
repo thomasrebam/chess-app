@@ -91,7 +91,7 @@ android {
         release { 
             storeFile file('upload.keystore') 
             storePassword 'zVCRF9Bz?' 
-            keyAlias 'uploadkeystore' 
+            keyAlias 'upload-keystore' 
             keyPassword 'zVCRF9Bz?' 
         }
     }
