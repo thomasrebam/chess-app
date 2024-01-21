@@ -87,14 +87,14 @@ const ButtonAndSpacer = ({
         <Progress.Circle
           progress={progress}
           direction="counter-clockwise"
-          color={colors.primary500}
+          color={colors.primary100}
           animated={false}
           borderWidth={0}
           thickness={4}
-          fill={progress === 1 ? colors.primary500 : undefined}
+          fill={progress === 1 ? colors.primary100 : undefined}
         />
         <TouchableOpacity onPress={() => onPressTrashCan({label})}>
-          <Icon.TrashCan height={28} width={28} color={colors.primary500} />
+          <Icon.TrashCan height={28} width={28} color={colors.primary100} />
         </TouchableOpacity>
       </ButtonAndTrashContainer>
     </>

@@ -55,5 +55,5 @@ export const MainPage = () => {
 };
 
 const StyledText = styled(Text)({
-  color: colors.primary500,
+  color: colors.primary100,
 });

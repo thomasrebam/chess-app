@@ -65,21 +65,21 @@ export const AnalysisBottomBar = ({onPressSave}: AnalysisBottomBarProps) => {
       <TouchableOpacity onPress={passPreviousMove}>
         <Icon.RightArrow
           style={{transform: [{rotate: '180deg'}]}}
-          color={colors.white}
+          color={colors.black}
           width={32}
           height={32}
         />
       </TouchableOpacity>
       <Spacer width={8} />
       <TouchableOpacity onPress={passNextMove}>
-        <Icon.RightArrow color={colors.white} width={32} height={32} />
+        <Icon.RightArrow color={colors.black} width={32} height={32} />
       </TouchableOpacity>
     </BottomBar>
   );
 };
 
 const BottomBar = styled(View)({
-  backgroundColor: colors.grey300,
+  backgroundColor: colors.grey100,
   paddingVertical: 4,
   borderRadius: 4,
   flexDirection: 'row',

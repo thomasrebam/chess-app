@@ -5,11 +5,12 @@ import {getPositionFromAlgebraicNotation} from '../../helpers/getAbsolutePositio
 import {PlayedMovesContext} from '../../../../modules/playedMoves/PlayedMovesContext/PlayedMoveContext';
 import {PlayerColorContext} from '../../contexts/PlayerColorContext';
 import {Color} from 'chess.js';
+import {colors} from '../../utils/theme/colors';
 
-const WHITE = 'rgb(230, 233, 198)';
-const BLACK = 'rgb(100, 133, 68)';
-const HIGHLITED_WHITE = 'rgb(244, 246, 128)';
-const HIGHLITED_BLACK = 'rgb(187, 204, 68)';
+const WHITE = colors.primary100;
+const BLACK = colors.primary200;
+const HIGHLITED_WHITE = colors.primary300;
+const HIGHLITED_BLACK = colors.primary300;
 
 export const ChessBoardSquare = ({
   row,
