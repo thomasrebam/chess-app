@@ -16,7 +16,7 @@ export const ErrorTestingModal = ({
     <Modal isVisible={isModalVisible}>
       <ModalContainer>
         <StyledText>This move is incorrect, try again</StyledText>
-        <Button.Primary label={`Let's go !`} onPress={onPressClose} />
+        <Button label={`Let's go !`} onPress={onPressClose} />
       </ModalContainer>
     </Modal>
   );

@@ -83,7 +83,7 @@ const ButtonAndSpacer = ({
     <>
       <Spacer height={16} />
       <ButtonAndTrashContainer>
-        <Button.Primary label={label} onPress={() => onPressButton({label})} />
+        <Button label={label} onPress={() => onPressButton({label})} />
         <Progress.Circle
           progress={progress}
           direction="counter-clockwise"

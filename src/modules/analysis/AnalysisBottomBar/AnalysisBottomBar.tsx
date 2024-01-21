@@ -58,7 +58,7 @@ export const AnalysisBottomBar = ({onPressSave}: AnalysisBottomBarProps) => {
   };
   return (
     <BottomBar>
-      <Button.Primary label="Save" onPress={onPressSaveCheck} />
+      <Button label="Save" onPress={onPressSaveCheck} />
       <TouchableOpacity onPress={rotatePlayerColor}>
         <StyledImage source={PIECES[`${playerColor}p`]} />
       </TouchableOpacity>

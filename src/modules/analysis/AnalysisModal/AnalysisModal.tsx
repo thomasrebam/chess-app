@@ -75,14 +75,14 @@ export const AnalysisModal = ({
         />
         <ButtonsContainer>
           <ButtonContainer>
-            <Button.Primary
+            <Button
               label={isConfirmShown ? 'Confirm' : 'Save analysis'}
               onPress={isConfirmShown ? saveAnalysis : onSavePress}
             />
           </ButtonContainer>
           <Spacer width={16} />
           <ButtonContainer>
-            <Button.Secondary label={'Cancel'} onPress={onPressClose} />
+            <Button label={'Cancel'} onPress={onPressClose} />
           </ButtonContainer>
         </ButtonsContainer>
       </ModalContainer>

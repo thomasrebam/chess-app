@@ -16,7 +16,7 @@ export const CongratulationsTestingModal = ({
     <Modal isVisible={isModalVisible}>
       <ModalContainer>
         <StyledText>Congratulations ! This is the end of the line</StyledText>
-        <Button.Primary label={`Go back to menu`} onPress={onPressClose} />
+        <Button label={`Go back to menu`} onPress={onPressClose} />
       </ModalContainer>
     </Modal>
   );

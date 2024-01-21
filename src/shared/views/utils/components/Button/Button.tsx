@@ -1,29 +1,29 @@
-import {useTheme} from '@emotion/react';
-
-import {BaseButton} from './BaseButton';
-import {IconType} from '../../icons/Icon.types';
+import styled from '@emotion/native';
+import {Pressable, Text, View} from 'react-native';
+import {Spacer} from '../../../components/Spacer/Spacer';
 
 export type ButtonProps = {
-  isDisabled?: boolean;
-  isLoading?: boolean;
   onPress: () => void;
   label: string;
-  StartIcon?: IconType;
-  EndIcon?: IconType;
-  accessibilityLabel?: string;
 };
 
-export const Button = {
-  Primary: (props: ButtonProps) => {
-    const theme = useTheme();
-    return <BaseButton style={theme.button.primary} {...props} />;
-  },
-  Secondary: (props: ButtonProps) => {
-    const theme = useTheme();
-    return <BaseButton style={theme.button.secondary} {...props} />;
-  },
-  Tertiary: (props: ButtonProps) => {
-    const theme = useTheme();
-    return <BaseButton style={theme.button.tertiary} {...props} />;
-  },
+export const Button = ({onPress, label}: ButtonProps) => {
+  return (
+    <Pressable onPress={onPress}>
+      <Container>
+        <Spacer height={8} />
+        <Text>{label || ''}</Text>
+        <Spacer height={8} />
+      </Container>
+    </Pressable>
+  );
 };
+
+const Container = styled(View)(() => ({
+  alignItems: 'center',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  backgroundColor: '#e3c099',
+  borderRadius: 10,
+  padding: 10,
+}));

@@ -3,9 +3,8 @@ import {PlayedMovesProvider} from '../../modules/playedMoves/PlayedMovesContext/
 import {ChessEngineProvider} from '../../shared/views/contexts/ChessEngineContext';
 import {Chess} from 'chess.js';
 import styled from '@emotion/native';
-import {View} from 'react-native';
+import {Text, View} from 'react-native';
 import {Spacer} from '../../shared/views/components/Spacer/Spacer';
-import {Typography} from '../../shared/views/utils/components/Typography/Typography';
 import {PlayedMoves} from '../../modules/playedMoves/PlayedMoves/PlayedMoves';
 import {TestingBoard} from '../../modules/testing/testingBoard/TestingBoard';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -96,6 +95,6 @@ const BottomContentContainer = styled(View)({
   alignItems: 'center',
 });
 
-const StyledText = styled(Typography.P1Bold)({
+const StyledText = styled(Text)({
   color: 'white',
 });

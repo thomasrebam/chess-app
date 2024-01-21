@@ -69,7 +69,7 @@ const ButtonAndSpacer = ({
     <>
       <Spacer height={16} />
       <ButtonAndTrashContainer>
-        <Button.Primary label={label} onPress={() => onPressButton({label})} />
+        <Button label={label} onPress={() => onPressButton({label})} />
         <TouchableOpacity onPress={() => onPressTrashCan({label})}>
           <Icon.TrashCan height={28} width={28} color={colors.primary500} />
         </TouchableOpacity>

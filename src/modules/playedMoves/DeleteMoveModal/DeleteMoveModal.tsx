@@ -27,8 +27,8 @@ export const DeleteMoveModal = ({
         <StyledText>{`Are you sure you want to delete ${cleanMove(
           move,
         )} ?`}</StyledText>
-        <Button.Primary label={`Delete`} onPress={onPressDelete} />
-        <Button.Secondary label={`Cancel`} onPress={closeModal} />
+        <Button label={`Delete`} onPress={onPressDelete} />
+        <Button label={`Cancel`} onPress={closeModal} />
       </ModalContainer>
     </Modal>
   );
