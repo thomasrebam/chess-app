@@ -1,4 +1,4 @@
-package com.chessapp;
+package com.gmail.thomas.renaud99.france.chessapp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

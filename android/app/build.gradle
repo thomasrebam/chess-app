@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.chessapp"
+    namespace "com.gmail.thomas.renaud99.france.chessapp"
     defaultConfig {
-        applicationId "com.chessapp"
+        applicationId "com.gmail.thomas.renaud99.france.chessapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
